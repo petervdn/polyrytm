@@ -1,0 +1,15 @@
+/* stylelint-disable-next-line block-no-empty */
+:local {
+	.wrap {
+		background-color: black;
+		width: 100%;
+		height: 15px;
+		color: white;
+
+		.used {
+			background-color: deepskyblue;
+			height: 100%;
+			color: white;
+		}
+	}
+}

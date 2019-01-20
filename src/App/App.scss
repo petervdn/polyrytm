@@ -1,0 +1,29 @@
+/* stylelint-disable-next-line block-no-empty */
+:local {
+	.discView {
+	}
+
+	.flexer {
+		display: flex;
+		flex-direction: column;
+
+		.routerContent {
+			flex-grow: 0;
+			flex: 0 0 400px;
+			width: 800px;
+			margin: 0 auto;
+		}
+
+		&.editor {
+			flex-direction: row;
+
+			.discView {
+				flex-grow: 1;
+			}
+			.routerContent {
+				flex-grow: 0;
+				flex: 0 0 500px;
+			}
+		}
+	}
+}

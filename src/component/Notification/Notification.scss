@@ -1,0 +1,46 @@
+:local {
+	.notification-layer {
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.8);
+		position: fixed;
+		top: 0;
+		left: 0;
+		color: white;
+
+		.notification {
+			border-radius: 5px;
+			width: 500px;
+			background-color: white;
+			color: black;
+			//position: fixed;
+			//left: 50%;
+			//top: 50%;
+			// border: 0px solid white;
+			padding: 10px 15px;
+			margin: 0 auto;
+			margin-top: 200px;
+			//transform: translate(-50%, -200%);
+			//
+			h2 {
+				//		font-size: 0.5em;
+				//border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+				border-bottom: 1px solid black;
+			}
+			p {
+				//		margin: 10px 0;
+			}
+
+			.progressWrap {
+				width: 100%;
+				background-color: #333;
+				height: 10px;
+
+				.progress {
+					height: 100%;
+					background-color: deepskyblue;
+				}
+			}
+		}
+	}
+}

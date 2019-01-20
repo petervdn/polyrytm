@@ -1,0 +1,21 @@
+/* stylelint-disable-next-line block-no-empty */
+:local {
+	.bar {
+		margin: 5px 0;
+		height: 30px;
+		position: relative;
+	}
+	.empty {
+		width: 100%;
+		background-color: black;
+	}
+	.fill {
+		height: 100%;
+		background-color: cadetblue;
+	}
+	span {
+		position: absolute;
+		left: 10px;
+		top: 6px;
+	}
+}

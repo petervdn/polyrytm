@@ -1,0 +1,37 @@
+:local {
+	.wrapper {
+		padding-left: 20px;
+		height: 80px;
+		// background-color: rgba(0, 0, 0, 0.1);
+
+		.hints {
+			margin: 0 0 5px 0;
+			padding: 0;
+			font-size: 12px;
+			font-style: italic;
+			color: rgba(255, 255, 255, 0.9);
+		}
+		.controls {
+			display: flex;
+
+			input {
+				width: 50px;
+			}
+
+			h3 {
+				font-size: 0.7em;
+				font-weight: normal;
+				margin-bottom: 5px;
+			}
+
+			input {
+				border: 0;
+				background-color: transparent;
+				color: white;
+			}
+		}
+		.controls > li {
+			margin-right: 10px;
+		}
+	}
+}

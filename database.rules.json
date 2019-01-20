@@ -1,0 +1,40 @@
+{
+  "rules": {
+	"admins": {
+	  ".read": true,
+	  ".write": false,
+	},
+	"public_rytms": {
+	  ".read": true,
+	  ".write": true,
+	},
+	"public_rytms_short": {
+	  ".read": true,
+	  ".write": true,
+	},
+	"private_rytms": {
+	  ".read": true,
+	  ".write": true,
+	},
+	"private_rytms_short": {
+	  ".read": true,
+	  ".write": true,
+	},
+	"users": {
+	  ".read": true,
+	  ".write": true,
+	},
+	"samples": {
+	  ".read": true, // only readable by user?
+	  ".write": false, // only written to by cloud functions
+	  "user": {
+		"$userid": {
+		  ".indexOn": "name",
+		}
+	  },
+	  "public": {
+		".indexOn": "name",
+	  }
+	}
+  }
+}
