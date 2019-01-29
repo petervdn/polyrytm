@@ -106,7 +106,7 @@ export default class RingsRenderer extends AbstractRenderer {
     // // watch ring highlight state
     this.storeWatchDestructors.push(
       this.store.watch(
-        state => state.theme.activeTheme,
+        state => state.app.activeTheme,
         () => {
           this.updateDisc();
           this.draw();
@@ -123,7 +123,7 @@ export default class RingsRenderer extends AbstractRenderer {
           this.ringsCanvasContext,
           ringItem,
           this.sizeData,
-          getRingItemColorForVolume(this.store.state.theme.activeTheme, ringItem.volume),
+          getRingItemColorForVolume(this.store.state.app.activeTheme, ringItem.volume),
         );
         this.draw();
       }
@@ -180,7 +180,7 @@ export default class RingsRenderer extends AbstractRenderer {
   public draw(): void {
     this.clear();
 
-    if (this.store.state.setting.playMode === PlayMode.STATIC) {
+    if (this.store.state.app.playMode === PlayMode.STATIC) {
       // static discs
       this.context.drawImage(this.ringsCanvas, 0, 0);
     } else {
@@ -267,7 +267,7 @@ export default class RingsRenderer extends AbstractRenderer {
       this.context,
       this.sizeData,
       this.disc,
-      this.store.state.setting.playMode,
+      this.store.state.app.playMode, // todo dont access stores from here
       this.scheduler,
     );
   }
@@ -295,7 +295,7 @@ export default class RingsRenderer extends AbstractRenderer {
             ring,
             index,
             this.sizeData,
-            this.store.state.theme.activeTheme,
+            this.store.state.app.activeTheme,
           );
         }
       });
@@ -314,7 +314,7 @@ export default class RingsRenderer extends AbstractRenderer {
         selectedRing,
         this.disc.rings.indexOf(selectedRing), // todo move index to rings? (and ringitems)
         this.sizeData,
-        this.store.state.theme.activeTheme,
+        this.store.state.app.activeTheme,
       );
     } else {
       this.disc.rings.forEach((ring, index) => {
@@ -323,7 +323,7 @@ export default class RingsRenderer extends AbstractRenderer {
           ring,
           index,
           this.sizeData,
-          this.store.state.theme.activeTheme,
+          this.store.state.app.activeTheme,
         );
       });
     }

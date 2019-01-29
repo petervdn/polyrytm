@@ -2,9 +2,9 @@ import { mapState, mapMutations, mapGetters } from 'vuex';
 import DiscSelector from '../DiscSelector';
 import RingSelector from '../RingSelector';
 import { schedulerStore } from '../../store/module/scheduler/scheduler';
-import { settingStore } from '../../store/module/setting/setting';
 import { interactionStore } from '../../store/module/interaction/interaction';
 import { attachHintToElement } from '../../util/interactionUtils';
+import { appStore } from '../../store/module/app/app';
 
 export default {
   name: 'MainControls',
@@ -37,7 +37,7 @@ export default {
     ...mapState({
       isPlaying: state => state.scheduler.isPlaying,
       secondsPerRevolution: state => state.scheduler.secondsPerRevolution,
-      playMode: state => state.setting.playMode,
+      playMode: state => state.app.playMode,
     }),
     ...mapGetters({
       hint: interactionStore.getters.hint,
@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      togglePlayMode: settingStore.TOGGLE_PLAY_MODE,
+      togglePlayMode: appStore.TOGGLE_PLAY_MODE,
     }),
     start() {
       this.$scheduler.start();

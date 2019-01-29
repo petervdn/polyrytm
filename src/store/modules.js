@@ -5,8 +5,6 @@ import notification from './module/notification';
 import project from './module/project';
 import sample from './module/sample';
 import scheduler from './module/scheduler';
-import setting from './module/setting';
-import theme from './module/theme';
 import user from './module/user';
 
 export default {
@@ -17,7 +15,5 @@ export default {
   project,
   sample,
   scheduler,
-  setting,
-  theme,
   user,
 };

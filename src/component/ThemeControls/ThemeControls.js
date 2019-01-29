@@ -1,5 +1,5 @@
 import { mapState, mapMutations } from 'vuex';
-import { themeStore } from '../../store/module/theme/theme';
+import { appStore } from '../../store/module/app/app';
 import Slider from '../Slider/Slider';
 
 export default {
@@ -22,13 +22,13 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setActiveTheme: themeStore.SET_ACTIVE_THEME,
+      setActiveTheme: appStore.SET_ACTIVE_THEME,
     }),
   },
   computed: {
     ...mapState({
-      activeTheme: state => state.theme.activeTheme,
-      themes: state => state.theme.themes,
+      activeTheme: state => state.app.activeTheme,
+      themes: state => state.app.themes,
     }),
   },
 };

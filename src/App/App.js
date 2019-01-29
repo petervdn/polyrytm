@@ -37,8 +37,8 @@ export default {
       return this.$route.name === RouteNames.EDITOR;
     },
     ...mapState({
-      activeTheme: state => state.theme.activeTheme,
-      uiBright: state => state.theme.activeTheme,
+      activeTheme: state => state.app.activeTheme,
+      // uiBright: state => state.theme.activeTheme, todo ??
     }),
   },
 };

@@ -4,16 +4,16 @@ export default {
   name: 'ProjectInfo',
   computed: {
     ...mapState({
-      activeColorTheme: state => state.theme.activeColorTheme,
+      activeTheme: state => state.app.activeTheme,
     }),
     ...mapState('project', ['name', 'author', 'link']),
     styleObject() {
-      if (!this.activeColorTheme) {
+      if (!this.activeTheme) {
         return {};
       }
 
       return {
-        infoColor: this.activeColorTheme.displayInfo,
+        infoColor: this.activeTheme.displayInfo,
       };
     },
   },

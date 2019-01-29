@@ -100,8 +100,7 @@ export interface IStore {
 interface IStoreState {
   interaction: IInteractionStoreState;
   scheduler: ISchedulerStoreState;
-  setting: ISettingStoreState;
-  theme: IThemeStoreState;
+  app: IAppStoreState;
 }
 
 interface IStoreWatchOptions {
@@ -120,8 +119,10 @@ export interface ISchedulerStoreState {
   isPlaying: boolean;
 }
 
-export interface ISettingStoreState {
+export interface IAppStoreState {
   playMode: string;
+  activeTheme: ITheme;
+  themes: ITheme[];
 }
 
 export interface INotification {
@@ -130,8 +131,4 @@ export interface INotification {
   okButton?: string;
   cancelButton?: string;
   progress?: number;
-}
-
-export interface IThemeStoreState {
-  activeTheme: ITheme;
 }
