@@ -3,7 +3,6 @@ import DiscSelector from '../DiscSelector';
 import RingSelector from '../RingSelector';
 import { schedulerStore } from '../../store/module/scheduler/scheduler';
 import { settingStore } from '../../store/module/setting/setting';
-import PlayMode from '../../data/enum/PlayMode';
 import { interactionStore } from '../../store/module/interaction/interaction';
 import { attachHintToElement } from '../../util/interactionUtils';
 
@@ -47,11 +46,8 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setPlayMode: settingStore.mutations.setPlayMode,
+      togglePlayMode: settingStore.TOGGLE_PLAY_MODE,
     }),
-    togglePlayMode() {
-      this.setPlayMode(this.playMode === PlayMode.ROTATE ? PlayMode.STATIC : PlayMode.ROTATE);
-    },
     start() {
       this.$scheduler.start();
     },

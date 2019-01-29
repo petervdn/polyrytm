@@ -1,7 +1,7 @@
 import { themes } from '../../../data/themes';
 
 const namespace = 'theme';
-
+// todo move to setting store
 export const themeStore = {
   SET_ACTIVE_THEME: `${namespace}/setActiveTheme`,
 };

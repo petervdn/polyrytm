@@ -228,6 +228,8 @@ export function getHint(state: IInteractionStoreState): string {
 }
 
 export function attachHintToElement(element: HTMLElement, hint: string, store: IStore): () => void {
+  // todo set as custom directive
+  // todo get store here instead of passing as arg every time
   const mouseEnter = event => {
     store.commit(interactionStore.mutations.setForceHint, hint || '&nbsp;');
     event.stopImmediatePropagation(); // todo check is this necessary?
