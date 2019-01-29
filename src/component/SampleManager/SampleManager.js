@@ -1,5 +1,4 @@
 import * as firebase from 'firebase';
-import FileUpload from '../FileUpload';
 import StorageSpace from '../StorageSpace';
 import UserSampleListItem from '../UserSampleListItem';
 import firebasePath from '../../firebase/firebasePath';
@@ -8,7 +7,6 @@ import { uniqueArray } from '../../util/miscUtils';
 export default {
   name: 'SampleManager',
   components: {
-    FileUpload,
     StorageSpace,
     UserSampleListItem, // todo rename this, not only for user (also public)
   },

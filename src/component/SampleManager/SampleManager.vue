@@ -4,22 +4,20 @@
 <template>
   <div>
     <h2 v-if="!isPublic">
-      your samples
-      <small>(used {{ usedSize | formatBytes }} of {{ maxSize | formatBytes }})</small>
+      your samples <small>(used {{ usedSize | formatBytes }} of {{ maxSize | formatBytes }})</small>
     </h2>
     <h2 v-else>
-      public samples
-      <small>({{ usedSize | formatBytes }})</small>
+      public samples <small>({{ usedSize | formatBytes }})</small>
     </h2>
     <StorageSpace
       v-if="!isPublic"
       :used="usedSize"
-      :max="maxSize"
-    />
+      :max="maxSize" />
 
-    <p 
-      v-if="fileNames.length === 0" 
-      :class="$style.empty">Nothing here yet...</p>
+    <p
+      v-if="fileNames.length === 0"
+      :class="$style.empty"
+    >Nothing here yet...</p>
 
     <UserSampleListItem
       v-for="fileName in fileNames"
@@ -49,4 +47,3 @@
     </div>
   </div>
 </template>
-
