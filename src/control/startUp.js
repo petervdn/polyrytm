@@ -13,7 +13,6 @@ import { CONFIG_MANAGER, GATEWAY, SCHEDULER } from '../data/Injectables';
 import localeLoader from '../util/localeLoader';
 import { mediaQueries, deviceState } from '../data/mediaQueries.json';
 import waitForStyleSheetsLoaded from '../util/waitForStyleSheetsLoaded';
-import { initUserLogin, loadPublicSamples } from '../firebase/firebaseUtils';
 import { setupSchedulerStoreCommunication } from '../audio/Scheduler';
 
 const initPlugins = () => {
@@ -77,11 +76,12 @@ const startUp = store => {
 
   const configManager = getValue(CONFIG_MANAGER);
 
+  setupSchedulerStoreCommunication(getValue(SCHEDULER), store);
+
   // Add async methods to the Promise.all array
   return Promise.all([
-    initUserLogin(store),
-    loadPublicSamples(store),
-    setupSchedulerStoreCommunication(getValue(SCHEDULER), store),
+    // initUserLogin(store),
+    // loadPublicSamples(store),
     configManager.getVariable(VariableNames.LOCALE_ENABLED)
       ? waitForLocale(store)
       : Promise.resolve(),

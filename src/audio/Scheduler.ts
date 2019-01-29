@@ -195,7 +195,7 @@ export interface IRingItemScheduleData {
   startTime: number;
 }
 
-export const setupSchedulerStoreCommunication = (scheduler: Scheduler, store) => {
+export const setupSchedulerStoreCommunication = (scheduler: Scheduler, store): void => {
   // listen to play-state changes from scheduler
   scheduler.addEventListener(SchedulerEvent.SCHEDULER_START, () => {
     store.commit(schedulerStore.mutations.setIsPlaying, true);
