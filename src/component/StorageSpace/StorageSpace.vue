@@ -2,8 +2,10 @@
 <script src="./StorageSpace.js"></script>
 
 <template>
-	<div :class="$style.wrap">
-		<div :class="$style.used" :style="{width: animatedPercentage + '%'}"></div>
-	</div>
+  <div :class="$style.wrap">
+    <div 
+      :class="$style.used" 
+      :style="{width: animatedPercentage + '%'}"/>
+  </div>
 </template>
 

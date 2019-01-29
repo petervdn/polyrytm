@@ -1,7 +1,7 @@
 export default {
-	name: 'MemberDisplay',
+  name: 'MemberDisplay',
 
-	props: ['member'],
+  props: ['member'],
 
-	mounted() {},
+  mounted() {},
 };

@@ -2,6 +2,5 @@
 <script src="./DiscViewItem.js"></script>
 
 <template>
-	<div ref="container"></div>
+  <div ref="container" />
 </template>
-

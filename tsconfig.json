@@ -1,21 +1,22 @@
 {
-	"compilerOptions": {
-		"sourceMap": true,
-		"noImplicitAny": false,
-		"moduleResolution": "Node",
-		"allowSyntheticDefaultImports": true,
-	  	"target": "es2017",
-		"allowJs": true,
-		"baseUrl": "./src/",
-	  	"lib": [
-			"DOM",
-			"ES6",
-			"DOM.Iterable",
-			"ScriptHost"
-	  	]
-	},
-	"include": [
-		"./src/**/*",
-		"node_modules/*"
-	]
+  "compilerOptions": {
+    "sourceMap": true,
+    "strict": false,
+    "module": "esnext",
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true,
+    "target": "es2017",
+    "allowJs": true,
+    "baseUrl": "./src/",
+    "lib": [
+      "DOM",
+      "ES7",
+      "DOM.Iterable",
+      "ScriptHost"
+    ]
+  },
+  "include": [
+    "./src/**/*",
+    "node_modules/*"
+  ]
 }

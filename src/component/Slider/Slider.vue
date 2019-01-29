@@ -2,8 +2,8 @@
 <script src="./Slider.js"></script>
 
 <template>
-	<div>
-		<h2>Slider</h2>
-	</div>
+  <div>
+    <h2>Slider</h2>
+  </div>
 </template>
 

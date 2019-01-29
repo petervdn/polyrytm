@@ -2,6 +2,6 @@
 <script src="./PlayingSamplesDisplay.js"></script>
 
 <template>
-	<canvas ref="canvas" />
+  <canvas ref="canvas" />
 </template>
 

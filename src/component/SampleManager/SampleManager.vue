@@ -2,49 +2,51 @@
 <script src="./SampleManager.js"></script>
 
 <template>
-	<div>
-		<h2 v-if="!isPublic">
-			your samples
-			<small>(used {{usedSize | formatBytes}} of {{maxSize | formatBytes}})</small>
-		</h2>
-		<h2 v-else>
-			public samples
-			<small>({{usedSize | formatBytes}})</small>
-		</h2>
-		<StorageSpace
-			v-if="!isPublic"
-			:used="usedSize"
-			:max="maxSize"
-		></StorageSpace>
+  <div>
+    <h2 v-if="!isPublic">
+      your samples
+      <small>(used {{ usedSize | formatBytes }} of {{ maxSize | formatBytes }})</small>
+    </h2>
+    <h2 v-else>
+      public samples
+      <small>({{ usedSize | formatBytes }})</small>
+    </h2>
+    <StorageSpace
+      v-if="!isPublic"
+      :used="usedSize"
+      :max="maxSize"
+    />
 
-		<p :class="$style.empty" v-if="fileNames.length === 0">Nothing here yet...</p>
+    <p 
+      v-if="fileNames.length === 0" 
+      :class="$style.empty">Nothing here yet...</p>
 
-		<UserSampleListItem
-			v-for="fileName in fileNames"
-			:fileName="fileName"
-			:userFile="userFiles.find(file => file.name === fileName)"
-			:uploadFile="uploadFiles.find(file => file.name === fileName)"
-			:key="fileName"
-			:isPublic="isPublic"
-			@fileUploaded="onFileUploaded"
-			@stateChange="onSampleStateChange"
-			ref="listItem"
-		></UserSampleListItem>
-		<div :class="$style.add">
-			<input
-				@change="onFileSelectionChange"
-				type="file"
-				multiple
-				ref="fileSelect"
-				name="sample"
-				v-show="false"
-			>
+    <UserSampleListItem
+      v-for="fileName in fileNames"
+      ref="listItem"
+      :file-name="fileName"
+      :user-file="userFiles.find(file => file.name === fileName)"
+      :upload-file="uploadFiles.find(file => file.name === fileName)"
+      :key="fileName"
+      :is-public="isPublic"
+      @fileUploaded="onFileUploaded"
+      @stateChange="onSampleStateChange"
+    />
+    <div :class="$style.add">
+      <input
+        v-show="false"
+        ref="fileSelect"
+        type="file"
+        multiple
+        name="sample"
+        @change="onFileSelectionChange"
+      >
 
-			<button
-				@click="addSamples"
-				v-if="uploadEnabled"
-			>add samples</button>
-		</div>
-	</div>
+      <button
+        v-if="uploadEnabled"
+        @click="addSamples"
+      >add samples</button>
+    </div>
+  </div>
 </template>
 

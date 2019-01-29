@@ -1,44 +1,46 @@
 import { mapState } from 'vuex';
-import DiscView from 'component/DiscView';
-import Notification from 'component/Notification';
-import MainControls from 'component/MainControls';
-import HeaderBar from 'component/HeaderBar';
-import PageNames from '../data/enum/PageNames';
+import DiscView from '../component/DiscView';
+import Notification from '../component/Notification';
+import MainControls from '../component/MainControls';
+import HeaderBar from '../component/HeaderBar';
 import { staticColors } from '../util/colorUtils';
+import { RouteNames } from '../router/routes';
 
 export default {
-	name: 'App',
-	components: {
-		HeaderBar,
-		DiscView,
-		Notification,
-		MainControls,
-	},
-	mounted() {
-		this.applyActiveTheme();
-	},
-	watch: {
-		activeTheme() {
-			this.applyActiveTheme();
-		},
-	},
-	methods: {
-		applyActiveTheme() {
-			const html = document.querySelector('html');
+  name: 'App',
+  components: {
+    HeaderBar,
+    DiscView,
+    Notification,
+    MainControls,
+  },
+  mounted() {
+    this.applyActiveTheme();
+  },
+  watch: {
+    activeTheme() {
+      this.applyActiveTheme();
+    },
+  },
+  methods: {
+    applyActiveTheme() {
+      const html = document.querySelector('html');
 
-			html.style.backgroundColor = this.activeTheme.invertUi ? staticColors.uiBright : staticColors.uiDark;
-			html.style.color = this.activeTheme.invertUi ? staticColors.uiDark : staticColors.uiBright;
-		},
-	},
-	computed: {
-		isInEditor() {
-			return this.$route.name === PageNames.EDITOR;
-		},
-		...mapState({
-			activeTheme: state => state.theme.activeTheme,
-			uiBright: state => state.theme.activeTheme,
-		}),
-	},
+      html.style.backgroundColor = this.activeTheme.invertUi
+        ? staticColors.uiBright
+        : staticColors.uiDark;
+      html.style.color = this.activeTheme.invertUi ? staticColors.uiDark : staticColors.uiBright;
+    },
+  },
+  computed: {
+    isInEditor() {
+      return this.$route.name === RouteNames.EDITOR;
+    },
+    ...mapState({
+      activeTheme: state => state.theme.activeTheme,
+      uiBright: state => state.theme.activeTheme,
+    }),
+  },
 };
 
 /**

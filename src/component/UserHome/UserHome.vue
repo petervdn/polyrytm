@@ -2,8 +2,8 @@
 <script src="./UserHome.js"></script>
 
 <template>
-	<div>
-		<h2>UserHome</h2>
-	</div>
+  <div>
+    <h2>UserHome</h2>
+  </div>
 </template>
 

@@ -2,10 +2,10 @@
 <script src="./SamplesPage.js"></script>
 
 <template>
-	<div>
-		<SampleManager :isPublic="false"></SampleManager>
-		<SampleManager :isPublic="true"></SampleManager>
+  <div>
+    <SampleManager :is-public="false"/>
+    <SampleManager :is-public="true"/>
 
-	</div>
+  </div>
 </template>
 

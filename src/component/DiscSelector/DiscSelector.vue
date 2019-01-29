@@ -2,15 +2,16 @@
 <script src="./DiscSelector.js"></script>
 
 <template>
-	<ul class="selector-list">
-		<li
-			v-for="(disc, index) in discs"
-			@click="setSelection(disc === selectedDisc && discs.length > 1 ? null : disc)"
-			:class="{ active: disc === selectedDisc }"
-		>
-			{{index + 1}}
-		</li>
-		<li @click="addDisc()">+</li>
-	</ul>
+  <ul class="selector-list">
+    <li
+      v-for="(disc, index) in discs"
+      :class="{ active: disc === selectedDisc }"
+      :key="index"
+      @click="setSelection(disc === selectedDisc && discs.length > 1 ? null : disc)"
+    >
+      {{ index + 1 }}
+    </li>
+    <li @click="addDisc()">+</li>
+  </ul>
 </template>
 

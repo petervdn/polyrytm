@@ -2,8 +2,8 @@
 <script src="./MixerFader.js"></script>
 
 <template>
-	<div :class="$style.wrapper">
-		F
-	</div>
+  <div :class="$style.wrapper">
+    F
+  </div>
 </template>
 

@@ -2,8 +2,8 @@
 <script src="./ValueInput.js"></script>
 
 <template>
-	<div>
-		<h2>ValueInput</h2>
-	</div>
+  <div>
+    <h2>ValueInput</h2>
+  </div>
 </template>
 

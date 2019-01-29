@@ -2,34 +2,37 @@
 <script src="./Notification.js"></script>
 
 <template>
-	<div :class="$style.notificationLayer" v-if="notification">
-		<div :class="$style.notification">
-			<h2 v-if="notification.title">
-				{{notification.title}}
-			</h2>
-			<p v-if="notification.message">
-				{{notification.message}}
-			</p>
-			<div v-if="typeof notification.progress !== 'undefined'" :class="$style.progressWrap">
-				<div
-					:class="$style.progress"
-					:style="{ width: (animatedProgress * 100) + '%' }">
-				</div>
-			</div>
+  <div 
+    v-if="notification" 
+    :class="$style.notificationLayer">
+    <div :class="$style.notification">
+      <h2 v-if="notification.title">
+        {{ notification.title }}
+      </h2>
+      <p v-if="notification.message">
+        {{ notification.message }}
+      </p>
+      <div 
+        v-if="typeof notification.progress !== 'undefined'" 
+        :class="$style.progressWrap">
+        <div
+          :class="$style.progress"
+          :style="{ width: (animatedProgress * 100) + '%' }"/>
+      </div>
 
-			<button
-				@click="onOkButtonClick"
-				v-if="notification.okButton"
-			>
-				{{notification.okButton}}
-			</button>
-			<button
-					@click="onCancelButtonClick"
-					v-if="notification.cancelButton"
-			>
-				{{notification.cancelButton}}
-			</button>
-		</div>
-	</div>
+      <button
+        v-if="notification.okButton"
+        @click="onOkButtonClick"
+      >
+        {{ notification.okButton }}
+      </button>
+      <button
+        v-if="notification.cancelButton"
+        @click="onCancelButtonClick"
+      >
+        {{ notification.cancelButton }}
+      </button>
+    </div>
+  </div>
 </template>
 

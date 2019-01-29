@@ -1,5 +1,5 @@
 export default {
-	name: 'DiscSound',
-	props: ['sound'],
-	mounted() {},
+  name: 'DiscSound',
+  props: ['sound'],
+  mounted() {},
 };

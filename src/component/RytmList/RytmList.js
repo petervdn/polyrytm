@@ -1,4 +1,4 @@
 export default {
-	name: 'RytmList',
-	props: ['rytms'],
+  name: 'RytmList',
+  props: ['rytms'],
 };

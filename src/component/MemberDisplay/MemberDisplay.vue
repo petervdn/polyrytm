@@ -2,5 +2,5 @@
 <script src="./MemberDisplay.js"></script>
 
 <template>
-	<li>{{member.name}}</li>
+  <li>{{ member.name }}</li>
 </template>

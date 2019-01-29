@@ -1,8 +1,8 @@
-import Profile from 'component/Profile';
+import Profile from '../../component/Profile';
 
 export default {
-	name: 'UserPage',
-	components: {
-		Profile,
-	},
+  name: 'UserPage',
+  components: {
+    Profile,
+  },
 };

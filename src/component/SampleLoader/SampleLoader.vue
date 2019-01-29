@@ -2,16 +2,16 @@
 <script src="./SampleLoader.js"></script>
 
 <template>
-	<div
-		:class="[$style.dropArea, isDraggingOverDropArea ? $style.dragOver : '']"
-		v-on:drop.prevent.stop="onFileDrop"
-		v-on:dragover.prevent.stop="onDragOver"
-		v-on:dragleave.prevent.stop="onDragLeave"
-		ref="dropArea"
+  <div
+    ref="dropArea"
+    :class="[$style.dropArea, isDraggingOverDropArea ? $style.dragOver : '']"
+    @drop.prevent.stop="onFileDrop"
+    @dragover.prevent.stop="onDragOver"
+    @dragleave.prevent.stop="onDragLeave"
 
-	>
-		{{isLoading ? 'loading...' : 'drop sample here to load it'}}
-	</div>
+  >
+    {{ isLoading ? 'loading...' : 'drop sample here to load it' }}
+  </div>
 
 </template>
 
