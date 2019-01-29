@@ -1,4 +1,4 @@
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 import { themeStore } from '../../store/module/theme/theme';
 import Slider from '../Slider/Slider';
 
@@ -10,7 +10,6 @@ export default {
   mounted() {
     this.localThemeIndex = this.themes.indexOf(this.activeTheme);
   },
-  methods: {},
   data() {
     return {
       localThemeIndex: -1,
@@ -18,8 +17,13 @@ export default {
   },
   watch: {
     localThemeIndex() {
-      this.$store.commit(themeStore.mutations.updateActiveTheme, this.themes[this.localThemeIndex]);
+      this.setActiveTheme(this.themes[this.localThemeIndex]);
     },
+  },
+  methods: {
+    ...mapMutations({
+      setActiveTheme: themeStore.SET_ACTIVE_THEME,
+    }),
   },
   computed: {
     ...mapState({

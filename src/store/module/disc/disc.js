@@ -87,7 +87,7 @@ export default {
     },
     [discStore.local.mutations.addDisc]: (state, payload) => {
       // no payload adds a default disc
-      state.discs.push(payload || createDefaultDisc());
+      state.discs.push(payload || createDefaultDisc()); // todo move defaultDisc method to where this is called?
     },
     [discStore.local.mutations.setAudioBuffer]: (state, payload) => {
       // todo move to sample store
