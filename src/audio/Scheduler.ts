@@ -36,6 +36,10 @@ export default class Scheduler extends EventDispatcher {
   }
 
   public start(): void {
+    if (audioContext.state === 'suspended') {
+      audioContext.resume();
+    }
+
     // set time that we started
     this.startTime = audioContext.currentTime;
 
