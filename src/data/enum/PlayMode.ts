@@ -1,4 +1,4 @@
 export default {
-	STATIC: 'static',
-	ROTATE: 'rotate',
+  STATIC: 'static',
+  ROTATE: 'rotate',
 };

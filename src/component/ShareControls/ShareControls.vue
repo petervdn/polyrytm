@@ -8,19 +8,9 @@
     </p>
     <div>
       <div>
-        <label>project name</label><input 
-          :value="name" 
-          @input="onNameInputUpdate" >
-      </div>
-      <div>
-        <label>author name</label><input 
-          :value="author" 
-          @input="onAuthorInputUpdate" >
-      </div>
-      <div>
-        <label>link</label><input 
-          :value="link" 
-          @input="onLinkInputUpdate" >
+        <label>title</label><input
+          :value="localTitle"
+          @input="onTitleUpdate" >
       </div>
     </div>
     <div>

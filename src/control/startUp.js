@@ -14,6 +14,7 @@ import localeLoader from '../util/localeLoader';
 import { mediaQueries, deviceState } from '../data/mediaQueries.json';
 import waitForStyleSheetsLoaded from '../util/waitForStyleSheetsLoaded';
 import { setupSchedulerStoreCommunication } from '../audio/Scheduler';
+import { loadPublicSamples } from '../firebase/firebaseUtils';
 
 const initPlugins = () => {
   const configManager = getValue(CONFIG_MANAGER);
@@ -81,7 +82,7 @@ const startUp = store => {
   // Add async methods to the Promise.all array
   return Promise.all([
     // initUserLogin(store),
-    // loadPublicSamples(store),
+    loadPublicSamples(store),
     configManager.getVariable(VariableNames.LOCALE_ENABLED)
       ? waitForLocale(store)
       : Promise.resolve(),

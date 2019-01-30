@@ -8,24 +8,26 @@ export default {
       this.storeProject();
     },
     ...mapActions({
-      storeProject: projectStore.actions.storeProject,
+      storeProject: projectStore.STORE_PROJECT,
     }),
     ...mapMutations({
-      updateName: projectStore.mutations.updateName,
-      updateAuthor: projectStore.mutations.updateAuthor,
-      updateLink: projectStore.mutations.updateLink,
+      setTitle: projectStore.SET_TITLE,
     }),
-    onNameInputUpdate(event) {
-      this.updateName(event.target.value);
-    },
-    onAuthorInputUpdate(event) {
-      this.updateAuthor(event.target.value);
-    },
-    onLinkInputUpdate(event) {
-      this.updateLink(event.target.value);
+    onTitleUpdate(event) {
+      this.setTitle(event.target.value);
     },
   },
+  data() {
+    return {
+      localTitle: null,
+    };
+  },
+  created() {
+    this.localTitle = this.title;
+  },
   computed: {
-    ...mapState('project', ['name', 'author', 'link']),
+    ...mapState({
+      title: state => state.project.title,
+    }),
   },
 };

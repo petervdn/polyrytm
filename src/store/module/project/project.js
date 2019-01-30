@@ -1,52 +1,25 @@
 import { storeRytm } from '../../../firebase/firebaseUtils';
-import { initStoreCommands } from '../../../util/storeUtils';
+
+const namespace = 'project';
 
 export const projectStore = {
-  mutations: {
-    updateName: null,
-    updateAuthor: null,
-    updateLink: null,
-  },
-  actions: {
-    storeProject: null,
-    setLoadedProject: null,
-  },
-  local: {
-    mutations: {
-      updateName: null,
-      updateAuthor: null,
-      updateLink: null,
-    },
-    actions: {
-      storeProject: null,
-      setLoadedProject: null,
-    },
-  },
+  SET_TITLE: `${namespace}/setTitle`,
+  STORE_PROJECT: `${namespace}/storeProject`,
+  SET_LOADED_PROJECT: `${namespace}/setLoadedProject`,
 };
 
-initStoreCommands(projectStore, 'project');
-
 export default {
-  namespaced: true,
   state: {
-    name: '', // todo rename to title
-    author: '',
-    link: '',
+    title: 'Untitled project',
   },
   getters: {},
   mutations: {
-    [projectStore.local.mutations.updateName]: (state, payload) => {
-      state.name = payload;
-    },
-    [projectStore.local.mutations.updateAuthor]: (state, payload) => {
-      state.author = payload;
-    },
-    [projectStore.local.mutations.updateLink]: (state, payload) => {
-      state.link = payload;
+    [projectStore.SET_TITLE]: (state, payload) => {
+      state.title = payload;
     },
   },
   actions: {
-    [projectStore.local.actions.storeProject]: context => {
+    [projectStore.STORE_PROJECT]: context => {
       // todo move to some util file
       // stringify/parse so we no longer have references to store objects
       const data = {
