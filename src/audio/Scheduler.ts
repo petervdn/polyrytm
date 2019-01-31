@@ -202,7 +202,7 @@ export const setupSchedulerStoreCommunication = (scheduler: Scheduler, store): v
   });
   scheduler.addEventListener(SchedulerEvent.SCHEDULER_STOP, () => {
     store.commit(schedulerStore.mutations.setIsPlaying, false);
-    store.commit(discStore.mutations.resetScheduledRevolutionValues);
+    store.commit(discStore.RESET_SCHEDULED_REVOLUTION_VALUES);
   });
 
   // discs change
@@ -225,7 +225,7 @@ export const setupSchedulerStoreCommunication = (scheduler: Scheduler, store): v
   scheduler.samplePlayer.addEventListener(
     SamplePlayerEvent.UPDATE_LAST_SCHEDULED_REVOLUTION,
     event => {
-      store.commit(discStore.mutations.update, {
+      store.commit(discStore.UPDATE, {
         // todo rename mutations.update?
         target: event.data.ringItem,
         source: {

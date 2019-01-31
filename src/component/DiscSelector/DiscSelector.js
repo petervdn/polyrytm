@@ -5,14 +5,16 @@ import { interactionStore } from '../../store/module/interaction/interaction';
 export default {
   name: 'DiscSelector',
   computed: {
-    ...mapState('disc', ['discs']),
+    ...mapState({
+      discs: state => state.disc.discs,
+    }),
     ...mapGetters({
       selectedDisc: interactionStore.getters.selectedDisc,
     }),
   },
   methods: {
     ...mapMutations({
-      addDisc: discStore.mutations.addDisc,
+      addDisc: discStore.ADD_DISC,
       setSelection: interactionStore.mutations.setSelection,
     }),
   },

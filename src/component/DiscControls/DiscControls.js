@@ -24,7 +24,7 @@ export default {
   methods: {
     // todo when slices change, check if disc has non-existing slices
     ...mapMutations({
-      updateSlicesForDisc: discStore.mutations.updateSlicesForDisc,
+      updateSlicesForDisc: discStore.UPDATE_SLICES_FOR_DISC,
       setSecondsPerRevolution: schedulerStore.mutations.setSecondsPerRevolution,
     }),
     onRemoveClick() {
@@ -49,7 +49,7 @@ export default {
       });
     },
     ...mapActions({
-      removeDisc: discStore.actions.removeDisc,
+      removeDisc: discStore.REMOVE_DISC,
       showNotification: notificationStore.actions.showNotification,
     }),
   },

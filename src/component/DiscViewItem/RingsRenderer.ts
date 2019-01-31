@@ -24,7 +24,6 @@ import PlayMode from '../../data/enum/PlayMode';
 import { interactionStore } from '../../store/module/interaction/interaction';
 import { GlobalEvent, globalEventBus } from '../../data/globalEvents';
 import { PI2 } from '../../util/miscUtils';
-import { ITheme } from '../../data/themes';
 import { getRingItemColorForVolume } from '../../util/colorUtils';
 
 export default class RingsRenderer extends AbstractRenderer {

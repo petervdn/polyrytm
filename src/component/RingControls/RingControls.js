@@ -27,22 +27,22 @@ export default {
   },
   methods: {
     ...mapMutations({
-      updateNumberOfRingItems: discStore.mutations.updateNumberOfRingItems,
-      updateRingVolumes: discStore.mutations.updateRingVolumes,
+      setNumberOfRingItems: discStore.SET_NUMBER_OF_RING_ITEMS,
+      setRingVolumes: discStore.SET_RING_VOLUMES,
     }),
     onRemoveClick() {
       // this.$store.commit(discStore.mutations.removeRing, this.selection.ring); // todo mapmutations
     },
     adjustRingItems(amount) {
-      this.updateNumberOfRingItems({
+      this.setNumberOfRingItems({
         amount,
         ring: this.selectedRing,
       });
 
-      this.$eventBus.$emit(GlobalEvent.RING_ITEMS_CHANGE, this.selectedRing);
+      this.$eventBus.$emit(GlobalEvent.RING_ITEMS_CHANGE, this.selectedRing); // todo event bus doesnt seem to be set? also: why do we need it
     },
     adjustVolumes(type) {
-      this.updateRingVolumes({
+      this.setRingVolumes({
         ring: this.selectedRing,
         volumes: generateVolumes(this.selectedRing.items, type),
       });

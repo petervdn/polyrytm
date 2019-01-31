@@ -49,8 +49,8 @@ export default {
       }
     },
     ...mapActions({
-      setSampleForDisc: discStore.actions.setSampleForDisc,
-      addSampleToDisc: discStore.actions.addSampleToDisc,
+      setSampleForDisc: discStore.SET_SAMPLE_FOR_DISC, // todo what are the diffs between these 2 actions
+      addSampleToDisc: discStore.ADD_SAMPLE_TO_DISC,
       showNotification: notificationStore.actions.showNotification,
       hideNotification: notificationStore.actions.hideNotification,
     }),

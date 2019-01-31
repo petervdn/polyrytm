@@ -43,7 +43,7 @@ export default {
         },
         {
           label: 'S',
-          id: 'share',
+          id: 'share', // todo create consts
         },
       ],
     };
@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      initDiscs: discStore.actions.initDiscs,
+      initDiscs: discStore.INIT_DISCS,
     }),
     setActiveMenuItem(item) {
       this.activeMenuItemId = item.id;

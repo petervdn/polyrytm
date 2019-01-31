@@ -16,7 +16,7 @@ export default {
       setSelection: interactionStore.mutations.setSelection,
     }),
     addRing() {
-      this.$store.commit(discStore.mutations.addRing, {
+      this.$store.commit(discStore.ADD_RING, {
         disc: this.selectedDisc,
         ring: createDefaultRing(this.selectedDisc),
       });

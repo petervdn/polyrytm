@@ -1,102 +1,69 @@
 import { loadSample } from '../../../util/soundUtils';
-import { initStoreCommands } from '../../../util/storeUtils';
 import { createDefaultDisc, createRingItem, createSound } from '../../../util/discUtils';
 import { interactionStore } from '../interaction/interaction';
 import { constants } from '../../../data/constants';
 import { sampleStore } from '../sample/sample';
 
+const namespace = 'disc';
+
 export const discStore = {
-  mutations: {
-    setRingItemVolume: null,
-    addDisc: null,
-    addSoundToDisc: null,
-    setAudioBuffer: null, // move to sample store?
-    updateRingVolumes: null,
-    addRing: null,
-    toggleSliceInRing: null,
-    resetScheduledRevolutionValues: null,
-    updateNumberOfRingItems: null,
-    removeRing: null,
-    updateSlicesForDisc: null,
-    update: null, // todo get rid of this
-    // setSampleForDisc: null, // todo this is both mutation and an action => give better names
-    // clearDiscs: null,
-    // removeDisc: null,
-  },
-  actions: {
-    clearDiscsAndSelections: null,
-    initDiscs: null,
-    setSampleForDisc: null,
-    setLoadedDiscs: null,
-    removeDisc: null,
-    addSampleToDisc: null,
-  },
-  local: {
-    mutations: {
-      setRingItemVolume: null,
-      addDisc: null,
-      addSoundToDisc: null,
-      setAudioBuffer: null, // move to sample store?
-      updateRingVolumes: null,
-      addRing: null,
-      toggleSliceInRing: null,
-      resetScheduledRevolutionValues: null,
-      updateNumberOfRingItems: null,
-      removeRing: null,
-      updateSlicesForDisc: null,
-      update: null, // todo get rid of this
-      setSampleForDisc: null, // todo this is both mutation and an action => give better names
-      clearDiscs: null,
-      removeDisc: null,
-    },
-    actions: {
-      clearDiscsAndSelections: null,
-      initDiscs: null,
-      setSampleForDisc: null,
-      setLoadedDiscs: null,
-      removeDisc: null,
-      addSampleToDisc: null,
-    },
-  },
+  SET_RING_ITEM_VOLUME: `${namespace}/setRingItemVolume`,
+  ADD_DISC: `${namespace}/addDisc`,
+  ADD_SOUND_TO_DISC: `${namespace}/addSoundToDisc`,
+  SET_AUDIO_BUFFER: `${namespace}/setAudioBuffer`, // move to sample store?
+  SET_RING_VOLUMES: `${namespace}/setRingVolumes`,
+  ADD_RING: `${namespace}/addRing`,
+  TOGGLE_SLICE_IN_RING: `${namespace}/toggleSliceInRing`,
+  RESET_SCHEDULED_REVOLUTION_VALUES: `${namespace}/resetScheduledRevolutionValues`,
+  SET_NUMBER_OF_RING_ITEMS: `${namespace}/setNumberOfRingItems`,
+  REMOVE_RING: `${namespace}/removeRing`,
+  UPDATE_SLICES_FOR_DISC: `${namespace}/updateSlicesForDisc`,
+  CLEAR_DISCS: `${namespace}/clearDiscs`,
+  SET_SLICES_FOR_DISC: `${namespace}/setSlicesForDisc`,
+  UPDATE: `${namespace}/update`, // todo remove
+  CLEAR_DISCS_AND_SELECTIONS: `${namespace}/clearDiscsAndSelections`, // todo what is this compared to clearDiscs?
+  INIT_DISCS: `${namespace}/initDiscs`, // a
+  SET_SAMPLE_FOR_DISC: `${namespace}/setSampleForDisc`, // a
+  SET_LOADED_DISCS: `${namespace}/setLoadedDiscs`, // a
+  REMOVE_DISC: `${namespace}/removeDisc`, // a
+  ADD_SAMPLE_TO_DISC: `${namespace}/addSampleToDisc`, // a
 };
 
-initStoreCommands(discStore, 'disc');
-
 export default {
-  namespaced: true,
   state: {
     discs: [],
   },
   getters: {},
   mutations: {
-    [discStore.local.mutations.addSoundToDisc]: (state, payload) => {
+    [discStore.ADD_SOUND_TO_DISC]: (state, payload) => {
       payload.disc.sounds.push(payload.sound);
     },
-    [discStore.local.mutations.setRingItemVolume]: (state, payload) => {
+    [discStore.SET_RING_ITEM_VOLUME]: (state, payload) => {
+      // todo payload should be volume
       payload.ringItem.volume = payload.volume;
     },
-    [discStore.local.mutations.clearDiscs]: state => {
+    [discStore.CLEAR_DISCS]: state => {
+      // todo rename remove?
       state.discs = [];
     },
-    [discStore.local.mutations.removeDisc]: (state, payload) => {
+    [discStore.REMOVE_DISC]: (state, payload) => {
       if (state.discs === 1) {
-        console.error('Only one disc left, cannot remove');
+        console.error('Only one disc left, cannot remove'); // todo should this be possible?
       } else {
         state.discs.splice(state.discs.indexOf(payload), 1);
       }
     },
-    [discStore.local.mutations.addDisc]: (state, payload) => {
+    [discStore.ADD_DISC]: (state, payload) => {
       // no payload adds a default disc
       state.discs.push(payload || createDefaultDisc()); // todo move defaultDisc method to where this is called?
     },
-    [discStore.local.mutations.setAudioBuffer]: (state, payload) => {
+    [discStore.SET_AUDIO_BUFFER]: (state, payload) => {
       // todo move to sample store
       payload.sample.audioBuffer = payload.audioBuffer;
     },
-    [discStore.local.mutations.updateRingVolumes]: (state, payload) => {
+    [discStore.SET_RING_VOLUMES]: (state, payload) => {
       if (payload.ring.items.length !== payload.volumes.length) {
-        console.error('Number of volumes doesnt match ring', payload);
-        return;
+        throw new Error('Number of volumes doesnt match ring');
       }
       payload.ring.items.forEach((item, index) => {
         let newVolume = payload.volumes[index];
@@ -112,11 +79,11 @@ export default {
         item.volume = newVolume;
       });
     },
-    [discStore.local.mutations.addRing]: (state, payload) => {
+    [discStore.ADD_RING]: (state, payload) => {
       payload.disc.rings.push(payload.ring);
     },
     // todo add description
-    [discStore.local.mutations.toggleSliceInRing]: (state, payload) => {
+    [discStore.TOGGLE_SLICE_IN_RING]: (state, payload) => {
       const { slice } = payload;
       const { ring } = payload;
       const indexInRingSlices = ring.slices.indexOf(slice);
@@ -130,10 +97,11 @@ export default {
     },
 
     // todo get rid of this shit
-    [discStore.local.mutations.update]: (state, payload) => {
+    [discStore.UPDATE]: (state, payload) => {
       Object.assign(payload.target, payload.source);
     },
-    [discStore.local.mutations.resetScheduledRevolutionValues]: state => {
+    [discStore.RESET_SCHEDULED_REVOLUTION_VALUES]: state => {
+      // todo move to scheduler?
       state.discs.forEach(disc => {
         disc.rings.forEach(ring => {
           ring.items.forEach(ringItem => {
@@ -142,12 +110,12 @@ export default {
         });
       });
     },
-    [discStore.local.mutations.updateNumberOfRingItems]: (state, payload) => {
+    [discStore.SET_NUMBER_OF_RING_ITEMS]: (state, payload) => {
       const { amount } = payload;
       const { ring } = payload;
 
       if (amount <= 0 || amount > constants.MAX_RING_ITEMS) {
-        console.error('Invalid amountof ringitems', payload);
+        console.error('Invalid amountof ringitems', payload); // todo throw error
         return;
       }
 
@@ -172,10 +140,10 @@ export default {
         // we already have the number of rings that is requested
       }
     },
-    [discStore.local.mutations.setSampleForDisc]: (state, payload) => {
+    [discStore.SET_SAMPLE_FOR_DISC]: (state, payload) => {
       payload.disc.sound.sample = payload.sample;
     },
-    [discStore.local.mutations.removeRing]: () => {
+    [discStore.REMOVE_RING]: () => {
       console.log('todo');
       // state.discs.forEach(disc => {
       // 	disc.rings.forEach((ring, index) => {
@@ -191,54 +159,55 @@ export default {
       // 	});
       // });
     },
-    [discStore.local.mutations.updateSlicesForDisc]: (state, payload) => {
+    [discStore.SET_SLICES_FOR_DISC]: (state, payload) => {
       payload.disc.sound.slices = payload.slices;
     },
   },
   actions: {
-    [discStore.local.actions.initDiscs]: context => {
-      context.dispatch(discStore.local.actions.clearDiscsAndSelections);
+    [discStore.INIT_DISCS]: context => {
+      context.dispatch(discStore.CLEAR_DISCS_AND_SELECTIONS);
 
       // create default disc and set as selection
       const disc = createDefaultDisc();
-      context.commit(discStore.local.mutations.addDisc, disc);
+      context.commit(discStore.ADD_DISC, disc);
       context.commit(interactionStore.mutations.setSelection, disc, { root: true });
     },
-    [discStore.local.actions.setSampleForDisc]: (context, payload) => {
+    [discStore.SET_SAMPLE_FOR_DISC]: (context, payload) => {
       const { sample } = payload;
 
       if (!sample) {
         // deselect a sample todo create a remove sample action?
-        context.commit(discStore.local.mutations.setSampleForDisc, payload);
+        context.commit(discStore.SET_SAMPLE_FOR_DISC, payload);
         return Promise.resolve();
       }
 
       return loadSample(sample, payload.onProgress).then(audioBuffer => {
-        context.commit(discStore.local.mutations.setAudioBuffer, {
+        context.commit(discStore.SET_AUDIO_BUFFER, {
           sample,
           audioBuffer,
         });
-        context.commit(discStore.local.mutations.setSampleForDisc, payload);
+        context.commit(discStore.SET_SAMPLE_FOR_DISC, payload);
       });
     },
-    [discStore.local.actions.setLoadedDiscs]: (context, discs) => {
-      context.commit(discStore.local.actions.clearDiscsAndSelections);
+    [discStore.SET_LOADED_DISCS]: (context, discs) => {
+      context.commit(discStore.CLEAR_DISCS_AND_SELECTIONS);
 
       discs.forEach(disc => {
-        context.dispatch(discStore.local.mutations.addDisc, disc);
+        context.dispatch(discStore.ADD_DISC, disc);
       });
     },
-    [discStore.local.actions.clearDiscsAndSelections]: context => {
-      context.commit(discStore.local.mutations.clearDiscs);
+    [discStore.CLEAR_DISCS_AND_SELECTIONS]: context => {
+      // todo do we need this? why not call both separately
+      context.commit(discStore.CLEAR_DISCS);
 
-      context.commit(interactionStore.mutations.clearSelection, null, { root: true });
+      // context.commit(interactionStore.mutations.clearSelection, null, { root: true }); todo
     },
     /**
      * Use this from outside, as opposed to the mutation. This one handles resulting selection changes
      * @param context
      */
-    [discStore.local.actions.removeDisc]: (context, payload) => {
-      context.commit(discStore.local.mutations.removeDisc, payload);
+    [discStore.REMOVE_DISC]: (context, payload) => {
+      context.commit(discStore.REMOVE_DISC, payload);
 
       if (context.rootState.interaction.selection === payload) {
         // removed disc was selected, set to first one todo set a closer one
@@ -247,7 +216,7 @@ export default {
         });
       }
     },
-    [discStore.local.actions.addSampleToDisc]: (context, payload) =>
+    [discStore.ADD_SAMPLE_TO_DISC]: (context, payload) =>
       loadSample(payload.sample, payload.onProgress).then(audioBuffer => {
         context.commit(
           sampleStore.mutations.setAudioBuffer,
@@ -258,7 +227,7 @@ export default {
           { root: true },
         );
 
-        context.commit(discStore.local.mutations.addSoundToDisc, {
+        context.commit(discStore.ADD_SOUND_TO_DISC, {
           disc: payload.disc,
           sound: createSound(payload.sample, payload.disc),
         });
