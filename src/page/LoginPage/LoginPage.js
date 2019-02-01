@@ -16,7 +16,9 @@ export default {
     };
   },
   computed: {
-    ...mapState('user', ['user']),
+    ...mapState({
+      user: state => state.user.user,
+    }),
   },
   methods: {
     login() {

@@ -3,6 +3,7 @@ import 'firebase/database';
 import 'firebase/auth';
 import firebasePath from './firebasePath';
 import { sampleStore } from '../store/module/sample/sample';
+import { userStore } from '../store/module/user/user';
 
 // todo move file to utils?
 
@@ -13,7 +14,7 @@ export const getFirebaseValue = path =>
     .once('value')
     .then(snap => snap.val());
 
-const setUser = (store, user) => store.dispatch('user/setUser', user);
+// const setUser = (store, user) => store.dispatch('user/setUser', user);
 
 // todo better name for this method
 export const initUserLogin = store =>
@@ -29,7 +30,8 @@ export const initUserLogin = store =>
           firebaseUser.uid = authUser.uid;
           if (firebaseUser) {
             // user logged in with existing user
-            setUser(store, firebaseUser).then(() => {
+            console.log('Logged in with existing user');
+            store.dispatch(userStore.SET_USER, firebaseUser).then(() => {
               resolve();
             });
           } else {
@@ -42,7 +44,7 @@ export const initUserLogin = store =>
             };
             firebaseUserRef.set(newUser).then(() => {
               // todo test by removing user form db
-              setUser(store, newUser).then(() => {
+              store.dispatch(userStore.SET_USER, newUser).then(() => {
                 resolve();
               });
             });

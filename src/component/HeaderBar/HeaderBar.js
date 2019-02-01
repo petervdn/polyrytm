@@ -4,7 +4,9 @@ import { mapState } from 'vuex';
 export default {
   name: 'HeaderBar',
   computed: {
-    ...mapState('user', ['user']),
+    ...mapState({
+      user: state => state.user.user,
+    }),
     ...mapState('theme', ['activeTheme']),
   },
   methods: {
