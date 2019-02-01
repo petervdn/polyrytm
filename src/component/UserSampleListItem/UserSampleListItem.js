@@ -1,4 +1,4 @@
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
 import { TweenLite, Expo } from 'gsap';
 import firebasePath from '../../firebase/firebasePath';
 

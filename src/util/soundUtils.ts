@@ -1,5 +1,5 @@
 import { ISample } from '../data/interface';
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
 import axios from 'axios';
 
 export const audioContext = new AudioContext();

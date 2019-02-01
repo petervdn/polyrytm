@@ -1,4 +1,6 @@
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
+import 'firebase/database';
+import 'firebase/auth';
 import firebasePath from './firebasePath';
 import { sampleStore } from '../store/module/sample/sample';
 
@@ -13,6 +15,7 @@ export const getFirebaseValue = path =>
 
 const setUser = (store, user) => store.dispatch('user/setUser', user);
 
+// todo better name for this method
 export const initUserLogin = store =>
   new Promise(resolve => {
     firebase.auth().onAuthStateChanged(authUser => {

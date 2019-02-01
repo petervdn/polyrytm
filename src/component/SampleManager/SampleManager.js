@@ -1,4 +1,4 @@
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
 import StorageSpace from '../StorageSpace';
 import UserSampleListItem from '../UserSampleListItem';
 import firebasePath from '../../firebase/firebasePath';

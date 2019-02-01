@@ -26,6 +26,7 @@ export default {
     applyActiveTheme() {
       const html = document.querySelector('html');
 
+      // todo handle in css?
       html.style.backgroundColor = this.activeTheme.invertUi
         ? staticColors.uiBright
         : staticColors.uiDark;
@@ -34,6 +35,7 @@ export default {
   },
   computed: {
     isInEditor() {
+      // todo move getter to store?
       return this.$route.name === RouteNames.EDITOR;
     },
     ...mapState({

@@ -11,4 +11,6 @@ const storage = require('./storage');
 
 admin.initializeApp(functions.config().firebase);
 
-exports.onStoreChange = functions.storage.object().onChange(event => storage.onChange(event, admin));
+exports.onStoreChange = functions.storage
+  .object()
+  .onChange(event => storage.onChange(event, admin));

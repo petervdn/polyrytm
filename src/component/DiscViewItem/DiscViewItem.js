@@ -34,7 +34,7 @@ export default {
       this.interactionManager.resize(this.sizeData);
     },
     disc() {
-      // this happens when a disc is remove, vue reuses the existing components and re-distributes the discs
+      // this happens when a disc is removed, vue reuses the existing components and re-distributes the discs
       this.waveformRenderer.setDisc(this.disc);
       this.ringsRenderer.setDisc(this.disc);
       this.interactionManager.setDisc(this.disc);
