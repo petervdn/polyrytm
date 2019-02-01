@@ -56,7 +56,7 @@ export default class RingsRenderer extends AbstractRenderer {
     // watch play/stop
     this.storeWatchDestructors.push(
       this.store.watch(
-        state => state.scheduler.isPlaying,
+        state => state.app.isPlaying,
         isPlaying => {
           if (isPlaying) {
             this.playingFrameUpdate.start();
@@ -229,7 +229,7 @@ export default class RingsRenderer extends AbstractRenderer {
     }
 
     // draw flashes in ringitems
-    if (this.store.state.scheduler.isPlaying) {
+    if (this.store.state.app.isPlaying) {
       this.disc.rings.forEach(ring => {
         const radiansPerRingItem = PI2 / ring.items.length;
         const playRadians = this.scheduler.timeData.currentRevolutionRadians;

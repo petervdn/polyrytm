@@ -4,7 +4,6 @@ import interaction from './module/interaction';
 import notification from './module/notification';
 import project from './module/project';
 import sample from './module/sample';
-import scheduler from './module/scheduler';
 import user from './module/user';
 
 export default {
@@ -14,6 +13,5 @@ export default {
   notification,
   project,
   sample,
-  scheduler,
   user,
 };

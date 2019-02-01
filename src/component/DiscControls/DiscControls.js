@@ -3,9 +3,9 @@ import SampleSelector from '../SampleSelector';
 import DiscSound from '../DiscSound';
 import { discStore } from '../../store/module/disc/disc';
 import { createSlices } from '../../util/discUtils';
-import { schedulerStore } from '../../store/module/scheduler/scheduler';
 import { interactionStore } from '../../store/module/interaction/interaction';
 import { notificationStore } from '../../store/module/notification/notification';
+import { appStore } from '../../store/module/app/app';
 
 export default {
   name: 'DiscControls',
@@ -25,7 +25,7 @@ export default {
     // todo when slices change, check if disc has non-existing slices
     ...mapMutations({
       updateSlicesForDisc: discStore.UPDATE_SLICES_FOR_DISC,
-      setSecondsPerRevolution: schedulerStore.mutations.setSecondsPerRevolution,
+      setSecondsPerRevolution: appStore.SET_SECONDS_PER_REVOLUTION,
     }),
     onRemoveClick() {
       this.showNotification({

@@ -91,7 +91,7 @@ export default {
     },
     ...mapState({
       discs: state => state.disc.discs,
-      isPlaying: state => state.scheduler.isPlaying,
+      isPlaying: state => state.app.isPlaying,
     }),
     ...mapGetters({
       selectedDisc: interactionStore.getters.selectedDisc,

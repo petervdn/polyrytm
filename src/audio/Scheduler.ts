@@ -1,12 +1,11 @@
 import SamplePlayer, { SamplePlayerEvent } from './SamplePlayer';
 import EventDispatcher from './EventDispatcher';
 import { PI2 } from '../util/miscUtils';
-
 import { audioContext } from '../util/soundUtils';
-import { schedulerStore } from '../store/module/scheduler/scheduler';
 import { discStore } from '../store/module/disc/disc';
-import { IRing, IRingItem, IDisc } from '../data/interface';
+import { IRing, IRingItem, IDisc, IStore } from '../data/interface';
 import AnimationFrame from '../util/AnimationFrame';
+import { appStore } from '../store/module/app/app';
 
 export const SchedulerEvent = {
   SCHEDULER_START: 'start',
@@ -195,13 +194,13 @@ export interface IRingItemScheduleData {
   startTime: number;
 }
 
-export const setupSchedulerStoreCommunication = (scheduler: Scheduler, store): void => {
+export const setupSchedulerStoreCommunication = (scheduler: Scheduler, store: IStore): void => {
   // listen to play-state changes from scheduler
   scheduler.addEventListener(SchedulerEvent.SCHEDULER_START, () => {
-    store.commit(schedulerStore.mutations.setIsPlaying, true);
+    store.commit(appStore.SET_IS_PLAYING, true);
   });
   scheduler.addEventListener(SchedulerEvent.SCHEDULER_STOP, () => {
-    store.commit(schedulerStore.mutations.setIsPlaying, false);
+    store.commit(appStore.SET_IS_PLAYING, false);
     store.commit(discStore.RESET_SCHEDULED_REVOLUTION_VALUES);
   });
 
@@ -214,9 +213,9 @@ export const setupSchedulerStoreCommunication = (scheduler: Scheduler, store): v
   );
 
   // secs/rev init and change
-  scheduler.secondsPerRevolution = store.state.scheduler.secondsPerRevolution;
+  scheduler.secondsPerRevolution = store.state.app.secondsPerRevolution;
   store.watch(
-    state => state.scheduler.secondsPerRevolution,
+    state => state.app.secondsPerRevolution,
     newValue => {
       scheduler.secondsPerRevolution = newValue;
     },

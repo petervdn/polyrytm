@@ -1,7 +1,6 @@
 import { mapState, mapMutations, mapGetters } from 'vuex';
 import DiscSelector from '../DiscSelector';
 import RingSelector from '../RingSelector';
-import { schedulerStore } from '../../store/module/scheduler/scheduler';
 import { interactionStore } from '../../store/module/interaction/interaction';
 import { attachHintToElement } from '../../util/interactionUtils';
 import { appStore } from '../../store/module/app/app';
@@ -35,8 +34,8 @@ export default {
   },
   computed: {
     ...mapState({
-      isPlaying: state => state.scheduler.isPlaying,
-      secondsPerRevolution: state => state.scheduler.secondsPerRevolution,
+      isPlaying: state => state.app.isPlaying,
+      secondsPerRevolution: state => state.app.secondsPerRevolution,
       playMode: state => state.app.playMode,
     }),
     ...mapGetters({
@@ -56,10 +55,7 @@ export default {
     },
     updateSecondsPerRevolution(event) {
       // todo check valid value (and update field)
-      this.$store.commit(
-        schedulerStore.mutations.setSecondsPerRevolution,
-        parseFloat(event.target.value),
-      );
+      this.$store.commit(appStore.SET_SECONDS_PER_REVOLUTION, parseFloat(event.target.value));
     },
   },
 };

@@ -99,8 +99,8 @@ export interface IStore {
 
 interface IStoreState {
   interaction: IInteractionStoreState;
-  scheduler: ISchedulerStoreState;
   app: IAppStoreState;
+  disc: IDiscStoreState;
 }
 
 interface IStoreWatchOptions {
@@ -115,14 +115,15 @@ export interface IInteractionStoreState {
   forceHint: string;
 }
 
-export interface ISchedulerStoreState {
-  isPlaying: boolean;
+export interface IDiscStoreState {
+  discs: IDisc[];
 }
-
 export interface IAppStoreState {
   playMode: string;
   activeTheme: ITheme;
   themes: ITheme[];
+  isPlaying: boolean;
+  secondsPerRevolution: number;
 }
 
 export interface INotification {
