@@ -1,5 +1,3 @@
-import firebasePath from '../../firebase/firebasePath';
-import { getFirebaseValue } from '../../firebase/firebaseUtils';
 import RytmList from '../../component/RytmList';
 
 export default {
@@ -8,9 +6,9 @@ export default {
     RytmList,
   },
   mounted() {
-    getFirebaseValue(firebasePath.database.PUBLIC_RYTMS_SHORT).then(value => {
-      this.rytms = value;
-    });
+    // getFirebaseValue(firebasePath.database.PUBLIC_RYTMS_SHORT).then(value => {
+    //   this.rytms = value;
+    // });
   },
   data() {
     return {

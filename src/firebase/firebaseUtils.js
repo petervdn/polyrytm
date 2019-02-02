@@ -1,61 +1,33 @@
 import * as firebase from 'firebase/app';
-import 'firebase/database';
 import 'firebase/auth';
+import 'firebase/firestore';
 import firebasePath from './firebasePath';
-import { sampleStore } from '../store/module/sample/sample';
 import { userStore } from '../store/module/user/user';
 
-// todo move file to utils?
+firebase.initializeApp({
+  apiKey: 'AIzaSyBWrdFVFh_NQXVQT5PA6y330n82ner3VbI',
+  authDomain: 'polyrytm.firebaseapp.com',
+  // databaseURL: 'https://polyrytm.firebaseio.com',
+  projectId: 'polyrytm',
+  // storageBucket: 'polyrytm.appspot.com',
+  // messagingSenderId: '137282098627',
+});
 
-export const getFirebaseValue = path =>
-  firebase
-    .database()
-    .ref(path)
-    .once('value')
-    .then(snap => snap.val());
-
-// const setUser = (store, user) => store.dispatch('user/setUser', user);
+export const db = firebase.firestore();
 
 // todo better name for this method
 export const initUserLogin = store =>
   new Promise(resolve => {
+    // listen to auth state changes. this listener will stay active (so when user logs out later, this is called)
     firebase.auth().onAuthStateChanged(authUser => {
       if (authUser) {
-        const firebaseUserRef = firebase
-          .database()
-          .ref(`/${firebasePath.database.USERS}/${authUser.uid}`);
-
-        firebaseUserRef.once('value').then(snapshot => {
-          const firebaseUser = snapshot.val();
-          firebaseUser.uid = authUser.uid;
-          if (firebaseUser) {
-            // user logged in with existing user
-            console.log('Logged in with existing user');
-            store.dispatch(userStore.SET_USER, firebaseUser).then(() => {
-              resolve();
-            });
-          } else {
-            // user logged in with non-existing user, so create the new user
-            // eslint-disable-next-line
-            console.log('Logged in with new user');
-            const newUser = {
-              name: 'New user',
-              uid: authUser.uid,
-            };
-            firebaseUserRef.set(newUser).then(() => {
-              // todo test by removing user form db
-              store.dispatch(userStore.SET_USER, newUser).then(() => {
-                resolve();
-              });
-            });
-          }
-        });
+        store.commit(userStore.SET_USER_ID, authUser.uid);
       } else {
         // user is not logged in
-        store.commit('user/clearUser'); // todo user store obj
-
-        resolve();
+        store.commit(userStore.SET_USER_ID, null);
       }
+
+      resolve();
     });
   });
 
@@ -125,17 +97,17 @@ export const storeRytm = (rytm, isPublic, user) =>
         reject(error);
       });
   });
-
-export const loadPublicSamples = store =>
-  new Promise(resolve => {
-    getFirebaseValue(firebasePath.database.PUBLIC_SAMPLES).then(samplesObject => {
-      const samples = Object.keys(samplesObject).map(key => ({
-        name: samplesObject[key].name,
-        path: `${samplesObject[key].path}/${samplesObject[key].name}`,
-        // uri: samplesObject[key].link, todo remove link in database and set full path there
-      }));
-
-      store.commit(sampleStore.mutations.setSamples, samples);
-      resolve();
-    });
-  });
+//
+// export const loadPublicSamples = store =>
+//   new Promise(resolve => {
+//     getFirebaseValue(firebasePath.database.PUBLIC_SAMPLES).then(samplesObject => {
+//       const samples = Object.keys(samplesObject).map(key => ({
+//         name: samplesObject[key].name,
+//         path: `${samplesObject[key].path}/${samplesObject[key].name}`,
+//         // uri: samplesObject[key].link, todo remove link in database and set full path there
+//       }));
+//
+//       store.commit(sampleStore.mutations.setSamples, samples);
+//       resolve();
+//     });
+//   });

@@ -1,4 +1,3 @@
-import * as firebase from 'firebase/app';
 import Vue from 'vue';
 import axios from 'axios';
 import DeviceStateTracker from 'seng-device-state-tracker';
@@ -65,16 +64,6 @@ const waitForLocale = store =>
 const startUp = store => {
   // Initialise plugins
   initPlugins();
-
-  const config = {
-    apiKey: 'AIzaSyBWrdFVFh_NQXVQT5PA6y330n82ner3VbI',
-    authDomain: 'polyrytm.firebaseapp.com',
-    databaseURL: 'https://polyrytm.firebaseio.com',
-    projectId: 'polyrytm',
-    storageBucket: 'polyrytm.appspot.com',
-    messagingSenderId: '137282098627',
-  };
-  firebase.initializeApp(config);
 
   const configManager = getValue(CONFIG_MANAGER);
 

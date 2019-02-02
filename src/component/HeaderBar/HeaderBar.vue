@@ -7,24 +7,24 @@
     <div :class="$style.loginState">
       <router-link :to="RouteNames.EDITOR">editor</router-link>
       <router-link
-        v-if="!user"
+        v-if="!isLoggedIn"
         :to="{ name: RouteNames.LOGIN }">log in</router-link>
       <router-link
-        v-if="user"
+        v-if="isLoggedIn"
         :to="{
           name: RouteNames.USER_HOME,
-          params: { [Params.USER_ID]: user.uid },
+          params: { [Params.USER_ID]: userId },
         }"
       >
         profile
       </router-link>
       <router-link
-        v-if="user && user.isAdmin"
+        v-if="isAdmin"
         :to="{ name: RouteNames.SAMPLES }"
       >samples</router-link
       >
       <a
-        v-if="user"
+        v-if="isLoggedIn"
         href="#"
         @click="logout">log out</a>
     </div>
