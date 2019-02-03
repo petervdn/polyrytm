@@ -1,12 +1,10 @@
+import { mapState } from 'vuex';
 import SampleManagerItem from '../SampleManagerItem';
 import SampleManagerItemState from '../../data/enum/SampleManagerItemState';
-
-const createItemFromFile = file => ({
-  file,
-  name: file.name,
-  // size: file.size,
-  state: SampleManagerItemState.WAITING_TO_UPLOAD,
-});
+import {
+  createSampleManagerItemFromFile,
+  createSampleManagerItemFromSample,
+} from '../../util/sampleUtils';
 
 // @vue/component
 export default {
@@ -18,8 +16,14 @@ export default {
       items: [],
     };
   },
+  computed: {
+    ...mapState({
+      samples: state => state.sample.samples,
+    }),
+  },
   mounted() {
     this.fileSelect = this.$refs.fileSelect;
+    this.items = [...this.samples.map(createSampleManagerItemFromSample)];
   },
   methods: {
     onItemStateChange(item, state) {
@@ -39,7 +43,7 @@ export default {
       console.log('item', item, 'state', state);
     },
     onFileSelectionChange() {
-      const items = Array.from(this.fileSelect.files).map(createItemFromFile);
+      const items = Array.from(this.fileSelect.files).map(createSampleManagerItemFromFile);
       this.items.push(...items);
 
       this.$refs.fileSelect.value = null;

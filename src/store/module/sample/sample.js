@@ -1,36 +1,38 @@
-import { initStoreCommands } from '../../../util/storeUtils';
+const namespace = 'sample';
 
 export const sampleStore = {
-  mutations: {
-    addSample: null,
-    setSamples: null,
-    setAudioBuffer: null,
-  },
-  local: {
-    mutations: {
-      addSample: null,
-      setSamples: null,
-      setAudioBuffer: null,
-    },
-  },
+  SET_SAMPLES: `${namespace}/setSamples`,
 };
 
-initStoreCommands(sampleStore, 'sample');
+// export const sampleStore = {
+//   mutations: {
+//     addSample: null,
+//     setSamples: null,
+//     setAudioBuffer: null,
+//   },
+//   local: {
+//     mutations: {
+//       addSample: null,
+//       setSamples: null,
+//       setAudioBuffer: null,
+//     },
+//   },
+// };
+//
 
 export default {
-  namespaced: true,
   state: {
     samples: [],
   },
   getters: {},
   mutations: {
-    [sampleStore.local.mutations.setSamples]: (state, samples) => {
+    [sampleStore.SET_SAMPLES]: (state, samples) => {
       state.samples = samples;
     },
-    [sampleStore.local.mutations.setAudioBuffer]: (state, payload) => {
-      console.log('setAudioBuffer', payload);
-      payload.sample.audioBuffer = payload.audioBuffer;
-    },
+    // [sampleStore.local.mutations.setAudioBuffer]: (state, payload) => {
+    //   console.log('setAudioBuffer', payload);
+    //   payload.sample.audioBuffer = payload.audioBuffer;
+    // },
   },
   actions: {},
 };

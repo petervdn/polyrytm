@@ -7,12 +7,16 @@ import SampleManagerItemState from '../../data/enum/SampleManagerItemState';
 // @vue/component
 export default {
   name: 'SampleManagerItem',
+  // props: {
+  //   item: VueTypes.any,
+  // },
   props: {
     item: VueTypes.shape({
       name: VueTypes.string.isRequired,
-      // size: VueTypes.number,
-      state: VueTypes.string.isRequired,
-      file: VueTypes.instanceOf(File),
+      path: VueTypes.string.def(''),
+      size: VueTypes.number.isRequired,
+      state: VueTypes.string,
+      file: VueTypes.instanceOf(File).def(undefined),
     }),
   },
   computed: {
@@ -22,6 +26,7 @@ export default {
   },
   mounted() {
     if (this.item.state === SampleManagerItemState.WAITING_TO_UPLOAD) {
+      // todo check if file exists
       this.setState(SampleManagerItemState.UPLOADING);
       uploadToStorage(
         this.item.file,

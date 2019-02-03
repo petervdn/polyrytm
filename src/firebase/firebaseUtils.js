@@ -4,6 +4,7 @@ import 'firebase/firestore';
 import firebasePath from './firebasePath';
 import { userStore } from '../store/module/user/user';
 import firebaseConfig from './enum/firebaseConfig';
+import { sampleStore } from '../store/module/sample/sample';
 
 // todo rename to firestore utils? and split up into auth utils?
 
@@ -16,6 +17,20 @@ firebase.initializeApp({
 });
 
 export const db = firebase.firestore();
+
+export const loadSamples = store =>
+  new Promise(resolve => {
+    db.collection(firebaseConfig.firestore.collection.SAMPLES)
+      .get()
+      .then(snapshot => {
+        const samples = [];
+        snapshot.forEach(doc => {
+          samples.push(doc.data());
+        });
+        store.commit(sampleStore.SET_SAMPLES, samples);
+        resolve();
+      });
+  });
 
 // todo better name for this method
 export const initUserLogin = store =>

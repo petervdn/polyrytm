@@ -13,7 +13,7 @@ import localeLoader from '../util/localeLoader';
 import { mediaQueries, deviceState } from '../data/mediaQueries.json';
 import waitForStyleSheetsLoaded from '../util/waitForStyleSheetsLoaded';
 import { setupSchedulerStoreCommunication } from '../audio/Scheduler';
-import { initUserLogin } from '../firebase/firebaseUtils';
+import { initUserLogin, loadSamples } from '../firebase/firebaseUtils';
 // import { loadPublicSamples } from '../firebase/firebaseUtils';
 
 const initPlugins = () => {
@@ -72,6 +72,7 @@ const startUp = store => {
   // Add async methods to the Promise.all array
   return Promise.all([
     initUserLogin(store),
+    loadSamples(store),
     // loadPublicSamples(store),
     configManager.getVariable(VariableNames.LOCALE_ENABLED)
       ? waitForLocale(store)
