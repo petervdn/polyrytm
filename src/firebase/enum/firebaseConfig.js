@@ -3,6 +3,7 @@ export default {
   firestore: {
     collection: {
       ADMINS: 'admins',
+      SAMPLES: 'samples',
     },
   },
   storage: {
