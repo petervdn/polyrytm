@@ -3,6 +3,7 @@ import 'firebase/auth';
 import 'firebase/firestore';
 import firebasePath from './firebasePath';
 import { userStore } from '../store/module/user/user';
+import firestore from './enum/firestore';
 
 firebase.initializeApp({
   apiKey: 'AIzaSyBWrdFVFh_NQXVQT5PA6y330n82ner3VbI',
@@ -21,13 +22,19 @@ export const initUserLogin = store =>
     // listen to auth state changes. this listener will stay active (so when user logs out later, this is called)
     firebase.auth().onAuthStateChanged(authUser => {
       if (authUser) {
-        store.commit(userStore.SET_USER_ID, authUser.uid);
+        db.collection(firestore.collection.ADMINS)
+          .doc(authUser.uid)
+          .get()
+          .then(doc => {
+            store.commit(userStore.SET_IS_ADMIN, doc.exists);
+            store.commit(userStore.SET_USER_ID, authUser.uid);
+            resolve();
+          });
       } else {
-        // user is not logged in
+        // user is not logged in (or logs out)
         store.commit(userStore.SET_USER_ID, null);
+        resolve();
       }
-
-      resolve();
     });
   });
 
