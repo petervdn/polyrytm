@@ -1,8 +1,8 @@
-import SampleManager from '../../component/SampleManager';
+import NewSampleManager from '../../component/NewSampleManager';
 
 export default {
   name: 'SamplesPage',
   components: {
-    SampleManager,
+    NewSampleManager,
   },
 };

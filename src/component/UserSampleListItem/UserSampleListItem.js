@@ -35,7 +35,7 @@ export default {
   mounted() {
     if (this.fileType === FileType.UPLOAD) {
       // file is a new entry, we have to upload it
-      this.upload();
+      // this.upload();
     }
 
     this.animatedFillWidth = this.fillWidth;

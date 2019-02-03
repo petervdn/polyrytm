@@ -3,14 +3,15 @@ import 'firebase/auth';
 import 'firebase/firestore';
 import firebasePath from './firebasePath';
 import { userStore } from '../store/module/user/user';
-import firestore from './enum/firestore';
+import firebaseConfig from './enum/firebaseConfig';
+
+// todo rename to firestore utils? and split up into auth utils?
 
 firebase.initializeApp({
-  apiKey: 'AIzaSyBWrdFVFh_NQXVQT5PA6y330n82ner3VbI',
+  apiKey: 'AIzaSyBWrdFVFh_NQXVQT5PA6y330n82ner3VbI', // todo move to startup and set props in config (so we can have a staging)
   authDomain: 'polyrytm.firebaseapp.com',
-  // databaseURL: 'https://polyrytm.firebaseio.com',
   projectId: 'polyrytm',
-  // storageBucket: 'polyrytm.appspot.com',
+  storageBucket: 'polyrytm.appspot.com',
   // messagingSenderId: '137282098627',
 });
 
@@ -22,7 +23,7 @@ export const initUserLogin = store =>
     // listen to auth state changes. this listener will stay active (so when user logs out later, this is called)
     firebase.auth().onAuthStateChanged(authUser => {
       if (authUser) {
-        db.collection(firestore.collection.ADMINS)
+        db.collection(firebaseConfig.firestore.collection.ADMINS)
           .doc(authUser.uid)
           .get()
           .then(doc => {

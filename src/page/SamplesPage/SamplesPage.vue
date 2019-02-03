@@ -3,9 +3,7 @@
 
 <template>
   <div>
-    <SampleManager :is-public="false"/>
-    <SampleManager :is-public="true"/>
-
+    <NewSampleManager/>
   </div>
 </template>
 

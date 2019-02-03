@@ -14,7 +14,7 @@ export default {
   data() {
     return {
       uploadFiles: [],
-      userFiles: [],
+      userFiles: [], // todo rename
       uploadEnabled: true,
       maxSize: 1024 * 1024 * 20, // todo get this from db?
     };
@@ -76,7 +76,7 @@ export default {
   },
   watch: {
     fileNames() {
-      this.checkUploadEnabled();
+      this.checkUploadEnabled(); // todo computed?
     },
   },
 };
