@@ -5,9 +5,9 @@
   <div :class="[$style.newSampleManager]">
     <h2>SampleManager</h2>
     <SampleManagerItem
-      v-for="item in items"
-      :item="item"
-      :key="item.name"
+      v-for="sample in samples"
+      :sample="sample"
+      :key="sample.name"
       @uploadStateChange="value => onItemUploadStateChange(item, value)"
     />
     <div :class="$style.add">
@@ -22,7 +22,7 @@
 
       <button
         v-if="canUpload"
-        @click="addSamples"
+        @click="onAddSamplesClick"
       >
         add samples
       </button>

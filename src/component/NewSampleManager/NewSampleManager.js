@@ -1,7 +1,6 @@
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import SampleManagerItem from '../SampleManagerItem';
-import { createSampleManagerItemFromFile } from '../../util/sampleUtils';
-import SampleManagerItemState from '../../data/enum/SampleManagerItemState';
+import { sampleStore } from '../../store/module/sample/sample';
 
 // @vue/component
 export default {
@@ -10,7 +9,6 @@ export default {
   data() {
     return {
       canUpload: true,
-      items: [],
     };
   },
   computed: {
@@ -20,25 +18,19 @@ export default {
   },
   mounted() {
     this.fileSelect = this.$refs.fileSelect;
-    this.items = [...this.samples];
   },
   methods: {
-    onItemUploadStateChange(item, state) {
-      // todo move all this to store
-      if (state === SampleManagerItemState.ADDED) {
-        this.$delete(item, 'uploadData');
-      } else {
-        item.uploadData.state = state;
-      }
-    },
     onFileSelectionChange() {
-      const items = Array.from(this.fileSelect.files).map(createSampleManagerItemFromFile);
-      this.items.push(...items);
+      Array.from(this.fileSelect.files).forEach(file => {
+        this.uploadFileAsSample(file);
+      });
 
       this.$refs.fileSelect.value = null;
     },
-    addSamples() {
-      // todo set correct auth rules on storage
+    ...mapActions({
+      uploadFileAsSample: sampleStore.UPLOAD_FILE_AS_SAMPLE,
+    }),
+    onAddSamplesClick() {
       this.fileSelect.click();
     },
   },

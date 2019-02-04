@@ -3,6 +3,6 @@
 
 <template>
   <div :class="[$style.sampleManagerItem]">
-    <p>{{ item.name }} <small v-if="item.uploadData">({{ item.uploadData.state }})</small></p>
+    <p>{{ sample.name }} <small v-if="sample.uploadData">({{ sample.uploadData.state }} {{ Math.round(sample.uploadData.progress * 100) }}%)</small></p>
   </div>
 </template>
