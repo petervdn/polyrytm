@@ -31,9 +31,12 @@ export default {
       sample.uploadData.progress = progress;
     },
     [sampleStore.SET_UPLOAD_STATE]: (state, { sample, uploadState }) => {
+      // todo better way to do this? (actually change something on the state obj)
       sample.uploadData.state = uploadState;
     },
-    [sampleStore.SET_UPLOAD_COMPLETE]: (state, { sample }) => {
+    [sampleStore.SET_UPLOAD_COMPLETE]: (state, { sample, dbDocData }) => {
+      // todo better way to do this?
+      Object.assign(sample, dbDocData);
       Vue.delete(sample, 'uploadData');
     },
   },
@@ -63,7 +66,9 @@ export default {
         const samplesRef = db.collection(firebaseConfig.firestore.collection.SAMPLES);
         samplesRef.where('path', '==', `${storagePath}/${sample.name}`).onSnapshot(snapshot => {
           if (snapshot.size === 1) {
-            context.commit(sampleStore.SET_UPLOAD_COMPLETE, { sample });
+            snapshot.forEach(doc => {
+              context.commit(sampleStore.SET_UPLOAD_COMPLETE, { sample, dbDocData: doc.data() });
+            });
           }
         });
       });
