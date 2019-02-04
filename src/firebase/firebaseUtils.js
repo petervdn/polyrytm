@@ -13,7 +13,6 @@ firebase.initializeApp({
   authDomain: 'polyrytm.firebaseapp.com',
   projectId: 'polyrytm',
   storageBucket: 'polyrytm.appspot.com',
-  // messagingSenderId: '137282098627',
 });
 
 export const db = firebase.firestore();

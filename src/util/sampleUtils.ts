@@ -1,29 +1,27 @@
 import SampleManagerItemState from '../data/enum/SampleManagerItemState';
 
+// todo better name
 interface ISampleInDatabase {
   name: string;
   size: number;
-  path: string;
+  path?: string;
 }
 
-interface ISampleManagerItem {
-  name: string;
+// todo better name
+interface ISampleManagerItemData extends ISampleInDatabase {
+  uploadData?: IUploadData;
+}
+
+interface IUploadData {
   file?: File;
-  size: number;
   state: string;
 }
 
-export const createSampleManagerItemFromFile = (file: File): ISampleManagerItem => ({
-  file,
+export const createSampleManagerItemFromFile = (file: File): ISampleManagerItemData => ({
   name: file.name,
   size: file.size,
-  state: SampleManagerItemState.WAITING_TO_UPLOAD,
-});
-
-export const createSampleManagerItemFromSample = (
-  sample: ISampleInDatabase,
-): ISampleManagerItem => ({
-  name: sample.name,
-  size: sample.size,
-  state: SampleManagerItemState.ADDED,
+  uploadData: {
+    file,
+    state: SampleManagerItemState.WAITING_TO_UPLOAD,
+  },
 });

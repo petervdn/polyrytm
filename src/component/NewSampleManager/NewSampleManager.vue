@@ -8,7 +8,7 @@
       v-for="item in items"
       :item="item"
       :key="item.name"
-      @stateChange="value => onItemStateChange(item, value)"
+      @uploadStateChange="value => onItemUploadStateChange(item, value)"
     />
     <div :class="$style.add">
       <input

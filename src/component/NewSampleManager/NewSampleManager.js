@@ -1,10 +1,7 @@
 import { mapState } from 'vuex';
 import SampleManagerItem from '../SampleManagerItem';
+import { createSampleManagerItemFromFile } from '../../util/sampleUtils';
 import SampleManagerItemState from '../../data/enum/SampleManagerItemState';
-import {
-  createSampleManagerItemFromFile,
-  createSampleManagerItemFromSample,
-} from '../../util/sampleUtils';
 
 // @vue/component
 export default {
@@ -23,24 +20,17 @@ export default {
   },
   mounted() {
     this.fileSelect = this.$refs.fileSelect;
-    this.items = [...this.samples.map(createSampleManagerItemFromSample)];
+    this.items = [...this.samples];
   },
   methods: {
-    onItemStateChange(item, state) {
-      item.state = state;
-
-      switch (state) {
-        case SampleManagerItemState.UPLOADED: {
-          break;
-        }
-        case SampleManagerItemState.UPLOADING: {
-          break;
-        }
-        default: {
-          throw new Error(`Unhandled state: ${state}`);
-        }
+    onItemUploadStateChange(item, state) {
+      // todo move all this to store
+      if (state === SampleManagerItemState.ADDED) {
+        const { uploadData, ...newItem } = item;
+        this.items.splice(this.items.indexOf(item), 1, newItem);
+      } else {
+        item.uploadData.state = state;
       }
-      console.log('item', item, 'state', state);
     },
     onFileSelectionChange() {
       const items = Array.from(this.fileSelect.files).map(createSampleManagerItemFromFile);
