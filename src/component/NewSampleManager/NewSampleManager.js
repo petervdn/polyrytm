@@ -26,8 +26,7 @@ export default {
     onItemUploadStateChange(item, state) {
       // todo move all this to store
       if (state === SampleManagerItemState.ADDED) {
-        const { uploadData, ...newItem } = item;
-        this.items.splice(this.items.indexOf(item), 1, newItem);
+        this.$delete(item, 'uploadData');
       } else {
         item.uploadData.state = state;
       }
