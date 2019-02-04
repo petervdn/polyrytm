@@ -4,7 +4,7 @@ import { sampleStore } from '../../store/module/sample/sample';
 
 // @vue/component
 export default {
-  name: 'NewSampleManager',
+  name: 'SampleManager',
   components: { SampleManagerItem },
   data() {
     return {

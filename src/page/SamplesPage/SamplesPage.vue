@@ -3,7 +3,7 @@
 
 <template>
   <div>
-    <NewSampleManager/>
+    <SampleManager/>
   </div>
 </template>
 

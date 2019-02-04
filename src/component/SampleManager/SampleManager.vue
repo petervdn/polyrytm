@@ -1,8 +1,8 @@
-<style src="./NewSampleManager.scss" module lang="scss"></style>
-<script src="./NewSampleManager.js"></script>
+<style src="./SampleManager.scss" module lang="scss"></style>
+<script src="./SampleManager.js"></script>
 
 <template>
-  <div :class="[$style.newSampleManager]">
+  <div :class="[$style.sampleManager]">
     <h2>SampleManager</h2>
     <SampleManagerItem
       v-for="sample in samples"
