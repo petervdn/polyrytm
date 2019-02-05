@@ -4,12 +4,14 @@
 <template>
   <div :class="[$style.sampleManager]">
     <h2>SampleManager</h2>
-    <SampleManagerItem
-      v-for="sample in samples"
-      :sample="sample"
-      :key="sample.name"
-      @uploadStateChange="value => onItemUploadStateChange(item, value)"
-    />
+    <ul>
+      <SampleManagerItem
+        v-for="sample in samples"
+        :sample="sample"
+        :key="sample.name"
+        @delete="deleteSample"
+      />
+    </ul>
     <div :class="$style.add">
       <input
         v-show="false"
@@ -23,9 +25,7 @@
       <button
         v-if="canUpload"
         @click="onAddSamplesClick"
-      >
-        add samples
-      </button>
+      >add samples</button>
     </div>
   </div>
 </template>

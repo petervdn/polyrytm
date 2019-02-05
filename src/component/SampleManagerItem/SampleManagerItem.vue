@@ -2,14 +2,16 @@
 <script src="./SampleManagerItem.js"></script>
 
 <template>
-  <div :class="[$style.sampleManagerItem]">
-    <p>{{ sample.name }}
-      <small v-if="!sample.uploadData">
-        {{ sample.path }}
-      </small>
+  <li :class="[$style.sampleManagerItem]">
+    <div :class="$style.name">
+      {{ sample.name }} <small v-if="!sample.uploadData"> {{ sample.path }} </small>
       <small v-if="sample.uploadData">
         ({{ sample.uploadData.state }} {{ Math.round(sample.uploadData.progress * 100) }}%)
       </small>
-    </p>
-  </div>
+    </div>
+    <button
+      :class="$style.remove"
+      @click="$emit('delete', sample)"
+    >x</button>
+  </li>
 </template>
