@@ -37,9 +37,10 @@ export default {
     [sampleStore.SET_PROCESSING_STATE]: (state, { sample, processingState }) => {
       // todo find sample from state? (by path)
       if (!sample.processingData) {
-        Vue.set(sample, processingDataPropName, {}); // otherwise this addition is not tracked
+        Vue.set(sample, processingDataPropName, { state: processingState }); // otherwise this addition is not tracked
+      } else {
+        sample.processingData.state = processingState;
       }
-      sample.processingData.state = processingState;
     },
     [sampleStore.REMOVE_SAMPLE_FROM_LIST]: (state, sample) => {
       const index = state.samples.indexOf(sample);
@@ -91,7 +92,7 @@ export default {
       }).then(() => {
         context.commit(sampleStore.SET_PROCESSING_STATE, {
           sample,
-          uploadState: SampleProcessingState.WAITING_FOR_DB_ENTRY,
+          processingState: SampleProcessingState.WAITING_FOR_DB_ENTRY,
         });
 
         // todo move some of below stuff to util ts file?
