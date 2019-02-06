@@ -9,7 +9,7 @@
         v-for="sample in samples"
         :sample="sample"
         :key="sample.name"
-        @delete="deleteSample"
+        @delete="onDeleteSample"
       />
     </ul>
     <div :class="$style.add">

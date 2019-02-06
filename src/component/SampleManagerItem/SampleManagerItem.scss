@@ -7,6 +7,10 @@
 
   .name {
     flex-grow: 2;
+
+    small {
+      opacity: 0.3;
+    }
   }
   .remove {
     width: 20px;

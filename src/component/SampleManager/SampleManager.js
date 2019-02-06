@@ -20,20 +20,10 @@ export default {
     this.fileSelect = this.$refs.fileSelect;
   },
   methods: {
-    deleteSample(sample) {
+    onDeleteSample(sample) {
       this.$confirm(`Do you really want to delete ${sample.name}?`).then(() => {
-        console.log(sample);
-
-        // removeFileFromStorage(sample.path).then(() => {
-        //   console.log('done');
-        // });
+        this.deleteSample(sample);
       });
-      /*
-      var storage = firebase.storage();
-
-// Create a storage reference from our storage service
-var storageRef = storage.ref();
-       */
     },
     onFileSelectionChange() {
       Array.from(this.fileSelect.files).forEach(file => {
@@ -44,6 +34,7 @@ var storageRef = storage.ref();
     },
     ...mapActions({
       uploadFileAsSample: sampleStore.UPLOAD_FILE_AS_SAMPLE,
+      deleteSample: sampleStore.DELETE_SAMPLE,
     }),
     onAddSamplesClick() {
       this.fileSelect.click();

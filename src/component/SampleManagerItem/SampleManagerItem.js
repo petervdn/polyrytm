@@ -1,5 +1,6 @@
 import VueTypes from 'vue-types';
 import { mapState } from 'vuex';
+import SampleProcessingState from '../../data/enum/SampleProcessingState';
 
 // @vue/component
 export default {
@@ -9,13 +10,14 @@ export default {
       name: VueTypes.string.isRequired,
       path: VueTypes.string.def(''),
       size: VueTypes.number.isRequired,
-      uploadData: VueTypes.shape({
+      processingData: VueTypes.shape({
         progress: VueTypes.number,
         state: VueTypes.string,
         file: VueTypes.instanceOf(File),
       }),
     }),
   },
+
   data() {
     return {
       progress: 0,
@@ -25,5 +27,8 @@ export default {
     ...mapState({
       userId: state => state.user.userId,
     }),
+  },
+  created() {
+    this.SampleProcessingState = SampleProcessingState;
   },
 };
