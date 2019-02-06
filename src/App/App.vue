@@ -3,10 +3,11 @@
 
 <template>
   <div>
+    <notivuecation :class="$style.notification" />
     <HeaderBar />
     <div :class="[$style.flexer, isInEditor ? $style.editor : null]">
-      <div 
-        :class="$style.discView" 
+      <div
+        :class="$style.discView"
         :style="{backgroundColor: activeTheme.mainColor.hex}">
         <DiscView />
         <MainControls />

@@ -613,6 +613,14 @@
     pirates "^4.0.0"
     source-map-support "^0.5.9"
 
+"@babel/runtime@7.0.0-beta.53":
+  version "7.0.0-beta.53"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0-beta.53.tgz#9df22ae34823ce89f790060594b83ee572e2c5d2"
+  integrity sha1-nfIq40gjzon3kAYFlLg+5XLixdI=
+  dependencies:
+    core-js "^2.5.7"
+    regenerator-runtime "^0.12.0"
+
 "@babel/runtime@^7.0.0":
   version "7.1.5"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.1.5.tgz#4170907641cf1f61508f563ece3725150cc6fe39"
@@ -7026,6 +7034,13 @@ normalize-url@^3.0.0:
 normalize.css@^8.0.0:
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-8.0.1.tgz#9b98a208738b9cc2634caacbc42d131c97487bf3"
+
+notivuecation@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/notivuecation/-/notivuecation-3.2.1.tgz#b417905071227644601f9934a0b818f13a6831f7"
+  integrity sha512-EumDi2zOKHjN8/D6qSdmTQbPRXdGDECSGi7StVTqfKCMMlTTh+junwRlqArKZin9sRaw0RRXpV50FQaxe8NA4g==
+  dependencies:
+    "@babel/runtime" "7.0.0-beta.53"
 
 npm-bundled@^1.0.1:
   version "1.0.5"

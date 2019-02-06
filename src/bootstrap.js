@@ -1,5 +1,6 @@
 import 'modernizr';
 import Vue from 'vue';
+import notivuecation from 'notivuecation';
 import VueI18nManager from 'vue-i18n-manager';
 import { sync } from 'vuex-router-sync';
 
@@ -47,6 +48,8 @@ if (localeConfig.localeEnabled) {
 
   Vue.initI18nManager();
 }
+
+Vue.use(notivuecation);
 
 // sync router data to store
 sync(store, router);

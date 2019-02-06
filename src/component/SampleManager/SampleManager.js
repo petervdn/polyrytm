@@ -1,7 +1,6 @@
 import { mapActions, mapState } from 'vuex';
 import SampleManagerItem from '../SampleManagerItem';
 import { sampleStore } from '../../store/module/sample/sample';
-import { removeFileFromStorage } from '../../firebase/storageUtils';
 
 // @vue/component
 export default {
@@ -22,9 +21,12 @@ export default {
   },
   methods: {
     deleteSample(sample) {
-      console.log(sample);
-      removeFileFromStorage(sample.path).then(() => {
-        console.log('done');
+      this.$confirm(`Do you really want to delete ${sample.name}?`).then(() => {
+        console.log(sample);
+
+        // removeFileFromStorage(sample.path).then(() => {
+        //   console.log('done');
+        // });
       });
       /*
       var storage = firebase.storage();
