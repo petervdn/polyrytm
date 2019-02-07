@@ -77,7 +77,6 @@ export default {
         name: file.name,
         size: file.size,
         processingData: {
-          file,
           progress: 0,
           state: SampleProcessingState.UPLOADING,
         },

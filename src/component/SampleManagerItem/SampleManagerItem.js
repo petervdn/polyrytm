@@ -13,7 +13,6 @@ export default {
       processingData: VueTypes.shape({
         progress: VueTypes.number,
         state: VueTypes.string,
-        file: VueTypes.instanceOf(File),
       }),
     }),
   },

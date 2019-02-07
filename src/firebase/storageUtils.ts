@@ -3,6 +3,7 @@ import 'firebase/storage';
 import UploadTaskSnapshot = firebase.storage.UploadTaskSnapshot;
 import { db } from './firebaseUtils';
 import firebaseConfig from './enum/firebaseConfig';
+
 interface ISampleInDatabase {
   name: string;
   path: string;
@@ -12,11 +13,10 @@ interface ISampleInDatabase {
 interface ISampleProcessData {
   state: string;
   progress?: number; // todo rename uploadProgress?
-  file?: File; // todo rename uploadFile?
 }
 
 interface ISampleInStore extends ISampleInDatabase {
-  processData: ISampleProcessData;
+  processData?: ISampleProcessData;
 }
 
 export const removeFileFromStorage = (path: string) => {
