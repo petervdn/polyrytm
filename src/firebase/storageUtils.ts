@@ -19,11 +19,6 @@ interface ISampleInStore extends ISampleInDatabase {
   processData?: ISampleProcessData;
 }
 
-export const removeFileFromStorage = (path: string) => {
-  const storageRef = firebase.storage().ref();
-  return storageRef.child(path).delete();
-};
-
 export const removeSampleFromDatabase = (
   sample: ISampleInStore,
   fileRemovedFromStorageCallback: () => void,
@@ -43,11 +38,15 @@ export const removeSampleFromDatabase = (
         });
 
         // remove file from store (will trigger cloud function)
-        removeFileFromStorage(sample.path).then(() => {
-          if (fileRemovedFromStorageCallback) {
-            fileRemovedFromStorageCallback();
-          }
-        });
+        const storageRef = firebase.storage().ref();
+        storageRef
+          .child(sample.path)
+          .delete()
+          .then(() => {
+            if (fileRemovedFromStorageCallback) {
+              fileRemovedFromStorageCallback();
+            }
+          });
       } else if (result.size === 0) {
         reject(`Cannot find path ${sample.path} in database`);
       } else {
