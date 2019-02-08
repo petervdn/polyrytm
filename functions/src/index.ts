@@ -38,7 +38,6 @@ export const onFileDeleted = functions.storage.object().onDelete(object => {
 });
 
 /*
-
  bucket: 'polyrytm.appspot.com',
   contentDisposition: 'inline; filename*=utf-8\'\'amb_main.mp3',
   contentType: 'audio/mp3',

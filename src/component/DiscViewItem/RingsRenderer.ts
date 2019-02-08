@@ -82,7 +82,7 @@ export default class RingsRenderer extends AbstractRenderer {
     // watch selected ring
     this.storeWatchDestructors.push(
       this.store.watch(
-        (state, getters) => getters[interactionStore.getters.selectedRing],
+        (state, getters) => getters[interactionStore.GET_SELECTED_RING],
         () => {
           this.updateDisc();
           this.draw();
@@ -203,8 +203,8 @@ export default class RingsRenderer extends AbstractRenderer {
     }
 
     // draw highlights
-    const highlightedDisc = this.store.getters[interactionStore.getters.highlightedDisc];
-    const selectedDisc = this.store.getters[interactionStore.getters.selectedDisc];
+    const highlightedDisc = this.store.getters[interactionStore.GET_HIGHLIGHTED_DISC];
+    const selectedDisc = this.store.getters[interactionStore.GET_SELECTED_DISC];
     if (highlightedDisc === this.disc) {
       if (!selectedDisc || selectedDisc !== this.disc) {
         //  nothing selected, but disc is highlighted => draw full disc highlight
@@ -283,7 +283,7 @@ export default class RingsRenderer extends AbstractRenderer {
     }
 
     // draw all rings, check if there is a selected one in this ring
-    const selectedRing = this.store.getters[interactionStore.getters.selectedRing];
+    const selectedRing = this.store.getters[interactionStore.GET_SELECTED_RING];
     if (selectedRing && selectedRing.disc === this.disc) {
       // if so,only draw the not-selected rings, because these will get a pixel-raster
       // and the highlighted ring will be drawn normally after that

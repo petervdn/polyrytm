@@ -17,7 +17,7 @@ firebase.initializeApp({
 
 export const db = firebase.firestore();
 
-export const loadSamples = store =>
+export const getSamples = store =>
   new Promise(resolve => {
     db.collection(firebaseConfig.firestore.collection.SAMPLES)
       .get()

@@ -70,8 +70,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      selectedDisc: interactionStore.getters.selectedDisc,
-      selectedRing: interactionStore.getters.selectedRing,
+      selectedDisc: interactionStore.GET_SELECTED_DISC,
+      selectedRing: interactionStore.GET_SELECTED_RING,
     }),
     ...mapState('interaction', ['selection']),
   },

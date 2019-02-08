@@ -28,7 +28,7 @@ export const removeSampleFromDatabase = (
     const query = samplesRef.where('path', '==', sample.path);
     query.get().then(result => {
       if (result.size === 1) {
-        // there is 1 sample found in db, attach listener (so we know when cloud function has removed the db entry)
+        // correct amount found in db. attach listener (so we know when cloud function has removed the db entry)
         const removeListener = query.onSnapshot(querySnapshot => {
           if (querySnapshot.size === 0) {
             // db entry has been removed

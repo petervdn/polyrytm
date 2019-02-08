@@ -33,6 +33,7 @@ export default {
         if (!sample.audioBuffer) {
           // sample needs to be loaded, show notification
           this.showNotification({
+            // todo switch to notivuecation (needs a way to hide from outside)
             progress: 0,
             title: 'Loading...',
             message: `Sample: ${sample.name}`,
@@ -63,7 +64,7 @@ export default {
       samples: state => state.sample.samples,
     }),
     ...mapGetters({
-      selectedDisc: interactionStore.getters.selectedDisc,
+      selectedDisc: interactionStore.GET_SELECTED_DISC,
     }),
   },
 };

@@ -94,7 +94,7 @@ export default {
       isPlaying: state => state.app.isPlaying,
     }),
     ...mapGetters({
-      selectedDisc: interactionStore.getters.selectedDisc,
+      selectedDisc: interactionStore.GET_SELECTED_DISC,
     }),
     isInEditor() {
       return this.$route.name === RouteNames.EDITOR;

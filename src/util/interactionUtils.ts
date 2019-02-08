@@ -160,6 +160,7 @@ export function getSliceForPosition(
   return getSliceForFactor(slices, radiansFactor);
 }
 
+// todo description
 export function getHint(state: IInteractionStoreState): string {
   const highlight = state.highlight;
   const selection = state.selection;
@@ -231,11 +232,11 @@ export function attachHintToElement(element: HTMLElement, hint: string, store: I
   // todo set as custom directive
   // todo get store here instead of passing as arg every time
   const mouseEnter = event => {
-    store.commit(interactionStore.mutations.setForceHint, hint || '&nbsp;');
+    store.commit(interactionStore.SET_FORCE_HINT, hint || '&nbsp;');
     event.stopImmediatePropagation(); // todo check is this necessary?
   };
   const mouseLeave = event => {
-    store.commit(interactionStore.mutations.setForceHint, null);
+    store.commit(interactionStore.SET_FORCE_HINT, null);
     event.stopImmediatePropagation();
   };
 

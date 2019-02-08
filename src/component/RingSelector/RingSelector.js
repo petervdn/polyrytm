@@ -7,13 +7,13 @@ export default {
   name: 'RingSelector',
   computed: {
     ...mapGetters({
-      selectedDisc: interactionStore.getters.selectedDisc,
-      selectedRing: interactionStore.getters.selectedRing,
+      selectedDisc: interactionStore.GET_SELECTED_DISC,
+      selectedRing: interactionStore.GET_SELECTED_RING,
     }),
   },
   methods: {
     ...mapMutations({
-      setSelection: interactionStore.mutations.setSelection,
+      setSelection: interactionStore.SET_SELECTION,
     }),
     addRing() {
       this.$store.commit(discStore.ADD_RING, {

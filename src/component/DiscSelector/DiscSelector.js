@@ -9,13 +9,13 @@ export default {
       discs: state => state.disc.discs,
     }),
     ...mapGetters({
-      selectedDisc: interactionStore.getters.selectedDisc,
+      selectedDisc: interactionStore.GET_SELECTED_DISC,
     }),
   },
   methods: {
     ...mapMutations({
       addDisc: discStore.ADD_DISC,
-      setSelection: interactionStore.mutations.setSelection,
+      setSelection: interactionStore.SET_SELECTION,
     }),
   },
 };

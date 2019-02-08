@@ -18,7 +18,7 @@ export default {
       discs: state => state.disc.discs,
     }),
     ...mapGetters({
-      selectedDisc: interactionStore.getters.selectedDisc,
+      selectedDisc: interactionStore.GET_SELECTED_DISC,
     }),
   },
   methods: {

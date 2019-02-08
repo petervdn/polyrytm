@@ -1,72 +1,48 @@
-import { initStoreCommands } from '../../../util/storeUtils';
 import { getHint } from '../../../util/interactionUtils';
 import { getDiscForInteractable, getRingForInteractable } from '../../../util/discUtils';
 
+const namespace = 'interaction';
+
 export const interactionStore = {
-  mutations: {
-    setSelection: null,
-    setHighlight: null,
-    clearSelection: null,
-    setHighlightAsSelection: null,
-    setForceHint: null,
-  },
-  getters: {
-    hint: null,
-    selectedDisc: null,
-    selectedRing: null,
-    highlightedDisc: null,
-    highlightedRing: null,
-  },
-  local: {
-    mutations: {
-      setSelection: null,
-      setHighlight: null,
-      clearSelection: null,
-      setHighlightAsSelection: null,
-      setForceHint: null,
-    },
-    getters: {
-      hint: null,
-      selectedDisc: null,
-      selectedRing: null,
-      highlightedDisc: null,
-      highlightedRing: null,
-    },
-  },
+  SET_SELECTION: `${namespace}/setSelection`,
+  SET_HIGHLIGHT: `${namespace}/setHighlight`,
+  CLEAR_SELECTION: `${namespace}/clearSelection`,
+  SET_HIGHLIGHT_AS_SELECTION: `${namespace}/setHighlightAsSelection`,
+  SET_FORCE_HINT: `${namespace}/setForceHint`,
+  GET_HINT: `${namespace}/getHint`,
+  GET_SELECTED_DISC: `${namespace}/selectedDisc`, // todo remove GET in getters?
+  GET_SELECTED_RING: `${namespace}/selectedRing`,
+  GET_HIGHLIGHTED_DISC: `${namespace}/highlightedDisc`,
+  GET_HIGHLIGHTED_RING: `${namespace}/highlightedRing`,
 };
 
-initStoreCommands(interactionStore, 'interaction');
-
 export default {
-  namespaced: true,
   state: {
     selection: null, // IInteractable
     highlight: null, // IInteractable
     forceHint: null, // a hint (string) that overrides hints resulting from selection/interaction
   },
   getters: {
-    [interactionStore.local.getters.hint]: state => getHint(state),
-    [interactionStore.local.getters.selectedDisc]: state => getDiscForInteractable(state.selection),
-    [interactionStore.local.getters.selectedRing]: state => getRingForInteractable(state.selection),
-    [interactionStore.local.getters.highlightedDisc]: state =>
-      getDiscForInteractable(state.highlight),
-    [interactionStore.local.getters.highlightedRing]: state =>
-      getRingForInteractable(state.highlight),
+    [interactionStore.GET_HINT]: state => getHint(state),
+    [interactionStore.GET_SELECTED_DISC]: state => getDiscForInteractable(state.selection),
+    [interactionStore.GET_SELECTED_RING]: state => getRingForInteractable(state.selection),
+    [interactionStore.GET_HIGHLIGHTED_DISC]: state => getDiscForInteractable(state.highlight),
+    [interactionStore.GET_HIGHLIGHTED_RING]: state => getRingForInteractable(state.highlight),
   },
   mutations: {
-    [interactionStore.local.mutations.setForceHint]: (state, payload) => {
+    [interactionStore.SET_FORCE_HINT]: (state, payload) => {
       state.forceHint = payload;
     },
-    [interactionStore.local.mutations.setHighlightAsSelection]: state => {
+    [interactionStore.SET_HIGHLIGHT_AS_SELECTION]: state => {
       state.selection = state.highlight;
     },
-    [interactionStore.local.mutations.clearSelection]: state => {
+    [interactionStore.CLEAR_SELECTION]: state => {
       state.selection = null;
     },
-    [interactionStore.local.mutations.setSelection]: (state, payload) => {
+    [interactionStore.SET_SELECTION]: (state, payload) => {
       state.selection = payload;
     },
-    [interactionStore.local.mutations.setHighlight]: (state, payload) => {
+    [interactionStore.SET_HIGHLIGHT]: (state, payload) => {
       state.highlight = payload;
     },
   },

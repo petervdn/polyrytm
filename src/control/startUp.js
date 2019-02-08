@@ -13,8 +13,7 @@ import localeLoader from '../util/localeLoader';
 import { mediaQueries, deviceState } from '../data/mediaQueries.json';
 import waitForStyleSheetsLoaded from '../util/waitForStyleSheetsLoaded';
 import { setupSchedulerStoreCommunication } from '../audio/Scheduler';
-import { initUserLogin, loadSamples } from '../firebase/firebaseUtils';
-// import { loadPublicSamples } from '../firebase/firebaseUtils';
+import { initUserLogin, getSamples } from '../firebase/firebaseUtils';
 
 const initPlugins = () => {
   const configManager = getValue(CONFIG_MANAGER);
@@ -69,10 +68,9 @@ const startUp = store => {
 
   setupSchedulerStoreCommunication(getValue(SCHEDULER), store);
 
-  // Add async methods to the Promise.all array
   return Promise.all([
     initUserLogin(store),
-    loadSamples(store),
+    getSamples(store), // todo probably do this when we need them
     // loadPublicSamples(store),
     configManager.getVariable(VariableNames.LOCALE_ENABLED)
       ? waitForLocale(store)

@@ -170,7 +170,7 @@ export default {
       // create default disc and set as selection
       const disc = createDefaultDisc();
       context.commit(discStore.ADD_DISC, disc);
-      context.commit(interactionStore.mutations.setSelection, disc, { root: true });
+      context.commit(interactionStore.SET_SELECTION, disc, { root: true });
     },
     [discStore.SET_SAMPLE_FOR_DISC]: (context, payload) => {
       const { sample } = payload;
@@ -211,7 +211,7 @@ export default {
 
       if (context.rootState.interaction.selection === payload) {
         // removed disc was selected, set to first one todo set a closer one
-        context.commit(interactionStore.mutations.setSelection, context.state.discs[0], {
+        context.commit(interactionStore.SET_SELECTION, context.state.discs[0], {
           root: true,
         });
       }

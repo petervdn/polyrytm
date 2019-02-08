@@ -22,7 +22,7 @@ export default {
       selection: state => state.interaction.selection,
     }),
     ...mapGetters({
-      selectedRing: interactionStore.getters.selectedRing,
+      selectedRing: interactionStore.GET_SELECTED_RING,
     }),
   },
   methods: {

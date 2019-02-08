@@ -39,8 +39,8 @@ export default {
       playMode: state => state.app.playMode,
     }),
     ...mapGetters({
-      hint: interactionStore.getters.hint,
-      selectedDisc: interactionStore.getters.selectedDisc,
+      hint: interactionStore.GET_HINT,
+      selectedDisc: interactionStore.GET_SELECTED_DISC,
     }),
   },
   methods: {

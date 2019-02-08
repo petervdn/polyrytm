@@ -89,7 +89,7 @@ export default class DiscInteractionManager extends EventDispatcher {
         this.setHighlight(this.disc);
       } else {
         // we're hovering over rings area, things can change depending on a selected ring
-        const selectedRing = this.store.getters[interactionStore.getters.selectedRing];
+        const selectedRing = this.store.getters[interactionStore.GET_SELECTED_RING];
 
         if (selectedRing && selectedRing.disc === this.disc) {
           // ring selected in this disc, highlight ring-items
@@ -119,7 +119,7 @@ export default class DiscInteractionManager extends EventDispatcher {
   private setHighlight(item: IInteractable): void {
     // only commit when changed (prevents commits on every mousemove)
     if (this.store.state.interaction.highlight !== item) {
-      this.store.commit(interactionStore.mutations.setHighlight, item);
+      this.store.commit(interactionStore.SET_HIGHLIGHT, item);
     }
   }
 
@@ -154,7 +154,7 @@ export default class DiscInteractionManager extends EventDispatcher {
         volume => {
           // clear the highlight when dragging
           if (this.store.state.interaction.highlight) {
-            this.store.commit(interactionStore.mutations.setHighlight, null);
+            this.store.commit(interactionStore.SET_HIGHLIGHT, null);
           }
 
           this.store.commit(discStore.SET_RING_ITEM_VOLUME, {
@@ -188,11 +188,11 @@ export default class DiscInteractionManager extends EventDispatcher {
     switch (highlight.type) {
       case InteractableType.DISC: {
         // todo when is this exactly
-        this.store.commit(interactionStore.mutations.setHighlightAsSelection);
+        this.store.commit(interactionStore.SET_HIGHLIGHT_AS_SELECTION);
         break;
       }
       case InteractableType.RING: {
-        this.store.commit(interactionStore.mutations.setHighlightAsSelection);
+        this.store.commit(interactionStore.SET_HIGHLIGHT_AS_SELECTION);
         break;
       }
       case InteractableType.RING_ITEM: {
