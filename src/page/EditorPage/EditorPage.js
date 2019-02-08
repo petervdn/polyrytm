@@ -7,6 +7,14 @@ import ShareControls from '../../component/ShareControls';
 import MixerControls from '../../component/MixerControls';
 import { interactionStore } from '../../store/module/interaction/interaction';
 
+const MenuItems = {
+  DISC: 'disc',
+  RING: 'ring',
+  MIXER: 'mixer',
+  THEME: 'theme',
+  SHARE: 'share',
+};
+
 export default {
   name: 'EditorPage',
   components: {
@@ -19,46 +27,49 @@ export default {
   },
   data() {
     return {
-      activeMenuItemId: 'disc',
+      activeMenuItem: MenuItems.DISC,
       menuItems: [
         {
-          label: 'S',
-          id: 'disc',
+          label: 'disc',
+          id: MenuItems.DISC,
         },
         {
-          label: 'R',
-          id: 'ring',
+          label: 'ring',
+          id: MenuItems.RING,
         },
         {
-          label: 'M',
-          id: 'mixer',
+          label: 'mixer',
+          id: MenuItems.MIXER,
         },
         {
-          label: 'V',
-          id: 'theme',
+          label: 'theme',
+          id: MenuItems.THEME,
         },
         {
-          label: 'S',
-          id: 'share', // todo create consts
+          label: 'share',
+          id: MenuItems.SHARE,
         },
       ],
     };
   },
+  created() {
+    this.MenuItems = MenuItems;
+  },
   watch: {
     selectedDisc(value) {
       if (value) {
-        this.activeMenuItemId = 'disc';
+        this.activeMenuItem = MenuItems.DISC;
       }
     },
     selectedRing(value) {
       if (value) {
-        this.activeMenuItemId = 'ring';
+        this.activeMenuItem = MenuItems.RING;
       }
     },
   },
   methods: {
     setActiveMenuItem(item) {
-      this.activeMenuItemId = item.id;
+      this.activeMenuItem = item.id;
     },
   },
   computed: {
