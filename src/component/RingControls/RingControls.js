@@ -2,7 +2,7 @@ import { mapState, mapGetters, mapMutations } from 'vuex';
 import SampleSelector from '../SampleSelector';
 import { interactionStore } from '../../store/module/interaction/interaction';
 import { discStore } from '../../store/module/disc/disc';
-import { GlobalEvent } from '../../data/globalEvents';
+import { GlobalEvent, globalEventBus } from '../../data/globalEvents';
 import { generateVolumes } from '../../util/ringUtils';
 
 export default {
@@ -39,7 +39,7 @@ export default {
         ring: this.selectedRing,
       });
 
-      this.$eventBus.$emit(GlobalEvent.RING_ITEMS_CHANGE, this.selectedRing); // todo event bus doesnt seem to be set? also: why do we need it
+      globalEventBus.$emit(GlobalEvent.RING_ITEMS_CHANGE, this.selectedRing); // todo event bus doesnt seem to be set? also: why do we need it
     },
     adjustVolumes(type) {
       this.setRingVolumes({
@@ -47,7 +47,7 @@ export default {
         volumes: generateVolumes(this.selectedRing.items, type),
       });
 
-      this.$eventBus.$emit(GlobalEvent.RING_ITEMS_CHANGE, this.selectedRing);
+      globalEventBus.$emit(GlobalEvent.RING_ITEMS_CHANGE, this.selectedRing);
     },
   },
 };
