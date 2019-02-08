@@ -1,11 +1,10 @@
-import { mapActions, mapState, mapGetters } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import DiscControls from '../../component/DiscControls';
 import RingControls from '../../component/RingControls';
 import ThemeControls from '../../component/ThemeControls';
 import SampleControls from '../../component/SampleControls';
 import ShareControls from '../../component/ShareControls';
 import MixerControls from '../../component/MixerControls';
-import { discStore } from '../../store/module/disc/disc';
 import { interactionStore } from '../../store/module/interaction/interaction';
 
 export default {
@@ -17,9 +16,6 @@ export default {
     SampleControls,
     ShareControls,
     MixerControls,
-  },
-  mounted() {
-    this.initDiscs();
   },
   data() {
     return {
@@ -61,9 +57,6 @@ export default {
     },
   },
   methods: {
-    ...mapActions({
-      initDiscs: discStore.INIT_DISCS,
-    }),
     setActiveMenuItem(item) {
       this.activeMenuItemId = item.id;
     },

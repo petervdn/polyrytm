@@ -1,10 +1,11 @@
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import DiscView from '../component/DiscView';
 import Notification from '../component/Notification';
 import MainControls from '../component/MainControls';
 import HeaderBar from '../component/HeaderBar';
 import { staticColors } from '../util/colorUtils';
 import { RouteNames } from '../router/routes';
+import { discStore } from '../store/module/disc/disc';
 
 export default {
   name: 'App',
@@ -15,6 +16,7 @@ export default {
     MainControls,
   },
   mounted() {
+    this.initDiscs();
     this.applyActiveTheme();
   },
   watch: {
@@ -23,6 +25,9 @@ export default {
     },
   },
   methods: {
+    ...mapActions({
+      initDiscs: discStore.INIT_DISCS,
+    }),
     applyActiveTheme() {
       const html = document.querySelector('html');
 
