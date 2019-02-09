@@ -39,7 +39,7 @@ export default {
         ring: this.selectedRing,
       });
 
-      globalEventBus.$emit(GlobalEvent.RING_ITEMS_CHANGE, this.selectedRing); // todo event bus doesnt seem to be set? also: why do we need it
+      globalEventBus.$emit(GlobalEvent.RING_ITEMS_CHANGE, this.selectedRing);
     },
     adjustVolumes(type) {
       this.setRingVolumes({

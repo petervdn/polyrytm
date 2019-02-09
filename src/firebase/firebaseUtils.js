@@ -26,7 +26,7 @@ export const getSamples = store =>
         snapshot.forEach(doc => {
           samples.push(doc.data());
         });
-        store.commit(sampleStore.SET_SAMPLES, samples);
+        store.dispatch(sampleStore.SET_SAMPLES, samples);
         resolve();
       });
   });

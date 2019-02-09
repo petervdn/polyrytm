@@ -22,7 +22,7 @@ export default {
   methods: {
     onDeleteSample(sample) {
       this.$confirm(`Do you really want to delete ${sample.name}?`).then(() => {
-        this.deleteSample(sample);
+        this.deleteSampleFromDatabase(sample);
       });
     },
     onFileSelectionChange() {
@@ -34,7 +34,7 @@ export default {
     },
     ...mapActions({
       uploadFileAsSample: sampleStore.UPLOAD_FILE_AS_SAMPLE,
-      deleteSample: sampleStore.DELETE_SAMPLE,
+      deleteSampleFromDatabase: sampleStore.DELETE_SAMPLE_FROM_DATABASE,
     }),
     onAddSamplesClick() {
       this.fileSelect.click();

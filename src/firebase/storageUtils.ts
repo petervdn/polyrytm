@@ -10,13 +10,9 @@ interface ISampleInDatabase {
   size: number;
 }
 
-interface ISampleProcessData {
-  state: string;
-  progress?: number; // todo rename uploadProgress?
-}
-
 interface ISampleInStore extends ISampleInDatabase {
-  processData?: ISampleProcessData;
+  state?: string; // SampleState
+  uploadProgress: number;
 }
 
 export const removeSampleFromDatabase = (

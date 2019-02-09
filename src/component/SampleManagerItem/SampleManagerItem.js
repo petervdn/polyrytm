@@ -1,6 +1,6 @@
 import VueTypes from 'vue-types';
 import { mapState } from 'vuex';
-import SampleProcessingState from '../../data/enum/SampleProcessingState';
+import SampleState from '../../data/enum/SampleState';
 
 // @vue/component
 export default {
@@ -10,10 +10,10 @@ export default {
       name: VueTypes.string.isRequired,
       path: VueTypes.string.def(''),
       size: VueTypes.number.isRequired,
-      processingData: VueTypes.shape({
-        progress: VueTypes.number,
-        state: VueTypes.string,
-      }),
+      state: VueTypes.string.isRequired,
+      uploadProgress: VueTypes.number.def(0),
+      // loadProgress: VueTypes.number.isRequired,
+      audioBuffer: VueTypes.instanceOf(AudioBuffer),
     }),
   },
 
@@ -28,6 +28,6 @@ export default {
     }),
   },
   created() {
-    this.SampleProcessingState = SampleProcessingState;
+    this.SampleState = SampleState;
   },
 };
