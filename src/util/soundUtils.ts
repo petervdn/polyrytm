@@ -1,16 +1,15 @@
-import { ISample } from '../data/interface';
 import * as firebase from 'firebase/app';
 import axios from 'axios';
 
 export const audioContext = new AudioContext();
 
-export function createSample(uri, name): ISample {
-  return {
-    uri,
-    name: name || uri,
-    audioBuffer: null,
-  };
-}
+// export function createSample(uri, name): ISample {
+//   return {
+//     uri,
+//     name: name || uri,
+//     audioBuffer: null,
+//   };
+// }
 //
 // export function createSampleSlices(amount: number): number[] {
 //   if (amount === 0) {

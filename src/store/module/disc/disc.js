@@ -53,9 +53,9 @@ export default {
         state.discs.splice(state.discs.indexOf(payload), 1);
       }
     },
-    [discStore.ADD_DISC]: (state, payload) => {
+    [discStore.ADD_DISC]: (state, disc) => {
       // no payload adds a default disc
-      state.discs.push(payload || createDefaultDisc()); // todo move defaultDisc method to where this is called?
+      state.discs.push(disc);
     },
     [discStore.SET_AUDIO_BUFFER]: (state, payload) => {
       // todo move to sample store

@@ -3,20 +3,11 @@ import 'firebase/storage';
 import UploadTaskSnapshot = firebase.storage.UploadTaskSnapshot;
 import { db } from './firebaseUtils';
 import firebaseConfig from './enum/firebaseConfig';
+import { ISample } from '../data/interface';
 
-interface ISampleInDatabase {
-  name: string;
-  path: string;
-  size: number;
-}
-
-interface ISampleInStore extends ISampleInDatabase {
-  state?: string; // SampleState
-  uploadProgress: number;
-}
-
+// todo rename, this also removes from storage
 export const removeSampleFromDatabase = (
-  sample: ISampleInStore,
+  sample: ISample,
   fileRemovedFromStorageCallback: () => void,
 ) =>
   new Promise((resolve, reject) => {

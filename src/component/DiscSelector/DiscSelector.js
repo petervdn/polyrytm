@@ -1,6 +1,7 @@
 import { mapState, mapMutations, mapGetters } from 'vuex';
 import { discStore } from '../../store/module/disc/disc';
 import { interactionStore } from '../../store/module/interaction/interaction';
+import { createDefaultDisc } from '../../util/discUtils';
 
 export default {
   name: 'DiscSelector',
@@ -13,6 +14,9 @@ export default {
     }),
   },
   methods: {
+    onAddDiscClick() {
+      this.addDisc(createDefaultDisc());
+    },
     ...mapMutations({
       addDisc: discStore.ADD_DISC,
       setSelection: interactionStore.SET_SELECTION,

@@ -1,5 +1,3 @@
-// import { PlayMode } from "./enum/PlayMode";
-
 import { ITheme } from './themes';
 
 export interface ISize {
@@ -35,27 +33,22 @@ export interface IRing extends IInteractable {
 
 export interface IDisc extends IInteractable {
   rings: IRing[];
-  sound: IDiscSound;
+  sound: IDiscSound; // todo why single en multiple?
   sounds: IDiscSound[];
 }
 
 export interface IDiscSound {
-  // todo rename to sound?
   sample: ISample;
   slices: ISoundSlice[];
 }
 
+// todo rename discsoundslice?
 export interface ISoundSlice extends IInteractable {
   disc: IDisc;
   startFactor: number;
   nextSlice: ISoundSlice; // ref to the next slice (null on last)
 }
 
-export interface ISample {
-  name: string;
-  uri: string;
-  audioBuffer?: AudioBuffer;
-}
 // todo describe each
 export interface ISizeData {
   size: ISize;
@@ -126,10 +119,21 @@ export interface IAppStoreState {
   secondsPerRevolution: number;
 }
 
-export interface INotification {
-  title?: string;
-  message?: string;
-  okButton?: string;
-  cancelButton?: string;
-  progress?: number;
+// export interface INotification {
+//   title?: string;
+//   message?: string;
+//   okButton?: string;
+//   cancelButton?: string;
+//   progress?: number;
+// }
+export interface ISampleInDatabase {
+  name: string;
+  path: string;
+  size: number;
+}
+
+export interface ISample extends ISampleInDatabase {
+  state?: string; // SampleState
+  uploadProgress: number;
+  audioBuffer?: AudioBuffer;
 }

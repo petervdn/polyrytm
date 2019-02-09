@@ -11,7 +11,7 @@
     >
       {{ index + 1 }}
     </li>
-    <li @click="addDisc()">+</li>
+    <li @click="onAddDiscClick">+</li>
   </ul>
 </template>
 

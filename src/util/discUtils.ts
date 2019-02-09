@@ -10,7 +10,6 @@ import {
   ISoundSlice,
 } from '../data/interface';
 import { audioContext } from './soundUtils';
-import { constants } from '../data/constants';
 import { getRandomInt } from './numberUtils';
 
 /**
@@ -67,7 +66,8 @@ export function createDefaultRing(disc: IDisc): IRing {
   return ring;
 }
 
-export function createSound(sample: ISample, disc: IDisc): IDiscSound {
+// todo rename to create discsound
+export function createSound(sample: ISample): IDiscSound {
   return {
     sample,
     slices: [],
