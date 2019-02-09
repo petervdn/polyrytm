@@ -1,20 +1,16 @@
 import { userStore } from '../store/module/user/user';
-import firebaseConfig from './enum/firebaseConfig';
 import { sampleStore } from '../store/module/sample/sample';
-import { firebaseInstance } from './firebase';
+import { firebaseInstance, firebasePath } from './firebase';
 
 // todo rename to firestore utils? and split up into auth utils?
 // todo make TS file
 // todo look at what's in storageutils
 
-// export const db = firebase.firestore(); // todo better name
-// export const storage = firebase.storage(); // todo check if all of these are used everywhere
-
 export const getSamples = store => {
   const startTime = Date.now();
   return new Promise(resolve => {
     firebaseInstance.firestore
-      .collection(firebaseConfig.firestore.collection.SAMPLES)
+      .collection(firebasePath.firestore.collection.SAMPLES)
       .get()
       .then(snapshot => {
         const samples = [];
@@ -34,7 +30,7 @@ export const initUserLogin = store =>
     firebaseInstance.auth.onAuthStateChanged(authUser => {
       if (authUser) {
         firebaseInstance.firestore
-          .collection(firebaseConfig.firestore.collection.ADMINS)
+          .collection(firebasePath.firestore.collection.ADMINS)
           .doc(authUser.uid)
           .get()
           .then(doc => {

@@ -1,8 +1,7 @@
 import * as firebase from 'firebase/app';
 import UploadTaskSnapshot = firebase.storage.UploadTaskSnapshot; // todo fix this imoprt?
-import firebaseConfig from './enum/firebaseConfig';
 import { ISample } from '../data/interface';
-import { firebaseInstance } from './firebase';
+import { firebaseInstance, firebasePath } from './firebase';
 
 // todo rename, this also removes from storage
 export const removeSampleFromDatabase = (
@@ -11,7 +10,7 @@ export const removeSampleFromDatabase = (
 ) =>
   new Promise((resolve, reject) => {
     const samplesRef = firebaseInstance.firestore.collection(
-      firebaseConfig.firestore.collection.SAMPLES,
+      firebasePath.firestore.collection.SAMPLES,
     );
     const query = samplesRef.where('path', '==', sample.path);
     query.get().then(result => {

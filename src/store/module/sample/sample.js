@@ -1,9 +1,8 @@
 import { loadAudioBuffer } from 'audiobuffer-loader';
-import firebaseConfig from '../../../firebase/enum/firebaseConfig';
 import { removeSampleFromDatabase, uploadToStorage } from '../../../firebase/storageUtils';
 import SampleState from '../../../data/enum/SampleState';
 import { audioContext } from '../../../util/soundUtils';
-import { firebaseInstance } from '../../../firebase/firebase';
+import { firebaseInstance, firebasePath } from '../../../firebase/firebase';
 
 const namespace = 'sample';
 
@@ -100,7 +99,7 @@ export default {
       context.commit(sampleStore.ADD_SAMPLE, sample);
 
       const { userId } = context.rootState.user;
-      const storagePath = `${firebaseConfig.storage.SAMPLES}/${userId}`;
+      const storagePath = `${firebasePath.storage.SAMPLES}/${userId}`;
 
       uploadToStorage(file, storagePath, progress => {
         context.commit(sampleStore.SET_UPLOAD_PROGRESS, { sample, progress });
@@ -112,7 +111,7 @@ export default {
 
         // todo move some of below stuff to util ts file?
         const samplesRef = firebaseInstance.firestore.collection(
-          firebaseConfig.firestore.collection.SAMPLES,
+          firebasePath.firestore.collection.SAMPLES,
         );
         samplesRef.where('path', '==', `${storagePath}/${sample.name}`).onSnapshot(snapshot => {
           if (snapshot.size === 1) {

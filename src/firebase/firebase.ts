@@ -15,3 +15,15 @@ export const firebaseInstance = {
   storage: firebase.storage(),
   auth: firebase.auth(),
 };
+
+export const firebasePath = {
+  firestore: {
+    collection: {
+      ADMINS: 'admins',
+      SAMPLES: 'samples',
+    },
+  },
+  storage: {
+    SAMPLES: 'samples',
+  },
+};
