@@ -1,9 +1,8 @@
 import * as firebase from 'firebase/app';
-import 'firebase/storage';
-import UploadTaskSnapshot = firebase.storage.UploadTaskSnapshot;
-import { db } from './firebaseUtils';
+import UploadTaskSnapshot = firebase.storage.UploadTaskSnapshot; // todo fix this imoprt?
 import firebaseConfig from './enum/firebaseConfig';
 import { ISample } from '../data/interface';
+import { firebaseInstance } from './firebase';
 
 // todo rename, this also removes from storage
 export const removeSampleFromDatabase = (
@@ -11,7 +10,9 @@ export const removeSampleFromDatabase = (
   fileRemovedFromStorageCallback: () => void,
 ) =>
   new Promise((resolve, reject) => {
-    const samplesRef = db.collection(firebaseConfig.firestore.collection.SAMPLES);
+    const samplesRef = firebaseInstance.firestore.collection(
+      firebaseConfig.firestore.collection.SAMPLES,
+    );
     const query = samplesRef.where('path', '==', sample.path);
     query.get().then(result => {
       if (result.size === 1) {
@@ -44,8 +45,7 @@ export const removeSampleFromDatabase = (
 
 export const uploadToStorage = (file: File, path: string, onProgress?: (value: number) => void) =>
   new Promise(resolve => {
-    const storage = firebase.storage();
-    const folderRef = storage.ref(path);
+    const folderRef = firebaseInstance.storage.ref(path);
 
     const fileRef = folderRef.child(file.name);
     const uploadTask = fileRef.put(file);

@@ -1,9 +1,9 @@
 import { loadAudioBuffer } from 'audiobuffer-loader';
 import firebaseConfig from '../../../firebase/enum/firebaseConfig';
 import { removeSampleFromDatabase, uploadToStorage } from '../../../firebase/storageUtils';
-import { db, storage } from '../../../firebase/firebaseUtils';
 import SampleState from '../../../data/enum/SampleState';
 import { audioContext } from '../../../util/soundUtils';
+import { firebaseInstance } from '../../../firebase/firebase';
 
 const namespace = 'sample';
 
@@ -64,7 +64,7 @@ export default {
         return Promise.resolve();
       }
 
-      return storage
+      return firebaseInstance.storage
         .ref(sample.path)
         .getDownloadURL()
         .then(url => loadAudioBuffer(audioContext, url))
@@ -111,7 +111,9 @@ export default {
         });
 
         // todo move some of below stuff to util ts file?
-        const samplesRef = db.collection(firebaseConfig.firestore.collection.SAMPLES);
+        const samplesRef = firebaseInstance.firestore.collection(
+          firebaseConfig.firestore.collection.SAMPLES,
+        );
         samplesRef.where('path', '==', `${storagePath}/${sample.name}`).onSnapshot(snapshot => {
           if (snapshot.size === 1) {
             snapshot.forEach(doc => {

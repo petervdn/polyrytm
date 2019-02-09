@@ -1,6 +1,6 @@
-import * as firebase from 'firebase/app';
 import { mapGetters, mapState } from 'vuex';
 import { userStore } from '../../store/module/user/user';
+import { firebaseInstance } from '../../firebase/firebase';
 
 export default {
   name: 'HeaderBar',
@@ -16,7 +16,7 @@ export default {
   },
   methods: {
     logout() {
-      firebase.auth().signOut();
+      firebaseInstance.auth.signOut(); // todo do something with logout promise? (might fail)
     },
   },
 };
