@@ -17,8 +17,9 @@ firebase.initializeApp({
 
 export const db = firebase.firestore();
 
-export const getSamples = store =>
-  new Promise(resolve => {
+export const getSamples = store => {
+  const startTime = Date.now();
+  return new Promise(resolve => {
     db.collection(firebaseConfig.firestore.collection.SAMPLES)
       .get()
       .then(snapshot => {
@@ -27,10 +28,11 @@ export const getSamples = store =>
           samples.push(doc.data());
         });
         store.dispatch(sampleStore.SET_SAMPLES, samples);
+        console.log(`Loading samples took ${(Date.now() - startTime) / 1000} seconds`);
         resolve();
       });
   });
-
+};
 // todo better name for this method
 export const initUserLogin = store =>
   new Promise(resolve => {
