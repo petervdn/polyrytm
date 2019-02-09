@@ -1,12 +1,15 @@
+import { loadAudioBuffer } from 'audiobuffer-loader';
 import firebaseConfig from '../../../firebase/enum/firebaseConfig';
 import { removeSampleFromDatabase, uploadToStorage } from '../../../firebase/storageUtils';
-import { db } from '../../../firebase/firebaseUtils';
+import { db, storage } from '../../../firebase/firebaseUtils';
 import SampleState from '../../../data/enum/SampleState';
+import { audioContext } from '../../../util/soundUtils';
 
 const namespace = 'sample';
 
 export const sampleStore = {
   SET_SAMPLES: `${namespace}/setSamples`,
+  SET_AUDIOBUFFER: `${namespace}/setAudioBuffer`,
   ADD_SAMPLE: `${namespace}/addSample`,
   UPLOAD_FILE_AS_SAMPLE: `${namespace}/uploadFileAsSample`, // todo better name (should match DELETE_SAMPLE_FROM_DATABASE somewhat)
   SET_UPLOAD_PROGRESS: `${namespace}/setUploadProgress`,
@@ -14,13 +17,18 @@ export const sampleStore = {
   SET_UPLOAD_COMPLETE: `${namespace}/setUploadComplete`,
   DELETE_SAMPLE_FROM_DATABASE: `${namespace}/deleteSampleFromDatabase`,
   REMOVE_SAMPLE: `${namespace}/removeSample`, // todo better name? (delete from store)
+  LOAD_SAMPLE: `${namespace}loadSample`,
 };
 
 export default {
   state: {
-    samples: [],
+    samples: [], // todo make object with keys
   },
   mutations: {
+    [sampleStore.SET_AUDIOBUFFER]: (state, { sample, audioBuffer }) => {
+      // todo get sample from list
+      sample.audioBuffer = audioBuffer;
+    },
     [sampleStore.ADD_SAMPLE]: (state, sample) => {
       // todo check if path exists?
       if (!sample.state) {
@@ -51,6 +59,18 @@ export default {
     },
   },
   actions: {
+    [sampleStore.LOAD_SAMPLE]: (context, sample) => {
+      if (sample.audioBuffer) {
+        return Promise.resolve();
+      }
+
+      return storage
+        .ref(sample.path)
+        .getDownloadURL()
+        .then(url => loadAudioBuffer(audioContext, url))
+        .then(result => result.audioBuffer)
+        .then(audioBuffer => context.commit(sampleStore.SET_AUDIOBUFFER, { sample, audioBuffer }));
+    },
     [sampleStore.SET_SAMPLES]: (context, samples) => {
       samples.forEach(sample => context.commit(sampleStore.ADD_SAMPLE, sample));
     },

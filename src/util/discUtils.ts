@@ -66,8 +66,7 @@ export function createDefaultRing(disc: IDisc): IRing {
   return ring;
 }
 
-// todo rename to create discsound
-export function createSound(sample: ISample): IDiscSound {
+export function createDiscSound(sample: ISample): IDiscSound {
   return {
     sample,
     slices: [],

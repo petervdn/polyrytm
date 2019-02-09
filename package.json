@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
+    "audiobuffer-loader": "^1.0.3",
     "axios": "^0.18.0",
     "core-js": "^2.4.1",
     "detect-port": "^1.2.1",

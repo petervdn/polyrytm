@@ -1,4 +1,4 @@
-import { mapState, mapActions, mapMutations, mapGetters } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
 import SampleLoader from '../SampleLoader';
 import { discStore } from '../../store/module/disc/disc';
 import { notificationStore } from '../../store/module/notification/notification';
@@ -15,48 +15,21 @@ export default {
       selectedSampleIndex: -1,
     };
   },
-  watch: {
-    selectedDisc() {
-      this.selectedSampleIndex = this.samples.indexOf(this.selectedDisc.sound.sample);
-    },
-  },
   methods: {
     onSelectChange(event) {
       const index = parseInt(event.target.value, 10);
 
-      if (index === -1) {
-        // deselect sample
-        // this.setSampleForDisc({ disc: this.selectedDisc, sample: null });
-      } else {
-        // select a sample
-        const sample = this.samples[index];
-        if (!sample.audioBuffer) {
-          // sample needs to be loaded, show notification
-          this.showNotification({
-            // todo switch to notivuecation (needs a way to hide from outside)
-            progress: 0,
-            title: 'Loading...',
-            message: `Sample: ${sample.name}`,
-          });
-        }
-        this.addSampleToDisc({
-          sample,
-          disc: this.selectedDisc,
-          onProgress: value => {
-            // todo dont pass this when not loading?
-            this.setNotificationProgress(value);
-          },
-        });
-      }
+      if (index === -1) return; // nothing selected
+
+      // todo sample is loaded again when leaving editor? (probably because waveform is redrawn)
+      const sample = this.samples[index];
+      this.addSampleToDisc({ disc: this.selectedDisc, sample }); // todo immediately add, then load?
+      // todo check if this sound hasnt been added yet (or should that be possible?)
     },
     ...mapActions({
-      setSampleForDisc: discStore.SET_SAMPLE_FOR_DISC, // todo what are the diffs between these 2 actions
       addSampleToDisc: discStore.ADD_SAMPLE_TO_DISC,
       showNotification: notificationStore.actions.showNotification,
       hideNotification: notificationStore.actions.hideNotification,
-    }),
-    ...mapMutations({
-      setNotificationProgress: notificationStore.mutations.setNotificationProgress,
     }),
   },
   computed: {

@@ -1,5 +1,5 @@
-import { loadSample } from '../../../util/soundUtils';
-import { createDefaultDisc, createRingItem, createSound } from '../../../util/discUtils';
+// import { loadSample } from '../../../util/soundUtils';
+import { createDefaultDisc, createDiscSound, createRingItem } from '../../../util/discUtils';
 import { interactionStore } from '../interaction/interaction';
 import { constants } from '../../../data/constants';
 import { sampleStore } from '../sample/sample';
@@ -10,7 +10,7 @@ export const discStore = {
   SET_RING_ITEM_VOLUME: `${namespace}/setRingItemVolume`,
   ADD_DISC: `${namespace}/addDisc`,
   ADD_SOUND_TO_DISC: `${namespace}/addSoundToDisc`,
-  SET_AUDIO_BUFFER: `${namespace}/setAudioBuffer`, // move to sample store?
+  // SET_AUDIO_BUFFER: `${namespace}/setAudioBuffer`, // move to sample store?
   SET_RING_VOLUMES: `${namespace}/setRingVolumes`,
   ADD_RING: `${namespace}/addRing`,
   TOGGLE_SLICE_IN_RING: `${namespace}/toggleSliceInRing`,
@@ -23,7 +23,7 @@ export const discStore = {
   UPDATE: `${namespace}/update`, // todo remove
   CLEAR_DISCS_AND_SELECTIONS: `${namespace}/clearDiscsAndSelections`, // todo what is this compared to clearDiscs?
   INIT_DISCS: `${namespace}/initDiscs`, // a
-  SET_SAMPLE_FOR_DISC: `${namespace}/setSampleForDisc`, // a
+  // SET_SAMPLE_FOR_DISC: `${namespace}/setSampleForDisc`, // a
   SET_LOADED_DISCS: `${namespace}/setLoadedDiscs`, // a
   REMOVE_DISC: `${namespace}/removeDisc`, // a
   ADD_SAMPLE_TO_DISC: `${namespace}/addSampleToDisc`, // a
@@ -36,6 +36,7 @@ export default {
   getters: {},
   mutations: {
     [discStore.ADD_SOUND_TO_DISC]: (state, payload) => {
+      // todo find disc on state
       payload.disc.sounds.push(payload.sound);
     },
     [discStore.SET_RING_ITEM_VOLUME]: (state, payload) => {
@@ -57,10 +58,10 @@ export default {
       // no payload adds a default disc
       state.discs.push(disc);
     },
-    [discStore.SET_AUDIO_BUFFER]: (state, payload) => {
-      // todo move to sample store
-      payload.sample.audioBuffer = payload.audioBuffer;
-    },
+    // [discStore.SET_AUDIO_BUFFER]: (state, payload) => {
+    //   // todo move to sample store
+    //   payload.sample.audioBuffer = payload.audioBuffer;
+    // },
     [discStore.SET_RING_VOLUMES]: (state, payload) => {
       if (payload.ring.items.length !== payload.volumes.length) {
         throw new Error('Number of volumes doesnt match ring');
@@ -140,9 +141,9 @@ export default {
         // we already have the number of rings that is requested
       }
     },
-    [discStore.SET_SAMPLE_FOR_DISC]: (state, payload) => {
-      payload.disc.sound.sample = payload.sample;
-    },
+    // [discStore.SET_SAMPLE_FOR_DISC]: (state, payload) => {
+    //   payload.disc.sound.sample = payload.sample;
+    // },
     [discStore.REMOVE_RING]: () => {
       console.log('todo');
       // state.discs.forEach(disc => {
@@ -172,23 +173,23 @@ export default {
       context.commit(discStore.ADD_DISC, disc);
       context.commit(interactionStore.SET_SELECTION, disc, { root: true });
     },
-    [discStore.SET_SAMPLE_FOR_DISC]: (context, payload) => {
-      const { sample } = payload;
-
-      if (!sample) {
-        // deselect a sample todo create a remove sample action?
-        context.commit(discStore.SET_SAMPLE_FOR_DISC, payload);
-        return Promise.resolve();
-      }
-
-      return loadSample(sample, payload.onProgress).then(audioBuffer => {
-        context.commit(discStore.SET_AUDIO_BUFFER, {
-          sample,
-          audioBuffer,
-        });
-        context.commit(discStore.SET_SAMPLE_FOR_DISC, payload);
-      });
-    },
+    // [discStore.SET_SAMPLE_FOR_DISC]: (context, payload) => {
+    //   const { sample } = payload;
+    //
+    //   if (!sample) {
+    //     // deselect a sample todo create a remove sample action?
+    //     context.commit(discStore.SET_SAMPLE_FOR_DISC, payload);
+    //     return Promise.resolve();
+    //   }
+    //
+    //   return loadSample(sample, payload.onProgress).then(audioBuffer => {
+    //     context.commit(discStore.SET_AUDIO_BUFFER, {
+    //       sample,
+    //       audioBuffer,
+    //     });
+    //     context.commit(discStore.SET_SAMPLE_FOR_DISC, payload);
+    //   });
+    // },
     [discStore.SET_LOADED_DISCS]: (context, discs) => {
       context.commit(discStore.CLEAR_DISCS_AND_SELECTIONS);
 
@@ -217,19 +218,10 @@ export default {
       }
     },
     [discStore.ADD_SAMPLE_TO_DISC]: (context, payload) =>
-      loadSample(payload.sample, payload.onProgress).then(audioBuffer => {
-        context.commit(
-          sampleStore.mutations.setAudioBuffer,
-          {
-            audioBuffer,
-            sample: payload.sample,
-          },
-          { root: true },
-        );
-
+      context.dispatch(sampleStore.LOAD_SAMPLE, payload.sample).then(() => {
         context.commit(discStore.ADD_SOUND_TO_DISC, {
           disc: payload.disc,
-          sound: createSound(payload.sample, payload.disc),
+          sound: createDiscSound(payload.sample),
         });
       }),
   },

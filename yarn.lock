@@ -627,6 +627,13 @@
   dependencies:
     regenerator-runtime "^0.12.0"
 
+"@babel/runtime@^7.0.0-beta.35":
+  version "7.3.1"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.3.1.tgz#574b03e8e8a9898eaf4a872a92ea20b7846f6f2a"
+  integrity sha512-7jGW8ppV0ant637pIqAcFfQDDH1orEPGJb8aXfUozuCU3QqX7rX4DA8iwrbPrR1hcH0FTTHz47yQnk+bl5xHQA==
+  dependencies:
+    regenerator-runtime "^0.12.0"
+
 "@babel/template@^7.1.0", "@babel/template@^7.1.2":
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.1.2.tgz#090484a574fef5a2d2d7726a674eceda5c5b5644"
@@ -1298,6 +1305,13 @@ asynckit@^0.4.0:
 atob@^2.1.1:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
+
+audiobuffer-loader@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/audiobuffer-loader/-/audiobuffer-loader-1.0.3.tgz#8a09b1943ebc279b8ef4b9fb7d21eb97a54eab98"
+  integrity sha512-M2FtAJVvAQLmbhVFZ+/LDk8SD5eW271+YJpo92h/2RUxFtG1fqI7plxfI9YFmY94NCXukPmzCwptiM0s1EGviw==
+  dependencies:
+    "@babel/runtime" "^7.0.0-beta.35"
 
 autolinker@~0.15.0:
   version "0.15.3"

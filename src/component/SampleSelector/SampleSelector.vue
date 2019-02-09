@@ -8,7 +8,7 @@
       v-model="selectedSampleIndex"
       @change="onSelectChange"
     >
-      <option value="-1">Select a sample for this disc</option>
+      <option value="-1">Add a sample to this disc</option>
       <option
         v-for="(sample, index) in samples"
         :value="index"

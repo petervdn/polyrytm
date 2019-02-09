@@ -7,6 +7,8 @@ import firebaseConfig from './enum/firebaseConfig';
 import { sampleStore } from '../store/module/sample/sample';
 
 // todo rename to firestore utils? and split up into auth utils?
+// todo make TS file
+// todo look at what's in storageutils
 
 firebase.initializeApp({
   apiKey: 'AIzaSyBWrdFVFh_NQXVQT5PA6y330n82ner3VbI', // todo move to startup and set props in config (so we can have a staging)
@@ -15,7 +17,8 @@ firebase.initializeApp({
   storageBucket: 'polyrytm.appspot.com',
 });
 
-export const db = firebase.firestore();
+export const db = firebase.firestore(); // todo better name
+export const storage = firebase.storage(); // todo check if all of these are used everywhere
 
 export const getSamples = store => {
   const startTime = Date.now();

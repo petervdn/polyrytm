@@ -33,7 +33,7 @@ export interface IRing extends IInteractable {
 
 export interface IDisc extends IInteractable {
   rings: IRing[];
-  sound: IDiscSound; // todo why single en multiple?
+  sound: IDiscSound; // todo why single en multiple? probably remove single one
   sounds: IDiscSound[];
 }
 
