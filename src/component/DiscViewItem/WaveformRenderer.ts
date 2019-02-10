@@ -235,6 +235,7 @@ export default class WaveformRenderer extends AbstractRenderer {
         this.sizeData.waveformInnerRadius.pixels,
         this.sizeData.rotateOffset,
         'white',
+        this.disc.sounds[i].sample.normalizeFactor,
       );
     }
   }

@@ -3,6 +3,7 @@ import SampleState from '../../../data/enum/SampleState';
 import { audioContext } from '../../../util/soundUtils';
 import { firebaseInstance, firebasePath } from '../../../firebase/firebase';
 import { removeSampleFromDatabase, uploadToStorage } from '../../../util/firebase/storageUtils';
+import { getNormalizeFactorForSample } from '../../../util/sampleUtils';
 
 const namespace = 'sample';
 
@@ -17,6 +18,7 @@ export const sampleStore = {
   DELETE_SAMPLE_FROM_DATABASE: `${namespace}/deleteSampleFromDatabase`,
   REMOVE_SAMPLE: `${namespace}/removeSample`, // todo better name? (delete from store)
   LOAD_SAMPLE: `${namespace}loadSample`,
+  SET_NORMALIZE_FACTOR: `${namespace}/setNormalizeFactor`,
 };
 
 export default {
@@ -24,6 +26,11 @@ export default {
     samples: [], // todo make object with keys
   },
   mutations: {
+    [sampleStore.SET_NORMALIZE_FACTOR]: (state, { sample, factor }) => {
+      // todo get sample from list
+      // todo maybe store this value in database
+      sample.normalizeFactor = factor;
+    },
     [sampleStore.SET_AUDIOBUFFER]: (state, { sample, audioBuffer }) => {
       // todo get sample from list
       sample.audioBuffer = audioBuffer;
@@ -68,7 +75,13 @@ export default {
         .getDownloadURL()
         .then(url => loadAudioBuffer(audioContext, url))
         .then(result => result.audioBuffer)
-        .then(audioBuffer => context.commit(sampleStore.SET_AUDIOBUFFER, { sample, audioBuffer }));
+        .then(audioBuffer => context.commit(sampleStore.SET_AUDIOBUFFER, { sample, audioBuffer }))
+        .then(() =>
+          context.commit(sampleStore.SET_NORMALIZE_FACTOR, {
+            sample,
+            factor: getNormalizeFactorForSample(sample),
+          }),
+        );
     },
     [sampleStore.SET_SAMPLES]: (context, samples) => {
       samples.forEach(sample => context.commit(sampleStore.ADD_SAMPLE, sample));

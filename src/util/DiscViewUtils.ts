@@ -31,7 +31,7 @@ export const getSizeData = (element: HTMLElement): ISizeData => {
   // these are all factors (between 0-1)
   const outerMargin = { factor: 0, pixels: 0 };
   const waveformOuterRadius = { factor: 1 - outerMargin.factor, pixels: 0 };
-  const waveformSize = { factor: 0.3, pixels: 0 };
+  const waveformSize = { factor: 0.1, pixels: 0 };
   const waveformInnerRadius = {
     factor: waveformOuterRadius.factor - waveformSize.factor,
     pixels: 0,

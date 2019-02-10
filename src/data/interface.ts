@@ -136,4 +136,5 @@ export interface ISample extends ISampleInDatabase {
   state?: string; // SampleState
   uploadProgress: number;
   audioBuffer?: AudioBuffer;
+  normalizeFactor: number; // set after loading, so we can always draw the best looking wave
 }
