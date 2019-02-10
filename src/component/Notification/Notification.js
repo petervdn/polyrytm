@@ -43,6 +43,9 @@ export default {
     },
   },
   computed: {
-    ...mapState('notification', ['notification']),
+    // ...mapState('notification', ['notification']),
+    ...mapState({
+      notification: state => state.notification.notification,
+    }),
   },
 };

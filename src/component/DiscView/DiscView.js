@@ -37,7 +37,7 @@ export default {
     },
     updatePositions(immediate) {
       if (this.discs.length === 0) {
-        // on init
+        // on init todo on init we now have 1
         return;
       }
 

@@ -8,8 +8,8 @@ export default {
     ...mapGetters({
       isLoggedIn: userStore.IS_LOGGED_IN,
     }),
-    ...mapState('theme', ['activeTheme']),
     ...mapState({
+      theme: state => state.theme.activeTheme,
       userId: state => state.user.userId,
       isAdmin: state => state.user.isAdmin,
     }),

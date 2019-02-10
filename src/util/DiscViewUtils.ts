@@ -17,7 +17,7 @@ export const createCanvas = (width: number, height: number, cssProps?: any): HTM
 };
 
 // todo rename sizedata? and also: function instead of const
-export const getSizeData: (element: HTMLElement) => ISizeData = (element: HTMLElement) => {
+export const getSizeData = (element: HTMLElement): ISizeData => {
   const rect = element.getBoundingClientRect();
   const size = { width: rect.width, height: rect.height };
   const squareSize = Math.min(size.width, size.height);
@@ -29,9 +29,9 @@ export const getSizeData: (element: HTMLElement) => ISizeData = (element: HTMLEl
   };
 
   // these are all factors (between 0-1)
-  const outerMargin = { factor: 0.0, pixels: 0 };
+  const outerMargin = { factor: 0, pixels: 0 };
   const waveformOuterRadius = { factor: 1 - outerMargin.factor, pixels: 0 };
-  const waveformSize = { factor: 0.1, pixels: 0 };
+  const waveformSize = { factor: 0.3, pixels: 0 };
   const waveformInnerRadius = {
     factor: waveformOuterRadius.factor - waveformSize.factor,
     pixels: 0,

@@ -77,6 +77,9 @@ export default {
       selectedDisc: interactionStore.GET_SELECTED_DISC,
       selectedRing: interactionStore.GET_SELECTED_RING,
     }),
-    ...mapState('interaction', ['selection']),
+    // ...mapState('interaction', ['selection']), todo does below replacemenet work?
+    ...mapState({
+      selection: state => state.interaction.selection,
+    }),
   },
 };

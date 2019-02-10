@@ -19,6 +19,7 @@ import Scheduler from '../../audio/Scheduler';
 import { interactionStore } from '../../store/module/interaction/interaction';
 
 export default class WaveformRenderer extends AbstractRenderer {
+  // todo describe these
   private originalWaveformCanvas: HTMLCanvasElement;
   private originalWaveformContext: CanvasRenderingContext2D;
   private resultingWaveformCanvas: HTMLCanvasElement;
