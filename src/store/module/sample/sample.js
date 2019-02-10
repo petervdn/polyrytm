@@ -1,8 +1,8 @@
 import { loadAudioBuffer } from 'audiobuffer-loader';
-import { removeSampleFromDatabase, uploadToStorage } from '../../../firebase/storageUtils';
 import SampleState from '../../../data/enum/SampleState';
 import { audioContext } from '../../../util/soundUtils';
 import { firebaseInstance, firebasePath } from '../../../firebase/firebase';
+import { removeSampleFromDatabase, uploadToStorage } from '../../../util/firebase/storageUtils';
 
 const namespace = 'sample';
 

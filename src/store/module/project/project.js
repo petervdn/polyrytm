@@ -1,5 +1,3 @@
-import { storeRytm } from '../../../firebase/firebaseUtils';
-
 const namespace = 'project';
 
 export const projectStore = {
@@ -46,7 +44,7 @@ export default {
         });
       });
 
-      storeRytm(data, true, context.rootState.user.user);
+      // storeRytm(data, true, context.rootState.user.user);
     },
     // [projectStore.local.actions.setLoadedProject]: (context, projectData) => {
     // 	context.commit(projectStore.local.mutations.updateName, projectData.project.name);

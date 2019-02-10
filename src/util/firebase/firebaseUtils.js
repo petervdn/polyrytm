@@ -1,50 +1,22 @@
-import { userStore } from '../store/module/user/user';
-import { sampleStore } from '../store/module/sample/sample';
-import { firebaseInstance, firebasePath } from './firebase';
-
-// todo rename to firestore utils? and split up into auth utils?
-// todo make TS file
 // todo look at what's in storageutils
-
-export const getSamples = store => {
-  const startTime = Date.now();
-  return new Promise(resolve => {
-    firebaseInstance.firestore
-      .collection(firebasePath.firestore.collection.SAMPLES)
-      .get()
-      .then(snapshot => {
-        const samples = [];
-        snapshot.forEach(doc => {
-          samples.push(doc.data());
-        });
-        store.dispatch(sampleStore.SET_SAMPLES, samples);
-        console.log(`Loading samples took ${(Date.now() - startTime) / 1000} seconds`);
-        resolve();
-      });
-  });
-};
-// todo better name for this method
-export const initUserLogin = store =>
-  new Promise(resolve => {
-    // listen to auth state changes. this listener will stay active (so when user logs out later, this is called)
-    firebaseInstance.auth.onAuthStateChanged(authUser => {
-      if (authUser) {
-        firebaseInstance.firestore
-          .collection(firebasePath.firestore.collection.ADMINS)
-          .doc(authUser.uid)
-          .get()
-          .then(doc => {
-            store.commit(userStore.SET_IS_ADMIN, doc.exists);
-            store.commit(userStore.SET_USER_ID, authUser.uid);
-            resolve();
-          });
-      } else {
-        // user is not logged in (or logs out)
-        store.commit(userStore.SET_USER_ID, null);
-        resolve();
-      }
-    });
-  });
+//
+// export const getSamples = store => {
+//   const startTime = Date.now();
+//   return new Promise(resolve => {
+//     firebaseInstance.firestore
+//       .collection(firebasePath.firestore.collection.SAMPLES)
+//       .get()
+//       .then(snapshot => {
+//         const samples = [];
+//         snapshot.forEach(doc => {
+//           samples.push(doc.data());
+//         });
+//         store.dispatch(sampleStore.SET_SAMPLES, samples);
+//         console.log(`Loading samples took ${(Date.now() - startTime) / 1000} seconds`);
+//         resolve();
+//       });
+//   });
+// };
 
 /**
  * Stores a rytm in the firebase database. Can be connected to a user, or anonymous (user = null),
@@ -52,6 +24,7 @@ export const initUserLogin = store =>
  * @param user
  */
 export const storeRytm = () => {}; // todo
+export const storeRytm2 = () => {}; // todo
 // export const storeRytm = (rytm, isPublic, user) =>
 // new Promise((resolve, reject) => {
 //   const authUser = firebaseInstance.auth.currentUser;
@@ -114,16 +87,3 @@ export const storeRytm = () => {}; // todo
 //     });
 // });
 //
-// export const loadPublicSamples = store =>
-//   new Promise(resolve => {
-//     getFirebaseValue(firebasePath.database.PUBLIC_SAMPLES).then(samplesObject => {
-//       const samples = Object.keys(samplesObject).map(key => ({
-//         name: samplesObject[key].name,
-//         path: `${samplesObject[key].path}/${samplesObject[key].name}`,
-//         // uri: samplesObject[key].link, todo remove link in database and set full path there
-//       }));
-//
-//       store.commit(sampleStore.mutations.setSamples, samples);
-//       resolve();
-//     });
-//   });

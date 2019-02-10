@@ -1,7 +1,7 @@
 import * as firebase from 'firebase/app';
-import UploadTaskSnapshot = firebase.storage.UploadTaskSnapshot; // todo fix this imoprt?
-import { ISample } from '../data/interface';
-import { firebaseInstance, firebasePath } from './firebase';
+import UploadTaskSnapshot = firebase.storage.UploadTaskSnapshot; // todo fix this import?
+import { ISample } from '../../data/interface';
+import { firebaseInstance, firebasePath } from '../../firebase/firebase';
 
 // todo rename, this also removes from storage
 export const removeSampleFromDatabase = (
@@ -25,7 +25,7 @@ export const removeSampleFromDatabase = (
         });
 
         // remove file from store (will trigger cloud function)
-        const storageRef = firebase.storage().ref();
+        const storageRef = firebaseInstance.storage.ref();
         storageRef
           .child(sample.path)
           .delete()

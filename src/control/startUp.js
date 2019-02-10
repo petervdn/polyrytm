@@ -13,7 +13,8 @@ import localeLoader from '../util/localeLoader';
 import { mediaQueries, deviceState } from '../data/mediaQueries.json';
 import waitForStyleSheetsLoaded from '../util/waitForStyleSheetsLoaded';
 import { setupSchedulerStoreCommunication } from '../audio/Scheduler';
-import { initUserLogin, getSamples } from '../firebase/firebaseUtils';
+import { initUserLogin } from '../util/firebase/authUtils';
+import { getSamples } from '../util/firebase/firestoreUtils';
 
 const initPlugins = () => {
   const configManager = getValue(CONFIG_MANAGER);
