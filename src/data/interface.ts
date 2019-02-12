@@ -10,13 +10,10 @@ export interface IPoint {
   y: number;
 }
 
-export interface IBasicRingItem extends IInteractable {
+export interface IRingItem extends IInteractable {
   ring: IRing;
   volume: number;
   index: number;
-}
-// todo explain these two
-export interface IRingItem extends IBasicRingItem {
   lastScheduledRevolution: number;
 }
 
@@ -45,8 +42,7 @@ export interface IDiscSound extends IInteractable {
 
 // todo rename discsoundslice?
 export interface ISoundSlice extends IInteractable {
-  // disc: IDisc; // todo why is this one here? probably to check interation stuff? see waveformrenderer:  (<ISoundSlice>highlight).disc === this.disc
-  discSound: IDiscSound; // todo discSound should be here instead of disc (we can reach discSOund, discSound has disc)
+  discSound: IDiscSound;
   startFactor: number;
   nextSlice: ISoundSlice; // ref to the next slice (null on last)
 }
@@ -85,7 +81,7 @@ export interface IStore {
   state: IStoreState;
   getters: { [key: string]: any };
   commit: (type: string, data?: any) => void;
-  dispatch: (type: string, data?: any) => void; // todo returns promise
+  dispatch: (type: string, data?: any) => Promise<any>;
   watch: (
     state: (state: IStoreState, getters?: any) => any,
     handler: (newValue: any, oldValue?: any) => void,

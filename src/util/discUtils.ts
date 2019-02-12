@@ -1,5 +1,4 @@
 import {
-  IBasicRingItem,
   IDisc,
   IDiscSound,
   IInteractable,
