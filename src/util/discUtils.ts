@@ -76,7 +76,6 @@ export const createDefaultDiscSound = (disc: IDisc, sample: ISample): IDiscSound
 
   discSound.slices.push({
     discSound,
-    disc, // todo remove here & in interface
     nextSlice: null,
     type: InteractableType.SLICE,
     startFactor: 0,
@@ -159,7 +158,7 @@ export function getDiscForInteractable(item: IInteractable): IDisc {
   if (item) {
     switch (item.type) {
       case InteractableType.SLICE: {
-        return (<ISoundSlice>item).disc;
+        return (<ISoundSlice>item).discSound.disc;
       }
       case InteractableType.RING_ITEM: {
         return (<IRingItem>item).ring.disc;

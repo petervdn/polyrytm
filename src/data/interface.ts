@@ -45,7 +45,7 @@ export interface IDiscSound extends IInteractable {
 
 // todo rename discsoundslice?
 export interface ISoundSlice extends IInteractable {
-  disc: IDisc; // todo why is this one here? probably to check interation stuff? see waveformrenderer:  (<ISoundSlice>highlight).disc === this.disc
+  // disc: IDisc; // todo why is this one here? probably to check interation stuff? see waveformrenderer:  (<ISoundSlice>highlight).disc === this.disc
   discSound: IDiscSound; // todo discSound should be here instead of disc (we can reach discSOund, discSound has disc)
   startFactor: number;
   nextSlice: ISoundSlice; // ref to the next slice (null on last)

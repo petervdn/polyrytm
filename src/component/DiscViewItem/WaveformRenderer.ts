@@ -182,6 +182,7 @@ export default class WaveformRenderer extends AbstractRenderer {
     );
 
     if (this.disc.sound.sample) {
+      // todo we now have sounds (REMOVE .SOUND!!)
       // we dont have a buffered canvas for the slices, probably faster to just draw these few lines every time
       drawSliceEdgeMarkers(this.context, this.sizeData, this.disc.sound.slices);
     }
@@ -191,7 +192,7 @@ export default class WaveformRenderer extends AbstractRenderer {
     if (
       highlight &&
       highlight.type === InteractableType.SLICE &&
-      (<ISoundSlice>highlight).disc === this.disc
+      (<ISoundSlice>highlight).discSound.disc === this.disc
     ) {
       drawHighlightSlice(
         this.context,
