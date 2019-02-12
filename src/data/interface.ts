@@ -21,7 +21,7 @@ export interface IRingItem extends IBasicRingItem {
 }
 
 export interface IInteractable {
-  type: InteractableType;
+  type: InteractableType; // todo rename type -> interactableType? (so it shows when we see that object what type prop is)
 }
 
 export interface IRing extends IInteractable {
@@ -44,7 +44,7 @@ export interface IDiscSound {
 
 // todo rename discsoundslice?
 export interface ISoundSlice extends IInteractable {
-  disc: IDisc;
+  disc: IDisc; // todo why is this one here? probably to check interation stuff? see waveformrenderer:  (<ISoundSlice>highlight).disc === this.disc
   startFactor: number;
   nextSlice: ISoundSlice; // ref to the next slice (null on last)
 }

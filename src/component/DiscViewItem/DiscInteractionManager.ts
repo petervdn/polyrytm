@@ -39,7 +39,7 @@ export default class DiscInteractionManager extends EventDispatcher {
 
     this.element.addEventListener('mousemove', this.onMouseMove);
     this.element.addEventListener('mouseleave', this.onMouseLeave);
-    this.element.addEventListener('mouseup', this.onMouseUp); // mouseup instead of click, so we can both drag and click
+    this.element.addEventListener('mouseup', this.onMouseUp); // mouseup instead of click, so we can both drag and click todo what??
     this.element.addEventListener('mousedown', this.onMouseDown);
   }
 
@@ -52,6 +52,7 @@ export default class DiscInteractionManager extends EventDispatcher {
     this.sizeData = sizeData;
   }
 
+  // todo what does this do exactly -> add description (probably rename into something like: find highlight for position)
   private updateHighlight(): void {
     if (this.isDraggingAValue) {
       return;
@@ -63,7 +64,7 @@ export default class DiscInteractionManager extends EventDispatcher {
     );
 
     if (!this.store.state.interaction.selection) {
-      // nothing selected => overview
+      // nothing selected => overview todo does this also trigger when outside disc?
       this.setHighlight(this.disc);
     } else if (distanceToCenterFactor > this.sizeData.waveformOuterRadius.factor) {
       // outside waveform

@@ -1,5 +1,5 @@
 // import { loadSample } from '../../../util/soundUtils';
-import { createDefaultDisc, createDiscSound, createRingItem } from '../../../util/discUtils';
+import { createDefaultDisc, createDefaultDiscSound, createRingItem } from '../../../util/discUtils';
 import { interactionStore } from '../interaction/interaction';
 import { constants } from '../../../data/constants';
 import { sampleStore } from '../sample/sample';
@@ -35,6 +35,7 @@ export default {
   mutations: {
     [discStore.ADD_SOUND_TO_DISC]: (state, payload) => {
       // todo find disc on state
+      console.log(payload);
       payload.disc.sounds.push(payload.sound);
     },
     [discStore.SET_RING_ITEM_VOLUME]: (state, payload) => {
@@ -191,12 +192,12 @@ export default {
         });
       }
     },
-    [discStore.ADD_SAMPLE_TO_DISC]: (context, payload) => {
+    [discStore.ADD_SAMPLE_TO_DISC]: (context, { disc, sample }) => {
       context.commit(discStore.ADD_SOUND_TO_DISC, {
-        disc: payload.disc,
-        sound: createDiscSound(payload.sample),
+        disc,
+        sound: createDefaultDiscSound(disc, sample),
       });
-      context.dispatch(sampleStore.LOAD_SAMPLE, payload.sample);
+      context.dispatch(sampleStore.LOAD_SAMPLE, sample);
     },
   },
 };

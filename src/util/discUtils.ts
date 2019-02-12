@@ -66,28 +66,26 @@ export function createDefaultRing(disc: IDisc): IRing {
   return ring;
 }
 
-export function createDiscSound(sample: ISample): IDiscSound {
+// export function createDiscSound(sample: ISample): IDiscSound {
+//   return {
+//     sample,
+//     slices: [],
+//   };
+// }
+
+export const createDefaultDiscSound = (disc: IDisc, sample: ISample): IDiscSound => {
   return {
     sample,
-    slices: [],
+    slices: [
+      {
+        disc,
+        nextSlice: null,
+        type: InteractableType.SLICE,
+        startFactor: 0,
+      },
+    ],
   };
-}
-
-function createDefaultSound(disc: IDisc): IDiscSound {
-  const sound: IDiscSound = {
-    sample: null,
-    slices: [],
-  };
-
-  sound.slices.push({
-    disc,
-    nextSlice: null,
-    type: InteractableType.SLICE,
-    startFactor: 0,
-  });
-
-  return sound;
-}
+};
 
 /**
  * Based on the positions of the slices (which devide the 0-1 range into parts), return the slice fora given factor
@@ -121,7 +119,7 @@ export function createDefaultDisc(): IDisc {
   };
 
   // both rings and slices need references to the parent disc
-  disc.sound = createDefaultSound(disc);
+  disc.sound = createDefaultDiscSound(disc, null); // todo remove this
   disc.rings.push(createDefaultRing(disc));
 
   return disc;

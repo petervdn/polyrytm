@@ -56,7 +56,7 @@ export default class WaveformRenderer extends AbstractRenderer {
       ),
     );
 
-    // watch slices
+    // watch slices todo watches unused sond property (now soundS)
     this.storeWatchDestructors.push(
       this.store.watch(
         () => this.disc.sound.slices,
