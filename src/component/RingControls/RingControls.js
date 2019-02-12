@@ -1,5 +1,4 @@
 import { mapState, mapGetters, mapMutations } from 'vuex';
-import SampleSelector from '../SampleSelector';
 import { interactionStore } from '../../store/module/interaction/interaction';
 import { discStore } from '../../store/module/disc/disc';
 import { GlobalEvent, globalEventBus } from '../../data/globalEvents';
@@ -7,9 +6,6 @@ import { generateVolumes } from '../../util/ringUtils';
 
 export default {
   name: 'RingControls',
-  components: {
-    SampleSelector,
-  },
   mounted() {},
   data() {
     return {

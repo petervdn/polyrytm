@@ -1,6 +1,6 @@
 import { mapState, mapMutations, mapGetters, mapActions } from 'vuex';
-import SampleSelector from '../SampleSelector';
-import DiscSound from '../DiscSound';
+
+import DiscSoundSelector from '../DiscSoundSelector';
 import { discStore } from '../../store/module/disc/disc';
 import { createSlices } from '../../util/discUtils';
 import { interactionStore } from '../../store/module/interaction/interaction';
@@ -10,8 +10,7 @@ import { appStore } from '../../store/module/app/app';
 export default {
   name: 'DiscControls',
   components: {
-    SampleSelector,
-    DiscSound,
+    DiscSoundSelector,
   },
   computed: {
     ...mapState({
