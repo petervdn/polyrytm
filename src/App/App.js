@@ -70,7 +70,8 @@ export default {
  - flashes when slices play
  - optimize schedule stuff
  - play button
-
+ - check all props (vuetypes)
+- sample packs
  - upload samples
  - examples
  - upvotes (needs login)

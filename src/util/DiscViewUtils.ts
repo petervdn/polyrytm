@@ -16,7 +16,7 @@ export const createCanvas = (width: number, height: number, cssProps?: any): HTM
   return canvas;
 };
 
-// todo rename sizedata? and also: function instead of const
+// todo rename sizedata?
 export const getSizeData = (element: HTMLElement): ISizeData => {
   const rect = element.getBoundingClientRect();
   const size = { width: rect.width, height: rect.height };

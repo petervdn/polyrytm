@@ -30,3 +30,30 @@ export function drawArcPath(
     centerY + Math.sin(startRadians) * outerRadius,
   );
 }
+
+export const circularText = (
+  context: CanvasRenderingContext2D,
+  text: string,
+  font: string,
+  x: number,
+  y: number,
+  radius: number,
+  space: number = 0,
+) => {
+  context.textAlign = 'center';
+  context.textBaseline = !top ? 'top' : 'bottom';
+  context.font = font;
+
+  const numRadsPerLetter = (Math.PI - space * 2) / text.length;
+  context.save();
+  context.translate(x, y);
+  const k = 1;
+  context.rotate(-k * ((Math.PI - numRadsPerLetter) / 2 - space));
+  for (let i = 0; i < text.length; i += 1) {
+    context.save();
+    context.rotate(k * i * numRadsPerLetter);
+    context.fillText(text[i], 0, -k * radius);
+    context.restore();
+  }
+  context.restore();
+};

@@ -41,6 +41,7 @@ export default {
         sample.state = SampleState.READY;
       }
 
+      sample.audioBuffer = undefined; // already set this, otherwise the prop is not reactive
       state.samples.push(sample);
     },
     [sampleStore.SET_UPLOAD_PROGRESS]: (state, { sample, progress }) => {

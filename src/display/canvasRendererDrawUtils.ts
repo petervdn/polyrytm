@@ -198,7 +198,7 @@ export function drawWaveformCanvas(
     return;
   }
   // tslint:disable-next-line
-  console.log('draw');
+  // console.error('draw');
   const steps = buffer.length;
   const channelData = getChannelDataToDraw(buffer);
 

@@ -10,7 +10,7 @@
     flex-direction: column;
 
     .routerContent {
-      flex-grow: 0;
+      // flex-grow: 0;
       flex: 0 0 400px;
       width: 800px;
       margin: 0 auto;
@@ -23,7 +23,7 @@
         flex-grow: 1;
       }
       .routerContent {
-        flex-grow: 0;
+        // flex-grow: 0;
         flex: 0 0 500px;
       }
     }

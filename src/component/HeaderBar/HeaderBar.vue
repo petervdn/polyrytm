@@ -16,8 +16,7 @@
           params: { [Params.USER_ID]: userId },
         }"
       >
-        profile
-      </router-link>
+        profile</router-link>
       <router-link
         v-if="isAdmin"
         :to="{ name: RouteNames.SAMPLES }"

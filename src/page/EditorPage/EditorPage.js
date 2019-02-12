@@ -13,6 +13,7 @@ const MenuItems = {
   MIXER: 'mixer',
   THEME: 'theme',
   SHARE: 'share',
+  SAMPLE: 'sample',
 };
 
 export default {
@@ -36,6 +37,10 @@ export default {
         {
           label: 'ring',
           id: MenuItems.RING,
+        },
+        {
+          label: 'sample',
+          id: MenuItems.SAMPLE,
         },
         {
           label: 'mixer',

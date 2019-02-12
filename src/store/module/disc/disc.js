@@ -53,13 +53,8 @@ export default {
       }
     },
     [discStore.ADD_DISC]: (state, disc) => {
-      // no payload adds a default disc
       state.discs.push(disc);
     },
-    // [discStore.SET_AUDIO_BUFFER]: (state, payload) => {
-    //   // todo move to sample store
-    //   payload.sample.audioBuffer = payload.audioBuffer;
-    // },
     [discStore.SET_RING_VOLUMES]: (state, payload) => {
       if (payload.ring.items.length !== payload.volumes.length) {
         throw new Error('Number of volumes doesnt match ring');
@@ -196,12 +191,12 @@ export default {
         });
       }
     },
-    [discStore.ADD_SAMPLE_TO_DISC]: (context, payload) =>
-      context.dispatch(sampleStore.LOAD_SAMPLE, payload.sample).then(() => {
-        context.commit(discStore.ADD_SOUND_TO_DISC, {
-          disc: payload.disc,
-          sound: createDiscSound(payload.sample),
-        });
-      }),
+    [discStore.ADD_SAMPLE_TO_DISC]: (context, payload) => {
+      context.commit(discStore.ADD_SOUND_TO_DISC, {
+        disc: payload.disc,
+        sound: createDiscSound(payload.sample),
+      });
+      context.dispatch(sampleStore.LOAD_SAMPLE, payload.sample);
+    },
   },
 };

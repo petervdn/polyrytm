@@ -15,7 +15,7 @@
     </ul>
     <DiscControls v-show="activeMenuItem === MenuItems.DISC" />
     <RingControls v-show="activeMenuItem === MenuItems.RING" />
-    <!--<SampleControls v-show="activeMenuItemId === 'sample'" />-->
+    <SampleControls v-show="activeMenuItem === 'sample'" />
     <ThemeControls v-show="activeMenuItem === MenuItems.THEME" />
     <ShareControls v-show="activeMenuItem === MenuItems.SHARE" />
     <MixerControls v-show="activeMenuItem === MenuItems.MIXER" />

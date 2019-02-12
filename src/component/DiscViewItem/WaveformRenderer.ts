@@ -20,19 +20,17 @@ import { interactionStore } from '../../store/module/interaction/interaction';
 
 export default class WaveformRenderer extends AbstractRenderer {
   // todo describe these
-  private originalWaveformCanvas: HTMLCanvasElement;
   private originalWaveformContext: CanvasRenderingContext2D;
-  private resultingWaveformCanvas: HTMLCanvasElement;
   private resultingWaveformContext: CanvasRenderingContext2D;
 
   private debouncedUpdateWaveform = debounce(() => {
     // update the buffersizes here, since this is NOT immediately changed on resize (what you would expect)
     // because we keep the incorrect size then, and scale while resizing. we actually redraw on debounce
-    this.originalWaveformCanvas.width = this.sizeData.squareSize;
-    this.originalWaveformCanvas.height = this.sizeData.squareSize;
+    this.originalWaveformContext.canvas.width = this.sizeData.squareSize;
+    this.originalWaveformContext.canvas.height = this.sizeData.squareSize;
 
-    this.resultingWaveformCanvas.width = this.sizeData.squareSize;
-    this.resultingWaveformCanvas.height = this.sizeData.squareSize;
+    this.resultingWaveformContext.canvas.width = this.sizeData.squareSize;
+    this.resultingWaveformContext.canvas.height = this.sizeData.squareSize;
 
     this.updateAll();
   }, 500);
@@ -40,18 +38,18 @@ export default class WaveformRenderer extends AbstractRenderer {
   constructor(disc: IDisc, sizeData: ISizeData, store: IStore, scheduler: Scheduler) {
     super(disc, sizeData, store, scheduler);
 
-    this.originalWaveformCanvas = createCanvas(sizeData.squareSize, sizeData.squareSize);
-    this.originalWaveformContext = this.originalWaveformCanvas.getContext('2d');
+    const originalWaveformCanvas = createCanvas(sizeData.squareSize, sizeData.squareSize);
+    this.originalWaveformContext = originalWaveformCanvas.getContext('2d');
 
-    this.resultingWaveformCanvas = createCanvas(sizeData.squareSize, sizeData.squareSize);
-    this.resultingWaveformContext = this.resultingWaveformCanvas.getContext('2d');
+    const resultingWaveformCanvas = createCanvas(sizeData.squareSize, sizeData.squareSize);
+    this.resultingWaveformContext = resultingWaveformCanvas.getContext('2d');
 
     this.updateAll();
 
-    // watch sounds
+    // watch sounds with loaded audioBuffers
     this.storeWatchDestructors.push(
       this.store.watch(
-        () => this.disc.sounds,
+        () => this.disc.sounds.filter(sound => !!sound.sample.audioBuffer).length,
         () => {
           this.updateAll();
         },
@@ -128,8 +126,9 @@ export default class WaveformRenderer extends AbstractRenderer {
       this.sizeData.squareSize,
       this.sizeData.squareSize,
     );
+
     this.resultingWaveformContext.drawImage(
-      this.originalWaveformCanvas,
+      this.originalWaveformContext.canvas,
       0,
       0,
       this.sizeData.squareSize,
@@ -175,7 +174,7 @@ export default class WaveformRenderer extends AbstractRenderer {
 
     // stretch whatever image we have (buffer might not be correct size yet) to the canvas size
     this.context.drawImage(
-      this.resultingWaveformCanvas,
+      this.resultingWaveformContext.canvas,
       0,
       0,
       this.sizeData.squareSize,
@@ -218,6 +217,18 @@ export default class WaveformRenderer extends AbstractRenderer {
       this.sizeData.squareSize,
       this.sizeData.squareSize,
     );
+
+    // drawArcPath(
+    //   this.originalWaveformContext,
+    //   this.sizeData.halfSquareSize,
+    //   this.sizeData.halfSquareSize,
+    //   0,
+    //   PI2,
+    //   this.sizeData.waveformOuterRadius.pixels,
+    //   this.sizeData.waveformInnerRadius.pixels,
+    // );
+    // this.originalWaveformContext.fillStyle = 'green';
+    // this.originalWaveformContext.fill();
 
     const radiansPerSound = PI2 / this.disc.sounds.length;
     for (let i = 0; i < this.disc.sounds.length; i += 1) {

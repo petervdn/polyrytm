@@ -29,6 +29,15 @@ export const themes: ITheme[] = [
     waveColor: createColor('000000'),
     invertUi: true,
   },
+  {
+    name: 'Test theme #3',
+    mainColor: createColor('000000'),
+    discVolumeOffColor: createColor('000000'),
+    discVolumeOnColor: createColor('FF0000'),
+    flashColor: createColor('000000'),
+    waveColor: createColor('000000'),
+    invertUi: false,
+  },
 ];
 
 function createColor(hex: string): IColor {

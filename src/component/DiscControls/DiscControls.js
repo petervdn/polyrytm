@@ -23,6 +23,7 @@ export default {
   },
   methods: {
     // todo when slices change, check if disc has non-existing slices
+    // todo move discSound list to new component
     ...mapMutations({
       updateSlicesForDisc: discStore.UPDATE_SLICES_FOR_DISC,
       setSecondsPerRevolution: appStore.SET_SECONDS_PER_REVOLUTION,

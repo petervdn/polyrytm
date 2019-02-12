@@ -2,13 +2,14 @@
 <script src="./DiscSound.js"></script>
 
 <template>
-  <div>
-    <h4>{{ sound.sample.name }}</h4>
-    <p>
-      {{ sound.sample.audioBuffer.duration.toFixed(2) }} s,
-      {{ sound.sample.audioBuffer.numberOfChannels === 1 ? 'mono' : 'stere' }},
-      {{ sound.sample.audioBuffer.sampleRate }}Hz
-    </p>
+  <div :class="$style.wrap">
+    {{ sound.sample.name }}
+    <small v-if="!sound.sample.audioBuffer">
+      (loading...)
+    </small>
+    <small v-if="sound.sample.audioBuffer">
+      ({{ sound.sample.audioBuffer.duration.toFixed(1) }}s {{ sound.sample.audioBuffer.numberOfChannels === 1 ? 'mono' : 'stereo' }})
+    </small>
   </div>
 </template>
 
