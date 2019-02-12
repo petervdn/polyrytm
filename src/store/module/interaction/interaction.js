@@ -6,7 +6,7 @@ const namespace = 'interaction';
 export const interactionStore = {
   SET_SELECTION: `${namespace}/setSelection`,
   SET_HIGHLIGHT: `${namespace}/setHighlight`,
-  CLEAR_SELECTION: `${namespace}/clearSelection`,
+  // CLEAR_SELECTION: `${namespace}/clearSelection`,
   SET_HIGHLIGHT_AS_SELECTION: `${namespace}/setHighlightAsSelection`,
   SET_FORCE_HINT: `${namespace}/setForceHint`,
   GET_HINT: `${namespace}/getHint`,
@@ -36,9 +36,9 @@ export default {
     [interactionStore.SET_HIGHLIGHT_AS_SELECTION]: state => {
       state.selection = state.highlight;
     },
-    [interactionStore.CLEAR_SELECTION]: state => {
-      state.selection = null;
-    },
+    // [interactionStore.CLEAR_SELECTION]: state => {
+    //   state.selection = null;
+    // },
     [interactionStore.SET_SELECTION]: (state, payload) => {
       state.selection = payload;
     },

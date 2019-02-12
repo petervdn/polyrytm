@@ -37,14 +37,16 @@ export interface IDisc extends IInteractable {
   sounds: IDiscSound[];
 }
 
-export interface IDiscSound {
+export interface IDiscSound extends IInteractable {
   sample: ISample;
   slices: ISoundSlice[];
+  disc: IDisc;
 }
 
 // todo rename discsoundslice?
 export interface ISoundSlice extends IInteractable {
   disc: IDisc; // todo why is this one here? probably to check interation stuff? see waveformrenderer:  (<ISoundSlice>highlight).disc === this.disc
+  discSound: IDiscSound; // todo discSound should be here instead of disc (we can reach discSOund, discSound has disc)
   startFactor: number;
   nextSlice: ISoundSlice; // ref to the next slice (null on last)
 }
@@ -74,8 +76,9 @@ interface ISizeDataEntry {
 export enum InteractableType { // todo rename without type?
   DISC = 'disc', // these should match the props of IInteractionData
   RING = 'ring',
-  RING_ITEM = 'ringItem',
+  RING_ITEM = 'ring-item',
   SLICE = 'slice',
+  DISC_SOUND = 'disc-sound',
 }
 
 export interface IStore {

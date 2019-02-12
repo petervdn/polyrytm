@@ -8,6 +8,9 @@
         v-for="sound in selectedDisc.sounds"
         :class="$style.item"
         :key="sound.sample.path"
+        @mouseenter="onSoundMouseEnter(sound)"
+        @mouseleave="onSoundMouseLeave"
+        @click="onSoundClick(sound)"
       >
         {{ sound.sample.name }} <small v-if="!sound.sample.audioBuffer"> (loading...) </small>
         <small v-if="sound.sample.audioBuffer">

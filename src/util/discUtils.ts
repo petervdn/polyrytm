@@ -66,25 +66,23 @@ export function createDefaultRing(disc: IDisc): IRing {
   return ring;
 }
 
-// export function createDiscSound(sample: ISample): IDiscSound {
-//   return {
-//     sample,
-//     slices: [],
-//   };
-// }
-
 export const createDefaultDiscSound = (disc: IDisc, sample: ISample): IDiscSound => {
-  return {
+  const discSound: IDiscSound = {
     sample,
-    slices: [
-      {
-        disc,
-        nextSlice: null,
-        type: InteractableType.SLICE,
-        startFactor: 0,
-      },
-    ],
+    disc,
+    type: InteractableType.DISC_SOUND,
+    slices: [],
   };
+
+  discSound.slices.push({
+    discSound,
+    disc, // todo remove here & in interface
+    nextSlice: null,
+    type: InteractableType.SLICE,
+    startFactor: 0,
+  });
+
+  return discSound;
 };
 
 /**
@@ -131,24 +129,26 @@ export function createDefaultDisc(): IDisc {
  * @returns {number[]}
  */
 export function createSlices(disc: IDisc, amount: number): ISoundSlice[] {
-  const slices: ISoundSlice[] = [];
-  for (let i = 0; i < amount; i += 1) {
-    const slice = {
-      disc,
-      startFactor: i * (1 / amount),
-      type: InteractableType.SLICE,
-      nextSlice: null,
-    };
+  // todo
+  // const slices: ISoundSlice[] = [];
+  // for (let i = 0; i < amount; i += 1) {
+  //   const slice = {
+  //     disc,
+  //     startFactor: i * (1 / amount),
+  //     type: InteractableType.SLICE,
+  //     nextSlice: null,
+  //   };
+  //
+  //   slices.push(slice);
+  //
+  //   // create linked list
+  //   if (i > 0) {
+  //     slices[i - 1].nextSlice = slice;
+  //   }
+  // }
 
-    slices.push(slice);
-
-    // create linked list
-    if (i > 0) {
-      slices[i - 1].nextSlice = slice;
-    }
-  }
-
-  return slices;
+  // return slices;
+  return [];
 }
 
 export function getSliceDurationFactor(slice: ISoundSlice): number {
@@ -170,6 +170,9 @@ export function getDiscForInteractable(item: IInteractable): IDisc {
       case InteractableType.DISC: {
         return <IDisc>item;
       }
+      case InteractableType.DISC_SOUND: {
+        return (<IDiscSound>item).disc;
+      }
       default: {
         throw new Error(`Unknown item type ${item.type}`);
       }
@@ -185,6 +188,10 @@ export function getRingForInteractable(item: IInteractable): IRing {
       case InteractableType.SLICE: {
         // a slice is not intself related to a ring, although slices can be assigned to a ring
         // at the moment we do not need the ref to the ring they belong to
+        return null;
+      }
+      case InteractableType.DISC_SOUND: {
+        // same for disc sound
         return null;
       }
       case InteractableType.RING_ITEM: {

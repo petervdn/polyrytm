@@ -35,7 +35,6 @@ export default {
   mutations: {
     [discStore.ADD_SOUND_TO_DISC]: (state, payload) => {
       // todo find disc on state
-      console.log(payload);
       payload.disc.sounds.push(payload.sound);
     },
     [discStore.SET_RING_ITEM_VOLUME]: (state, payload) => {

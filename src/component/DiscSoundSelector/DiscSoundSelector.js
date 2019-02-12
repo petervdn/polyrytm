@@ -1,5 +1,5 @@
 // @vue/component
-import { mapActions, mapGetters, mapState } from 'vuex';
+import { mapActions, mapGetters, mapState, mapMutations } from 'vuex';
 import { interactionStore } from '../../store/module/interaction/interaction';
 import { discStore } from '../../store/module/disc/disc';
 
@@ -19,6 +19,15 @@ export default {
     }),
   },
   methods: {
+    onSoundClick(sound) {
+      this.setSelection(sound);
+    },
+    onSoundMouseEnter(sound) {
+      this.setHighlight(sound);
+    },
+    onSoundMouseLeave() {
+      this.setHighlight(null);
+    },
     onSelectChange(event) {
       const index = parseInt(event.target.value, 10);
 
@@ -29,6 +38,10 @@ export default {
       this.addSampleToDisc({ disc: this.selectedDisc, sample });
       // todo check if this sound hasnt been added yet (or should that be possible?)
     },
+    ...mapMutations({
+      setSelection: interactionStore.SET_SELECTION,
+      setHighlight: interactionStore.SET_HIGHLIGHT,
+    }),
     ...mapActions({
       addSampleToDisc: discStore.ADD_SAMPLE_TO_DISC,
     }),
