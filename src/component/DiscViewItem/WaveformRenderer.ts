@@ -1,17 +1,9 @@
 import AbstractRenderer from './AbstractRenderer';
+import { IDisc, InteractableType, IRing, ISizeData, IStore } from '../../data/interface';
 import {
-  ISizeData,
-  IDisc,
-  IStore,
-  InteractableType,
-  IRing,
-  IInteractable,
-  ISoundSlice,
-} from '../../data/interface';
-import {
-  drawWaveformCanvas,
-  drawHighlightSlice,
+  drawHighlightInWaveform,
   drawSliceEdgeMarkers,
+  drawWaveformCanvas,
 } from '../../display/canvasRendererDrawUtils';
 import { createCanvas } from '../../util/DiscViewUtils';
 import { debounce, PI2 } from '../../util/miscUtils';
@@ -61,28 +53,25 @@ export default class WaveformRenderer extends AbstractRenderer {
     );
 
     // watch slices todo watches unused sond property (now soundS)
-    this.storeWatchDestructors.push(
-      this.store.watch(
-        () => this.disc.sound.slices,
-        () => {
-          this.draw();
-        },
-      ),
-    );
+    // this.storeWatchDestructors.push(
+    //   this.store.watch(
+    //     () => this.disc.sound.slices,
+    //     () => {
+    //       this.draw();
+    //     },
+    //   ),
+    // );
 
-    // watch highlighted slices changes
+    // watch highlighted slices or discsound changes
     this.storeWatchDestructors.push(
       this.store.watch(
-        state => {
-          if (
-            state.interaction.highlight &&
-            state.interaction.highlight.type === InteractableType.SLICE
-          ) {
-            return state.interaction.highlight;
-          }
-          return null;
-        },
-        () => {
+        state =>
+          state.interaction.highlight &&
+          (state.interaction.highlight.type === InteractableType.SLICE ||
+            state.interaction.highlight.type === InteractableType.DISC_SOUND)
+            ? state.interaction.highlight.type
+            : null,
+        value => {
           this.draw();
         },
       ),
@@ -153,7 +142,7 @@ export default class WaveformRenderer extends AbstractRenderer {
 
       // draw all slices on top of that
       (<IRing>selection).slices.forEach(slice => {
-        drawHighlightSlice(context, slice, this.disc.sound.slices, this.sizeData, 'black');
+        // drawHighlightSlice(context, slice, this.disc.sound.slices, this.sizeData, 'black'); todo
       });
 
       // apply as mask on result canvas
@@ -169,8 +158,10 @@ export default class WaveformRenderer extends AbstractRenderer {
     }
   }
 
+  // todo describe what this does. draw what exactly
   public draw(): void {
     this.clear();
+    // console.log('clear');
 
     if (this.disc.sounds.length === 0) {
       return;
@@ -201,19 +192,27 @@ export default class WaveformRenderer extends AbstractRenderer {
     });
 
     // draw highlight if needed
-    const highlight: IInteractable = this.store.state.interaction.highlight;
+    const highlight = this.store.state.interaction.highlight;
     if (
       highlight &&
-      highlight.type === InteractableType.SLICE &&
-      (<ISoundSlice>highlight).discSound.disc === this.disc
+      (highlight.type === InteractableType.SLICE || highlight.type === InteractableType.DISC_SOUND)
     ) {
-      drawHighlightSlice(
-        this.context,
-        <ISoundSlice>highlight,
-        this.disc.sound.slices,
-        this.sizeData,
-      );
+      drawHighlightInWaveform(this.context, highlight, this.sizeData);
+      // if (highlight.type === InteractableType.SLICE) {
+      // } else if (highlight.type === InteractableType.DISC_SOUND) {
+      // }
     }
+    //   highlight &&
+    //   highlight.type === InteractableType.SLICE ||
+    //   (<ISoundSlice>highlight).discSound.disc === this.disc
+    // ) {
+    // drawHighlightSlice( todo
+    //   this.context,
+    //   <ISoundSlice>highlight,
+    //   this.disc.sound.slices,
+    //   this.sizeData,
+    // );
+    // }
   }
 
   public resize(sizeData: ISizeData): void {

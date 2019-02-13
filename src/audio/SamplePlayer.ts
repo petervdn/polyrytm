@@ -18,7 +18,8 @@ export default class SamplePlayer extends EventDispatcher {
       return;
     }
 
-    const sound = scheduleData.disc.sound;
+    // const sound = scheduleData.disc.sound;
+    const sound = scheduleData.disc.sounds[0]; // todo just temporary
     const randomSlice: ISoundSlice = getRandomItemFromArray(scheduleData.ring.slices);
 
     if (sound.sample) {

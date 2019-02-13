@@ -7,7 +7,7 @@ import {
 } from '../../util/interactionUtils';
 import {
   IDisc,
-  IInteractable,
+  Interactable,
   InteractableType,
   IPoint,
   IRingItem,
@@ -70,17 +70,17 @@ export default class DiscInteractionManager extends EventDispatcher {
       // outside waveform
       this.setHighlight(this.disc);
     } else if (distanceToCenterFactor > this.sizeData.waveformInnerRadius.factor) {
-      // inside waveform, only set data when there is actually a sample
-      if (this.disc.sound.sample) {
-        const slice = getSliceForPosition(
-          this.mousePosition,
-          this.sizeData,
-          this.disc.sound.slices,
-        );
-        this.setHighlight(slice);
-      } else {
-        this.setHighlight(this.disc);
-      }
+      // inside waveform, only set data when there is actually a sample todo
+      // if (this.disc.sound.sample) {
+      //   const slice = getSliceForPosition(
+      //     this.mousePosition,
+      //     this.sizeData,
+      //     this.disc.sound.slices,
+      //   );
+      //   this.setHighlight(slice);
+      // } else {
+      //   this.setHighlight(this.disc);
+      // }
     } else if (distanceToCenterFactor < this.sizeData.ringsOuterRadius.factor) {
       // inside rings
       const mouseOverRingIndex = getRingIndexForPosition(this.mousePosition, this.sizeData);
@@ -117,7 +117,7 @@ export default class DiscInteractionManager extends EventDispatcher {
     }
   }
 
-  private setHighlight(item: IInteractable): void {
+  private setHighlight(item: Interactable): void {
     // only commit when changed (prevents commits on every mousemove)
     if (this.store.state.interaction.highlight !== item) {
       this.store.commit(interactionStore.SET_HIGHLIGHT, item);

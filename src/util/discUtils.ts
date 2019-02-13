@@ -1,7 +1,7 @@
 import {
   IDisc,
   IDiscSound,
-  IInteractable,
+  Interactable,
   InteractableType,
   IRing,
   IRingItem,
@@ -107,15 +107,13 @@ export function getSliceForFactor(slices: ISoundSlice[], factor: number): ISound
  * @returns {IDisc}
  */
 export function createDefaultDisc(): IDisc {
-  const disc = {
-    sound: null,
+  const disc: IDisc = {
     sounds: [],
     type: InteractableType.DISC,
     rings: [],
   };
 
   // both rings and slices need references to the parent disc
-  disc.sound = createDefaultDiscSound(disc, null); // todo remove this
   disc.rings.push(createDefaultRing(disc));
 
   return disc;
@@ -153,26 +151,26 @@ export function getSliceDurationFactor(slice: ISoundSlice): number {
   return (slice.nextSlice ? slice.nextSlice.startFactor : 1) - slice.startFactor;
 }
 
-export function getDiscForInteractable(item: IInteractable): IDisc {
+export function getDiscForInteractable(item: Interactable): IDisc {
   if (item) {
     switch (item.type) {
       case InteractableType.SLICE: {
-        return (<ISoundSlice>item).discSound.disc;
+        return item.discSound.disc;
       }
       case InteractableType.RING_ITEM: {
-        return (<IRingItem>item).ring.disc;
+        return item.ring.disc;
       }
       case InteractableType.RING: {
-        return (<IRing>item).disc;
+        return item.disc;
       }
       case InteractableType.DISC: {
-        return <IDisc>item;
+        return item;
       }
       case InteractableType.DISC_SOUND: {
-        return (<IDiscSound>item).disc;
+        return item.disc;
       }
       default: {
-        throw new Error(`Unknown item type ${item.type}`);
+        throw new Error('Unknown item type');
       }
     }
   } else {
@@ -180,7 +178,7 @@ export function getDiscForInteractable(item: IInteractable): IDisc {
   }
 }
 
-export function getRingForInteractable(item: IInteractable): IRing {
+export function getRingForInteractable(item: Interactable): IRing {
   if (item) {
     switch (item.type) {
       case InteractableType.SLICE: {
@@ -193,16 +191,16 @@ export function getRingForInteractable(item: IInteractable): IRing {
         return null;
       }
       case InteractableType.RING_ITEM: {
-        return (<IRingItem>item).ring;
+        return item.ring;
       }
       case InteractableType.RING: {
-        return <IRing>item;
+        return item;
       }
       case InteractableType.DISC: {
         return null;
       }
       default: {
-        throw new Error(`Unknown item type ${item.type}`);
+        throw new Error('Unknown item type');
       }
     }
   } else {

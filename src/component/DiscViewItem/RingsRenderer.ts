@@ -2,10 +2,10 @@ import {
   ISizeData,
   IDisc,
   IStore,
-  IInteractable,
   InteractableType,
   IRing,
   IRingItem,
+  Interactable,
 } from '../../data/interface';
 import { createCanvas } from '../../util/DiscViewUtils';
 import AbstractRenderer from './AbstractRenderer';
@@ -210,7 +210,7 @@ export default class RingsRenderer extends AbstractRenderer {
         //  nothing selected, but disc is highlighted => draw full disc highlight
         drawDiscHighlight(this.context, this.sizeData);
       } else {
-        const highlight: IInteractable = this.store.state.interaction.highlight;
+        const highlight: Interactable = this.store.state.interaction.highlight;
 
         if (highlight.type === InteractableType.RING) {
           // highlight is a ring

@@ -10,38 +10,40 @@ export interface IPoint {
   y: number;
 }
 
-export interface IRingItem extends IInteractable {
+export interface IRingItem {
+  type: InteractableType.RING_ITEM;
   ring: IRing;
   volume: number;
   index: number;
   lastScheduledRevolution: number;
 }
 
-export interface IInteractable {
-  type: InteractableType; // todo rename type -> interactableType? (so it shows when we see that object what type prop is)
-}
+export type Interactable = IRing | IRingItem | IDisc | IDiscSound | ISoundSlice;
 
-export interface IRing extends IInteractable {
+export interface IRing {
+  type: InteractableType.RING;
   disc: IDisc;
   items: IRingItem[];
   slices: ISoundSlice[];
   gain: GainNode;
 }
 
-export interface IDisc extends IInteractable {
+export interface IDisc {
+  type: InteractableType.DISC;
   rings: IRing[];
-  sound: IDiscSound; // todo why single en multiple? probably remove single one
   sounds: IDiscSound[];
 }
 
-export interface IDiscSound extends IInteractable {
+export interface IDiscSound {
+  type: InteractableType.DISC_SOUND;
   sample: ISample;
   slices: ISoundSlice[];
   disc: IDisc;
 }
 
 // todo rename discsoundslice?
-export interface ISoundSlice extends IInteractable {
+export interface ISoundSlice {
+  type: InteractableType.SLICE;
   discSound: IDiscSound;
   startFactor: number;
   nextSlice: ISoundSlice; // ref to the next slice (null on last)
@@ -100,10 +102,12 @@ interface IStoreWatchOptions {
   deep?: boolean;
 }
 
+// export type Interactable = IDiscSound | IDisc | IRing | ISoundSlice;
+
 export interface IInteractionStoreState {
-  selection: IInteractable;
-  highlight: IInteractable;
-  edit: IInteractable;
+  selection: Interactable;
+  highlight: Interactable;
+  edit: Interactable;
   forceHint: string;
 }
 

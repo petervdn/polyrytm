@@ -18,8 +18,8 @@ export const interactionStore = {
 
 export default {
   state: {
-    selection: null, // IInteractable
-    highlight: null, // IInteractable
+    selection: null, // Interactable
+    highlight: null, // Interactable
     forceHint: null, // a hint (string) that overrides hints resulting from selection/interaction
   },
   getters: {

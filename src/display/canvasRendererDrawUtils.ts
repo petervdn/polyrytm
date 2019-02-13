@@ -1,5 +1,13 @@
 import { PI2 } from '../util/miscUtils';
-import { ISizeData, IRing, IDisc, IRingItem, ISize, ISoundSlice } from '../data/interface';
+import {
+  ISizeData,
+  IRing,
+  IDisc,
+  IRingItem,
+  ISize,
+  ISoundSlice,
+  IDiscSound,
+} from '../data/interface';
 import { drawArcPath } from '../util/drawUtils';
 import { blendColors, getRingItemColorForVolume, IRgbColor } from '../util/colorUtils';
 import Scheduler from '../audio/Scheduler';
@@ -257,35 +265,36 @@ export function drawHighlightRing( // todo name
  * @param {ISizeData} sizeData
  * @param {string} color
  */
-export function drawHighlightSlice( // todo rename, not only for highlights
+export function drawHighlightInWaveform( // todo rename, not only for highlights
   context: CanvasRenderingContext2D,
-  sliceInRing: ISoundSlice,
-  soundSlices: ISoundSlice[],
+  highlightedItem: IDiscSound | ISoundSlice,
+  // sliceInRing: ISoundSlice,
+  // soundSlices: ISoundSlice[],
   sizeData: ISizeData,
   color?: string,
 ) {
-  const startFactor = sliceInRing.startFactor;
-  const sliceIndex = soundSlices.indexOf(sliceInRing);
-  let endFactor;
-  if (sliceIndex < soundSlices.length - 1) {
-    // not the last one
-    endFactor = soundSlices[sliceIndex + 1].startFactor;
-  } else {
-    endFactor = 1;
-  }
-
-  drawArcPath(
-    context,
-    sizeData.halfSquareSize,
-    sizeData.halfSquareSize,
-    startFactor * PI2 + sizeData.rotateOffset,
-    endFactor * PI2 + sizeData.rotateOffset,
-    sizeData.waveformOuterRadius.pixels,
-    sizeData.waveformInnerRadius.pixels,
-  );
-
-  context.fillStyle = color || defaultHighlightColor;
-  context.fill();
+  // const startFactor = sliceInRing.startFactor;
+  // const sliceIndex = soundSlices.indexOf(sliceInRing);
+  // let endFactor;
+  // if (sliceIndex < soundSlices.length - 1) {
+  //   // not the last one
+  //   endFactor = soundSlices[sliceIndex + 1].startFactor;
+  // } else {
+  //   endFactor = 1;
+  // }
+  //
+  // drawArcPath(
+  //   context,
+  //   sizeData.halfSquareSize,
+  //   sizeData.halfSquareSize,
+  //   startFactor * PI2 + sizeData.rotateOffset,
+  //   endFactor * PI2 + sizeData.rotateOffset,
+  //   sizeData.waveformOuterRadius.pixels,
+  //   sizeData.waveformInnerRadius.pixels,
+  // );
+  //
+  // context.fillStyle = color || defaultHighlightColor;
+  // context.fill();
 }
 
 /**
