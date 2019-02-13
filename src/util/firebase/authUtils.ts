@@ -14,13 +14,13 @@ export const initUserLogin = (store: IStore) =>
           .then(doc => {
             store.commit(userStore.SET_IS_ADMIN, doc.exists);
             store.commit(userStore.SET_USER_ID, authUser.uid);
+            // tslint:disable-next-line
+            console.log('initUserLogin done');
             resolve();
           });
       } else {
         // user is not logged in (or logs out)
         store.commit(userStore.SET_USER_ID, null);
-        // tslint:disable-next-line
-        console.log('initUserLogin done');
         resolve();
       }
     });

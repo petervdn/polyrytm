@@ -1,9 +1,10 @@
 import AbstractRenderer from './AbstractRenderer';
 import { IDisc, InteractableType, IRing, ISizeData, IStore } from '../../data/interface';
 import {
-  drawHighlightInWaveform,
+  defaultHighlightColor,
   drawSliceEdgeMarkers,
   drawWaveformCanvas,
+  fillRingPartInWaveformRing,
 } from '../../display/canvasRendererDrawUtils';
 import { createCanvas } from '../../util/DiscViewUtils';
 import { debounce, PI2 } from '../../util/miscUtils';
@@ -42,7 +43,7 @@ export default class WaveformRenderer extends AbstractRenderer {
 
     this.updateAll();
 
-    // watch sounds with loaded audioBuffers
+    // watch number of sounds with loaded audioBuffers
     this.storeWatchDestructors.push(
       this.store.watch(
         () => this.disc.sounds.filter(sound => !!sound.sample.audioBuffer).length,
@@ -77,26 +78,38 @@ export default class WaveformRenderer extends AbstractRenderer {
       ),
     );
 
-    // // watch slices for selected ring change (this also catches when a selected ring changes)
+    // watch selection change todo can be better optimized, new selection might not need a redraw (ratsterize doesnt have to change)
     this.storeWatchDestructors.push(
       this.store.watch(
-        state => {
-          const selection = state.interaction.selection;
-          if (
-            selection &&
-            selection.type === InteractableType.RING &&
-            (<IRing>selection).disc === this.disc
-          ) {
-            return (<IRing>selection).slices;
-          }
-          return null;
-        },
+        state => state.interaction.selection,
         () => {
           this.updateResultWaveform();
           this.draw();
         },
       ),
     );
+
+    // watch slices for selected ring change (this also catches when a selected ring changes)
+    // this.storeWatchDestructors.push(
+    //   this.store.watch(
+    //     state => {
+    //       const selection = state.interaction.selection;
+    //       if (
+    //         selection &&
+    //         selection.type === InteractableType.RING &&
+    //         (<IRing>selection).disc === this.disc
+    //       ) {
+    //         return (<IRing>selection).slices;
+    //       }
+    //       return null;
+    //     },
+    //     (v) => {
+    //       console.log(v);
+    //       this.updateResultWaveform();
+    //       this.draw();
+    //     },
+    //   ),
+    // );
   }
 
   private updateAll(): void {
@@ -131,14 +144,24 @@ export default class WaveformRenderer extends AbstractRenderer {
     // if needed, rasterize
     const selection = this.store.state.interaction.selection;
     const selectedDisc = this.store.getters[interactionStore.GET_SELECTED_DISC];
-    if (selectedDisc === this.disc && selection.type === InteractableType.RING) {
+    if (
+      selectedDisc === this.disc &&
+      (selection.type === InteractableType.RING || selection.type === InteractableType.DISC_SOUND)
+    ) {
       // create new canvas
       const canvas = createCanvas(this.sizeData.squareSize, this.sizeData.squareSize);
       const context = canvas.getContext('2d');
 
-      // fill with pattern
-      context.fillStyle = this.rasterPattern;
-      context.fillRect(0, 0, this.sizeData.squareSize, this.sizeData.squareSize);
+      if (selection.type === InteractableType.RING) {
+        // all waveforms need a raster, so fully fill the whole canvas
+        context.fillStyle = this.rasterPattern;
+        context.fillRect(0, 0, this.sizeData.squareSize, this.sizeData.squareSize);
+      } else {
+        // give all other sounds except for the selected a raster
+        fillRingPartInWaveformRing(context, selection, this.sizeData, this.rasterPattern, true);
+        // selected gets a full fill
+        fillRingPartInWaveformRing(context, selection, this.sizeData, 'white', false);
+      }
 
       // draw all slices on top of that
       (<IRing>selection).slices.forEach(slice => {
@@ -161,7 +184,6 @@ export default class WaveformRenderer extends AbstractRenderer {
   // todo describe what this does. draw what exactly
   public draw(): void {
     this.clear();
-    // console.log('clear');
 
     if (this.disc.sounds.length === 0) {
       return;
@@ -176,11 +198,7 @@ export default class WaveformRenderer extends AbstractRenderer {
       this.sizeData.squareSize,
     );
 
-    // if (this.disc.sound.sample) {
-    //   // todo we now have sounds (REMOVE .SOUND!!)
-    //   // we dont have a buffered canvas for the slices, probably faster to just draw these few lines every time
-    //   drawSliceEdgeMarkers(this.context, this.sizeData, this.disc.sound.slices);
-    // }
+    // draw edge markers for each sound
     this.disc.sounds.forEach((discSound, index) => {
       drawSliceEdgeMarkers(
         this.context,
@@ -191,25 +209,14 @@ export default class WaveformRenderer extends AbstractRenderer {
       );
     });
 
-    // draw highlight if needed
+    // draw highlight for discsound or slice
     const highlight = this.store.state.interaction.highlight;
     if (
       highlight &&
       (highlight.type === InteractableType.SLICE || highlight.type === InteractableType.DISC_SOUND)
     ) {
-      drawHighlightInWaveform(this.context, highlight, this.sizeData);
+      fillRingPartInWaveformRing(this.context, highlight, this.sizeData, defaultHighlightColor);
     }
-    //   highlight &&
-    //   highlight.type === InteractableType.SLICE ||
-    //   (<ISoundSlice>highlight).discSound.disc === this.disc
-    // ) {
-    // drawHighlightSlice( todo
-    //   this.context,
-    //   <ISoundSlice>highlight,
-    //   this.disc.sound.slices,
-    //   this.sizeData,
-    // );
-    // }
   }
 
   public resize(sizeData: ISizeData): void {
@@ -227,18 +234,6 @@ export default class WaveformRenderer extends AbstractRenderer {
       this.sizeData.squareSize,
       this.sizeData.squareSize,
     );
-
-    // drawArcPath(
-    //   this.originalWaveformContext,
-    //   this.sizeData.halfSquareSize,
-    //   this.sizeData.halfSquareSize,
-    //   0,
-    //   PI2,
-    //   this.sizeData.waveformOuterRadius.pixels,
-    //   this.sizeData.waveformInnerRadius.pixels,
-    // );
-    // this.originalWaveformContext.fillStyle = 'green';
-    // this.originalWaveformContext.fill();
 
     const radiansPerSound = PI2 / this.disc.sounds.length;
     for (let i = 0; i < this.disc.sounds.length; i += 1) {

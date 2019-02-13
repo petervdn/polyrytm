@@ -232,7 +232,7 @@ export function drawWaveformCanvas(
   context.stroke();
 }
 
-const defaultHighlightColor = 'rgba(0,0,0,0.1)';
+export const defaultHighlightColor = 'rgba(0,0,0,0.1)'; // todo move to better spot
 
 /**
  * Draws a ring that is highlighted by hovering with the mouse.
@@ -257,11 +257,12 @@ export function drawHighlightRing( // todo name
   context.fill();
 }
 
-export function drawHighlightInWaveform( // todo rename, not only for highlights
+export function fillRingPartInWaveformRing( // todo rename, not only for highlights
   context: CanvasRenderingContext2D,
   item: IDiscSound | ISoundSlice,
   sizeData: ISizeData,
-  color?: string,
+  fillStyle: string | CanvasPattern,
+  invert = false,
 ) {
   let startFactor: number;
   let endFactor: number;
@@ -288,13 +289,13 @@ export function drawHighlightInWaveform( // todo rename, not only for highlights
     context,
     sizeData.halfSquareSize,
     sizeData.halfSquareSize,
-    startFactor * PI2 + sizeData.rotateOffset,
-    endFactor * PI2 + sizeData.rotateOffset,
+    (invert ? endFactor : startFactor) * PI2 + sizeData.rotateOffset,
+    (invert ? startFactor : endFactor) * PI2 + sizeData.rotateOffset,
     sizeData.waveformOuterRadius.pixels,
     sizeData.waveformInnerRadius.pixels,
   );
 
-  context.fillStyle = color || defaultHighlightColor;
+  context.fillStyle = fillStyle || defaultHighlightColor;
   context.fill();
 }
 
