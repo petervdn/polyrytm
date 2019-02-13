@@ -5,7 +5,7 @@
   <header :class="$style.header">
     <h1><router-link :to="{ name: RouteNames.HOME }">polyrytm</router-link></h1>
     <div :class="$style.loginState">
-      <router-link :to="RouteNames.EDITOR">editor</router-link>
+      <router-link :to="{ name: RouteNames.EDITOR }">editor</router-link>
       <router-link
         v-if="!isLoggedIn"
         :to="{ name: RouteNames.LOGIN }">log in</router-link>
