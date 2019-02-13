@@ -38,11 +38,15 @@ export default class WaveformRenderer extends AbstractRenderer {
   constructor(disc: IDisc, sizeData: ISizeData, store: IStore, scheduler: Scheduler) {
     super(disc, sizeData, store, scheduler);
 
-    const originalWaveformCanvas = createCanvas(sizeData.squareSize, sizeData.squareSize);
-    this.originalWaveformContext = originalWaveformCanvas.getContext('2d');
+    this.originalWaveformContext = createCanvas(
+      sizeData.squareSize,
+      sizeData.squareSize,
+    ).getContext('2d');
 
-    const resultingWaveformCanvas = createCanvas(sizeData.squareSize, sizeData.squareSize);
-    this.resultingWaveformContext = resultingWaveformCanvas.getContext('2d');
+    this.resultingWaveformContext = createCanvas(
+      sizeData.squareSize,
+      sizeData.squareSize,
+    ).getContext('2d');
 
     this.updateAll();
 
@@ -181,11 +185,20 @@ export default class WaveformRenderer extends AbstractRenderer {
       this.sizeData.squareSize,
     );
 
-    if (this.disc.sound.sample) {
-      // todo we now have sounds (REMOVE .SOUND!!)
-      // we dont have a buffered canvas for the slices, probably faster to just draw these few lines every time
-      drawSliceEdgeMarkers(this.context, this.sizeData, this.disc.sound.slices);
-    }
+    // if (this.disc.sound.sample) {
+    //   // todo we now have sounds (REMOVE .SOUND!!)
+    //   // we dont have a buffered canvas for the slices, probably faster to just draw these few lines every time
+    //   drawSliceEdgeMarkers(this.context, this.sizeData, this.disc.sound.slices);
+    // }
+    this.disc.sounds.forEach((discSound, index) => {
+      drawSliceEdgeMarkers(
+        this.context,
+        this.sizeData,
+        discSound.slices,
+        index,
+        this.disc.sounds.length,
+      );
+    });
 
     // draw highlight if needed
     const highlight: IInteractable = this.store.state.interaction.highlight;

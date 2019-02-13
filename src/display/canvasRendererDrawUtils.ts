@@ -124,19 +124,12 @@ export function drawRing(
   });
 }
 
-/**
- * Draws slice-edges onto a canvas
- * @param {CanvasRenderingContext2D} context
- * @param {ISizeData} sizeData
- * @param {number[]} slices
- * @param {string} color
- * @param {number} lineWidth
- * @param {number[]} lineDash
- */
 export function drawSliceEdgeMarkers(
   context: CanvasRenderingContext2D,
   sizeData: ISizeData,
   slices: ISoundSlice[],
+  soundIndex: number,
+  totalSounds: number,
   color: string = 'black',
   lineWidth: number = 1,
   lineDash: number[] = [],
@@ -144,8 +137,11 @@ export function drawSliceEdgeMarkers(
   context.strokeStyle = color;
   context.lineWidth = lineWidth;
 
+  const radiansPerSound = PI2 / totalSounds;
+  const startRadians = radiansPerSound * soundIndex;
+
   for (let i = 0; i < slices.length; i += 1) {
-    const radians = slices[i].startFactor * PI2 + sizeData.rotateOffset;
+    const radians = startRadians + slices[i].startFactor * PI2 + sizeData.rotateOffset;
 
     context.beginPath();
     context.moveTo(
