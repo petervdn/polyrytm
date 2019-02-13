@@ -1,15 +1,15 @@
 import { PI2 } from '../util/miscUtils';
 import {
-  ISizeData,
-  IRing,
   IDisc,
-  IRingItem,
-  ISize,
-  ISoundSlice,
   IDiscSound,
+  InteractableType,
+  IRing,
+  IRingItem,
+  ISizeData,
+  ISoundSlice,
 } from '../data/interface';
 import { drawArcPath } from '../util/drawUtils';
-import { blendColors, getRingItemColorForVolume, IRgbColor } from '../util/colorUtils';
+import { getRingItemColorForVolume } from '../util/colorUtils';
 import Scheduler from '../audio/Scheduler';
 import PlayMode from '../data/enum/PlayMode';
 import { ITheme } from '../data/themes';
@@ -257,44 +257,45 @@ export function drawHighlightRing( // todo name
   context.fill();
 }
 
-/**
- * Draws a highlighted sample slice.
- * @param {CanvasRenderingContext2D} context
- * @param {number} sliceIndex
- * @param {number[]} slices
- * @param {ISizeData} sizeData
- * @param {string} color
- */
 export function drawHighlightInWaveform( // todo rename, not only for highlights
   context: CanvasRenderingContext2D,
-  highlightedItem: IDiscSound | ISoundSlice,
-  // sliceInRing: ISoundSlice,
-  // soundSlices: ISoundSlice[],
+  item: IDiscSound | ISoundSlice,
   sizeData: ISizeData,
   color?: string,
 ) {
-  // const startFactor = sliceInRing.startFactor;
-  // const sliceIndex = soundSlices.indexOf(sliceInRing);
-  // let endFactor;
-  // if (sliceIndex < soundSlices.length - 1) {
-  //   // not the last one
-  //   endFactor = soundSlices[sliceIndex + 1].startFactor;
-  // } else {
-  //   endFactor = 1;
-  // }
-  //
-  // drawArcPath(
-  //   context,
-  //   sizeData.halfSquareSize,
-  //   sizeData.halfSquareSize,
-  //   startFactor * PI2 + sizeData.rotateOffset,
-  //   endFactor * PI2 + sizeData.rotateOffset,
-  //   sizeData.waveformOuterRadius.pixels,
-  //   sizeData.waveformInnerRadius.pixels,
-  // );
-  //
-  // context.fillStyle = color || defaultHighlightColor;
-  // context.fill();
+  let startFactor: number;
+  let endFactor: number;
+
+  if (item.type === InteractableType.SLICE) {
+    startFactor = item.startFactor;
+    const slices = item.discSound.slices;
+    const sliceIndex = slices.indexOf(item);
+
+    if (sliceIndex < slices.length - 1) {
+      // not the last one
+      endFactor = slices[sliceIndex + 1].startFactor;
+    } else {
+      endFactor = 1;
+    }
+  } else {
+    // item is DiscSound
+    const sounds = item.disc.sounds;
+    startFactor = sounds.indexOf(item) / sounds.length;
+    endFactor = startFactor + 1 / sounds.length;
+  }
+
+  drawArcPath(
+    context,
+    sizeData.halfSquareSize,
+    sizeData.halfSquareSize,
+    startFactor * PI2 + sizeData.rotateOffset,
+    endFactor * PI2 + sizeData.rotateOffset,
+    sizeData.waveformOuterRadius.pixels,
+    sizeData.waveformInnerRadius.pixels,
+  );
+
+  context.fillStyle = color || defaultHighlightColor;
+  context.fill();
 }
 
 /**

@@ -19,6 +19,8 @@ export const initUserLogin = (store: IStore) =>
       } else {
         // user is not logged in (or logs out)
         store.commit(userStore.SET_USER_ID, null);
+        // tslint:disable-next-line
+        console.log('initUserLogin done');
         resolve();
       }
     });

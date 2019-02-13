@@ -198,9 +198,6 @@ export default class WaveformRenderer extends AbstractRenderer {
       (highlight.type === InteractableType.SLICE || highlight.type === InteractableType.DISC_SOUND)
     ) {
       drawHighlightInWaveform(this.context, highlight, this.sizeData);
-      // if (highlight.type === InteractableType.SLICE) {
-      // } else if (highlight.type === InteractableType.DISC_SOUND) {
-      // }
     }
     //   highlight &&
     //   highlight.type === InteractableType.SLICE ||

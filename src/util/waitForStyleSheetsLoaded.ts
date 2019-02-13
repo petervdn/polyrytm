@@ -15,6 +15,8 @@ const waitForStyleSheetsLoaded = (document: HTMLDocument) =>
       ) {
         allLoaded = true;
 
+        // tslint:disable-next-line
+        console.log('waitForStyleSheetsLoaded done');
         resolve();
       }
     };
