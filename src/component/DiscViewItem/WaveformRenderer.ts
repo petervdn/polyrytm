@@ -10,6 +10,7 @@ import { createCanvas } from '../../util/DiscViewUtils';
 import { debounce, PI2 } from '../../util/miscUtils';
 import Scheduler from '../../audio/Scheduler';
 import { interactionStore } from '../../store/module/interaction/interaction';
+import { circularText } from '../../util/drawUtils';
 
 export default class WaveformRenderer extends AbstractRenderer {
   // todo describe these
@@ -198,7 +199,7 @@ export default class WaveformRenderer extends AbstractRenderer {
       this.sizeData.squareSize,
     );
 
-    // draw edge markers for each sound
+    // draw edge markers for each sound todo these are not rasterized atm
     this.disc.sounds.forEach((discSound, index) => {
       drawSliceEdgeMarkers(
         this.context,
@@ -206,6 +207,7 @@ export default class WaveformRenderer extends AbstractRenderer {
         discSound.slices,
         index,
         this.disc.sounds.length,
+        'white',
       );
     });
 
@@ -254,6 +256,16 @@ export default class WaveformRenderer extends AbstractRenderer {
         this.disc.sounds[i].sample.normalizeFactor,
       );
     }
+
+    // this.originalWaveformContext.fillStyle = 'white';
+    // circularText(
+    //   this.originalWaveformContext,
+    //   'test text here please do!',
+    //   'Arial 130pt',
+    //   this.sizeData.halfSquareSize, // center x
+    //   this.sizeData.halfSquareSize, // center y
+    //   this.sizeData.waveformInnerRadius.pixels - 5,
+    // );
   }
 
   // todo destruct

@@ -4,6 +4,9 @@ import EventDispatcher from '../../audio/EventDispatcher';
 import Scheduler from '../../audio/Scheduler';
 import { getRasterPattern } from '../../display/canvasRendererDrawUtils';
 
+/**
+ * Is extended by both WaveformRenderer and RingsRenderer
+ */
 export default class AbstractRenderer extends EventDispatcher {
   public canvas: HTMLCanvasElement;
 

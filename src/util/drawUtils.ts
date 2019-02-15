@@ -38,7 +38,7 @@ export const circularText = (
   x: number,
   y: number,
   radius: number,
-  space: number = 0,
+  space: number = 1.2,
 ) => {
   context.textAlign = 'center';
   context.textBaseline = !top ? 'top' : 'bottom';

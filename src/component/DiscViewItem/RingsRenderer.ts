@@ -1,11 +1,11 @@
 import {
-  ISizeData,
   IDisc,
-  IStore,
+  Interactable,
   InteractableType,
   IRing,
   IRingItem,
-  Interactable,
+  ISizeData,
+  IStore,
 } from '../../data/interface';
 import { createCanvas } from '../../util/DiscViewUtils';
 import AbstractRenderer from './AbstractRenderer';
@@ -27,10 +27,10 @@ import { PI2 } from '../../util/miscUtils';
 import { getRingItemColorForVolume } from '../../util/colorUtils';
 
 export default class RingsRenderer extends AbstractRenderer {
-  private ringsCanvas: HTMLCanvasElement;
-  private ringsCanvasContext: CanvasRenderingContext2D;
-  private cssRotate: boolean = false;
-  private playingFrameUpdate: AnimationFrame;
+  private readonly ringsCanvas: HTMLCanvasElement;
+  private readonly ringsCanvasContext: CanvasRenderingContext2D;
+  private readonly cssRotate: boolean = false;
+  private readonly playingFrameUpdate: AnimationFrame;
 
   constructor(disc: IDisc, sizeData: ISizeData, store: IStore, scheduler: Scheduler) {
     super(disc, sizeData, store, scheduler);
@@ -230,11 +230,10 @@ export default class RingsRenderer extends AbstractRenderer {
 
     // draw flashes in ringitems
     if (this.store.state.app.isPlaying) {
+      const playRadians = this.scheduler.timeData.currentRevolutionRadians;
       this.disc.rings.forEach(ring => {
         const radiansPerRingItem = PI2 / ring.items.length;
-        const playRadians = this.scheduler.timeData.currentRevolutionRadians;
         const activeItemIndex = Math.floor(playRadians / radiansPerRingItem);
-
         const itemStartRadians = activeItemIndex * radiansPerRingItem;
         const itemEndRadians = itemStartRadians + radiansPerRingItem;
         const progressInItemFactor =
@@ -282,13 +281,17 @@ export default class RingsRenderer extends AbstractRenderer {
       return;
     }
 
-    // draw all rings, check if there is a selected one in this ring
-    const selectedRing = this.store.getters[interactionStore.GET_SELECTED_RING];
-    if (selectedRing && selectedRing.disc === this.disc) {
+    // draw rings
+    const selection = this.store.state.interaction.selection;
+    const selectedDisc = this.store.getters[interactionStore.GET_SELECTED_DISC];
+
+    if (!selection || selectedDisc !== this.disc) {
+      this.drawAllRings();
+    } else if (selection.type === InteractableType.RING && selection.disc === this.disc) {
       // if so,only draw the not-selected rings, because these will get a pixel-raster
       // and the highlighted ring will be drawn normally after that
       this.disc.rings.forEach((ring, index) => {
-        if (ring !== selectedRing) {
+        if (ring !== selection) {
           drawRing(
             this.ringsCanvasContext,
             ring,
@@ -299,34 +302,48 @@ export default class RingsRenderer extends AbstractRenderer {
         }
       });
 
-      // raster over everything we've drawn
-      rasterizeCanvas(
-        this.ringsCanvasContext,
-        this.sizeData.squareSize,
-        this.sizeData.squareSize,
-        this.rasterPattern,
-      );
+      this.rasterizeFullCanvas();
 
       // draw the highlighted one normally
       drawRing(
         this.ringsCanvasContext,
-        selectedRing,
-        this.disc.rings.indexOf(selectedRing), // todo move index to rings? (and ringitems)
+        selection,
+        this.disc.rings.indexOf(selection), // todo move index to rings? (and ringitems)
         this.sizeData,
         this.store.state.app.activeTheme,
       );
+    } else if (
+      (selection.type === InteractableType.SLICE && selection.discSound.disc === this.disc) ||
+      (selection.type === InteractableType.DISC_SOUND && selection.disc === this.disc)
+    ) {
+      this.drawAllRings(true);
     } else {
-      this.disc.rings.forEach((ring, index) => {
-        drawRing(
-          this.ringsCanvasContext,
-          ring,
-          index,
-          this.sizeData,
-          this.store.state.app.activeTheme,
-        );
-      });
+      this.drawAllRings();
     }
   }
 
+  private drawAllRings(rasterize = false): void {
+    this.disc.rings.forEach((ring, index) => {
+      drawRing(
+        this.ringsCanvasContext,
+        ring,
+        index,
+        this.sizeData,
+        this.store.state.app.activeTheme,
+      );
+    });
+
+    if (rasterize) this.rasterizeFullCanvas();
+  }
+
+  private rasterizeFullCanvas(): void {
+    // raster over everything we've drawn
+    rasterizeCanvas(
+      this.ringsCanvasContext,
+      this.sizeData.squareSize,
+      this.sizeData.squareSize,
+      this.rasterPattern,
+    );
+  }
   // todo destruct
 }
