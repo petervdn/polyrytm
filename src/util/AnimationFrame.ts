@@ -1,22 +1,22 @@
 export default class AnimationFrame {
-	private callback: () => void;
-	private requestAnimationFrameId: number;
+  private callback: () => void;
+  private requestAnimationFrameId: number = -1;
 
-	constructor(callback: () => void) {
-		this.callback = callback;
-	}
+  constructor(callback: () => void) {
+    this.callback = callback;
+  }
 
-	public start() {
-		this.requestAnimationFrameId = requestAnimationFrame(this.update);
-	}
+  public start() {
+    this.requestAnimationFrameId = requestAnimationFrame(this.update);
+  }
 
-	public stop() {
-		cancelAnimationFrame(this.requestAnimationFrameId);
-	}
+  public stop() {
+    cancelAnimationFrame(this.requestAnimationFrameId);
+  }
 
-	update = () => {
-		this.callback();
+  update = () => {
+    this.callback();
 
-		this.requestAnimationFrameId = requestAnimationFrame(this.update);
-	};
+    this.requestAnimationFrameId = requestAnimationFrame(this.update);
+  };
 }

@@ -1,8 +1,67 @@
-import { PI2 } from 'util/miscUtils';
+import { DiscData, DiscSizeData, RingData, RingItemData } from '../data/interfaces';
+import { PI2 } from './miscUtils';
 
-// todo move to other drawutils class (or that to here)
-// todo use mpm package
-export function drawArcPath(
+export const drawDisc = (
+  context: CanvasRenderingContext2D,
+  disc: DiscData,
+  sizeData: DiscSizeData,
+  rotateOffset: number,
+) => {
+  context.clearRect(0, 0, sizeData.size, sizeData.size);
+  disc.rings.forEach((ring, index) => drawRing(context, ring, index, sizeData, rotateOffset));
+};
+
+export const drawRing = (
+  context: CanvasRenderingContext2D,
+  ring: RingData,
+  ringIndex: number,
+  sizeData: DiscSizeData,
+  rotateOffset: number,
+) => {
+  ring.items.forEach((ringItem, itemIndex) =>
+    drawRingItem(
+      context,
+      ringItem,
+      sizeData,
+      ring.items.length,
+      itemIndex,
+      ringIndex,
+      rotateOffset,
+    ),
+  );
+};
+
+export const drawRingItem = (
+  context: CanvasRenderingContext2D,
+  ringItem: RingItemData,
+  sizeData: DiscSizeData,
+  totalItems: number,
+  ringItemIndex: number,
+  ringIndex: number,
+  rotateOffset: number,
+): void => {
+  const radiansForRingItem = PI2 / totalItems;
+
+  const startRadians = radiansForRingItem * ringItemIndex + rotateOffset;
+  const endRadians = startRadians + radiansForRingItem;
+  const outerRadius = sizeData.ringsOuterRadius - ringIndex * sizeData.ringSize;
+  const innerRadius = outerRadius - sizeData.ringSize;
+
+  drawArcPath(
+    context,
+    sizeData.halfSize,
+    sizeData.halfSize,
+    startRadians,
+    endRadians,
+    outerRadius,
+    innerRadius,
+  );
+
+  context.fillStyle = `rgba(255,0,0,${ringItem.volume}`;
+  context.fill();
+};
+
+export const drawArcPath = (
   context: CanvasRenderingContext2D,
   centerX: number,
   centerY: number,
@@ -10,7 +69,7 @@ export function drawArcPath(
   endRadians: number,
   outerRadius: number,
   innerRadius: number,
-): void {
+): void => {
   if (outerRadius <= 0 || innerRadius <= 0) {
     return;
   }
@@ -29,31 +88,4 @@ export function drawArcPath(
     centerX + Math.cos(startRadians) * outerRadius,
     centerY + Math.sin(startRadians) * outerRadius,
   );
-}
-
-export const circularText = (
-  context: CanvasRenderingContext2D,
-  text: string,
-  font: string,
-  x: number,
-  y: number,
-  radius: number,
-  space: number = 1.2,
-) => {
-  context.textAlign = 'center';
-  context.textBaseline = !top ? 'top' : 'bottom';
-  context.font = font;
-
-  const numRadsPerLetter = (Math.PI - space * 2) / text.length;
-  context.save();
-  context.translate(x, y);
-  const k = 1;
-  context.rotate(-k * ((Math.PI - numRadsPerLetter) / 2 - space));
-  for (let i = 0; i < text.length; i += 1) {
-    context.save();
-    context.rotate(k * i * numRadsPerLetter);
-    context.fillText(text[i], 0, -k * radius);
-    context.restore();
-  }
-  context.restore();
 };

@@ -1,26 +1,28 @@
-export function getRandomItemFromArray(array: any[]): any {
-  return array[Math.floor(Math.random() * array.length)];
-}
+import { DiscSizeData } from '../data/interfaces';
 
 export const PI2: number = Math.PI * 2;
 
-export const debounce = (func: () => void, wait = 50) => {
-  let h: number;
-  return () => {
-    clearTimeout(h);
-    h = window.setTimeout(() => func(), wait);
+export const getDiscSizeData = (size: number): DiscSizeData => {
+  const outerMargin = 0;
+  const waveformSize = 0.1;
+  const ringsOuterMargin = 0.05;
+  const ringSize = 0.1;
+  const waveformOuterRadius = 1 - outerMargin;
+  const waveformInnerRadius = waveformOuterRadius - waveformSize;
+  const ringsOuterRadius = waveformInnerRadius - ringsOuterMargin;
+  const halfSize = size * 0.5;
+  return {
+    size,
+    halfSize,
+    waveformOuterRadius: waveformOuterRadius * halfSize,
+    waveformInnerRadius: waveformInnerRadius * halfSize,
+    ringsOuterRadius: ringsOuterRadius * halfSize,
+    ringSize: ringSize * halfSize,
   };
 };
 
-export function uniqueArray(array: any[]): any[] {
-  return array.filter((elem, pos, arr) => {
-    return arr.indexOf(elem) === pos;
-  });
-}
-
-export function removeFromArray(item: any, list: any[]): void {
-  const index = list.indexOf(item);
-  if (index > -1) {
-    list.splice(index);
-  }
-}
+export const getRandomInt = (min: number, max: number) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
