@@ -15,7 +15,7 @@ const initialTimeData: TimeData = {
 };
 export default class ApplicationStore extends AbstractStore {
   @observable contextTimeAtPlayStart = NOT_PLAYING_CONTEXT_TIME;
-  @observable secondsPerRevolution = 2;
+  @observable secondsPerRevolution = 4;
   @observable timeData: TimeData = initialTimeData;
 
   private frame = new AnimationFrame(this.updateTimeData);

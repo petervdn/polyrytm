@@ -57,7 +57,7 @@ export const drawRingItem = (
     innerRadius,
   );
 
-  context.fillStyle = `rgba(255,0,0,${ringItem.volume}`;
+  context.fillStyle = `rgba(255,255,255,${ringItem.volume}`;
   context.fill();
 };
 

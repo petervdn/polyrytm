@@ -16,12 +16,11 @@ type Selectable =
     };
 
 export default class InteractionStore extends AbstractStore {
-  @observable selected: Selectable | undefined;
-  @observable hovered: Selectable | undefined;
+  @observable selected: Selectable | undefined; // rename -> selection
+  @observable hovered: Selectable | undefined; // rename -> ....something
 
   @action.bound setSelected(value: Selectable) {
     this.selected = value;
-    console.log(this.selected);
   }
 
   @action.bound setHovered(value: Selectable) {
