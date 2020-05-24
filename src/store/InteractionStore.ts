@@ -1,8 +1,8 @@
 import { observable, action } from 'mobx';
 import AbstractStore from './AbstractStore';
-import { DiscData } from '../data/interfaces';
+import { DiscData, RingData, RingItemData } from '../data/interfaces';
 
-type Selection = DiscData | undefined;
+type Selection = DiscData | RingData | RingItemData | undefined;
 
 export default class InteractionStore extends AbstractStore {
   @observable selection: Selection;

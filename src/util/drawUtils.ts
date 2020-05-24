@@ -7,7 +7,9 @@ export const drawDisc = (
   sizeData: DiscSizeData,
   rotateOffset: number,
 ) => {
-  context.clearRect(0, 0, sizeData.size, sizeData.size);
+  // context.clearRect(0, 0, sizeData.size, sizeData.size);
+  context.fillStyle = `green`;
+  context.fillRect(0, 0, sizeData.size, sizeData.size);
   disc.rings.forEach((ring, index) => drawRing(context, ring, index, sizeData, rotateOffset));
 };
 

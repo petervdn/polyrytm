@@ -4,6 +4,7 @@ import { DiscData, DiscSizeData } from '../../data/interfaces';
 import { getDiscSizeData } from '../../util/miscUtils';
 import { drawDisc } from '../../util/drawUtils';
 import { store } from '../../store/RootStore';
+import { observer } from 'mobx-react';
 
 type Props = {
   size: number;
@@ -34,17 +35,17 @@ const DiscView: React.FC<Props> = ({ size, disc }) => {
   }, [discSizeData, context, disc, size, timeData]);
 
   return (
-    <StyledWrapper size={size}>
-      <canvas
-        // style={{ transform: `rotate(${timeData.currentRevolutionDegrees}deg)` }}
-        width={size}
-        height={size}
-        ref={(canvas) => {
-          canvas && setContext(canvas.getContext('2d')!);
-        }}
-      />
-    </StyledWrapper>
+    // <StyledWrapper size={size}>
+    <canvas
+      style={{ transform: `rotate(${timeData.currentRevolutionDegrees}deg)` }}
+      width={size}
+      height={size}
+      ref={(canvas) => {
+        canvas && setContext(canvas.getContext('2d')!);
+      }}
+    />
+    // </StyledWrapper>
   );
 };
 
-export default DiscView;
+export default observer(DiscView);

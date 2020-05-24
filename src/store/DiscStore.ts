@@ -8,6 +8,7 @@ import { createRandomDisc } from '../util/discUtils';
 export default class DiscStore extends AbstractStore {
   @observable discs: DiscData[] = [];
 
+
   @action.bound addDisc() {
     this.discs.push(createRandomDisc());
   }

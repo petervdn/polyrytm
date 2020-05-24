@@ -1,25 +1,40 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { observer } from 'mobx-react';
 import { store } from './store/RootStore';
 import Header from './components/layout/Header';
-import DiscView from './components/disc/Disc';
+import DiscsView from './components/disc/DiscsView';
+
+const MainView = styled.div`
+  background-color: lightgray;
+  height: 500px;
+  display: flex;
+`;
+
+const DiscsWrapper = styled.div`
+  background-color: olive;
+  flex-grow: 1;
+`;
+const SidePanelWrapper = styled.div`
+  background-color: paleturquoise;
+  width: 400px;
+  flex-grow: 0;
+`;
 
 const Wrapper = styled.div`
   //background-color: #282c34;
   //color: white;
 `;
-const DiscsWrap = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-`;
 
 const App = () => {
   const { applicationStore, discStore } = store;
   const { timeData, isPlaying, stop, start } = applicationStore;
-  const { discs, addDisc } = discStore;
+  const { addDisc } = discStore;
+
+  useEffect(() => {
+    addDisc();
+  }, [addDisc]);
 
   return (
     <Wrapper>
@@ -31,11 +46,14 @@ const App = () => {
       <div>
         <button onClick={addDisc}>Add disc</button>
       </div>
-      <DiscsWrap>
-        {discs.map((disc, index) => (
-          <DiscView size={500} disc={disc} key={index} />
-        ))}
-      </DiscsWrap>
+      <MainView>
+        <DiscsWrapper>
+          <DiscsView />
+        </DiscsWrapper>
+        <SidePanelWrapper>
+          <h3>menu</h3>
+        </SidePanelWrapper>
+      </MainView>
     </Wrapper>
   );
 };
