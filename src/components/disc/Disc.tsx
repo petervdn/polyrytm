@@ -11,13 +11,6 @@ type Props = {
   disc: DiscData;
 };
 
-const StyledWrapper = styled.div<{ size: number; rotation?: number }>`
-  width: ${(p) => p.size}px;
-  height: ${(p) => p.size}px;
-  //background-color: antiquewhite;
-  // transform: rotate(${(p) => p.rotation}deg);
-`;
-
 const DiscView: React.FC<Props> = ({ size, disc }) => {
   const { applicationStore } = store;
   const { timeData } = applicationStore;
@@ -28,14 +21,12 @@ const DiscView: React.FC<Props> = ({ size, disc }) => {
   useEffect(() => {
     if (context) {
       drawDisc(context, disc, discSizeData, timeData.currentRevolutionRadians);
-
-      // context.fillStyle = 'blue';
-      // context.fillRect(20, 20, size - 40, size - 40);
     }
   }, [discSizeData, context, disc, size, timeData]);
 
+  // todo: apply size directly on style width/height, debounced value for widtth/height attrs
+  // todo: pixelratio
   return (
-    // <StyledWrapper size={size}>
     <canvas
       style={{ transform: `rotate(${timeData.currentRevolutionDegrees}deg)` }}
       width={size}
@@ -44,7 +35,6 @@ const DiscView: React.FC<Props> = ({ size, disc }) => {
         canvas && setContext(canvas.getContext('2d')!);
       }}
     />
-    // </StyledWrapper>
   );
 };
 

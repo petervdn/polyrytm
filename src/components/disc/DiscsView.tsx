@@ -16,18 +16,18 @@ const DiscsView = () => {
   const { discStore } = store;
   const { discs } = discStore;
 
-  const { ref, rect } = useGetClientRect();
+  const { ref: wrapperRef, rect: wrapperRect } = useGetClientRect();
 
   const discSize = useMemo(() => {
-    return rect ? Math.min(rect.width, rect.height) : 0;
-  }, [rect]);
+    return wrapperRect ? Math.min(wrapperRect.width, wrapperRect.height) : 0;
+  }, [wrapperRect]);
 
   const discPositions = useMemo(() => {
     return discs.map((_, index) => index * discSize);
   }, [discSize, discs.length]);
 
   return (
-    <Wrapper ref={ref}>
+    <Wrapper ref={wrapperRef}>
       {discs.map((disc, index) => (
         <div style={{ position: 'absolute', left: discPositions[index], top: 0 }} key={index}>
           <DiscView size={discSize} disc={disc} />
