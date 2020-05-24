@@ -26,7 +26,7 @@ const DiscsView = () => {
     const totalDiscsWidth = discs.length * discSize;
     const offset = wrapperRect ? -0.5 * (wrapperRect.width - totalDiscsWidth) : 0;
     return discs.map((_, index) => index * discSize - offset);
-  }, [discSize, discs]);
+  }, [discSize, discs, wrapperRect]);
 
   return (
     <Wrapper ref={wrapperRef}>
