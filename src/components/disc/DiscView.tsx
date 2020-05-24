@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import styled from 'styled-components';
 import { DiscData, DiscSizeData } from '../../data/interfaces';
 import { getDiscSizeData } from '../../util/miscUtils';
 import { drawDisc } from '../../util/drawUtils';

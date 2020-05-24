@@ -13,7 +13,7 @@ const MainView = styled.div`
 `;
 
 const DiscsWrapper = styled.div`
-  background-color: olive;
+  background-color: cadetblue;
   flex-grow: 1;
 `;
 const SidePanelWrapper = styled.div`
@@ -39,13 +39,7 @@ const App = () => {
   return (
     <Wrapper>
       <Header />
-      <h2>{timeData.playTime.toFixed(2)}</h2>
-      <h2>{timeData.currentRevolution}</h2>
-      <h2>{timeData.currentRevolutionFactor.toFixed(2)}</h2>
-      {isPlaying ? <button onClick={stop}>stop</button> : <button onClick={start}>start</button>}
-      <div>
-        <button onClick={addDisc}>Add disc</button>
-      </div>
+
       <MainView>
         <DiscsWrapper>
           <DiscsView />
@@ -54,6 +48,13 @@ const App = () => {
           <h3>menu</h3>
         </SidePanelWrapper>
       </MainView>
+      <h2>{timeData.playTime.toFixed(2)}</h2>
+      <h2>{timeData.currentRevolution}</h2>
+      <h2>{timeData.currentRevolutionFactor.toFixed(2)}</h2>
+      {isPlaying ? <button onClick={stop}>stop</button> : <button onClick={start}>start</button>}
+      <div>
+        <button onClick={addDisc}>Add disc</button>
+      </div>
     </Wrapper>
   );
 };

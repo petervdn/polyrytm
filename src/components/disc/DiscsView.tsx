@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import DiscView from './Disc';
+import DiscView from './DiscView';
 import styled from 'styled-components';
 import { store } from '../../store/RootStore';
 import { observer } from 'mobx-react';
@@ -24,7 +24,7 @@ const DiscsView = () => {
 
   const discPositions = useMemo(() => {
     return discs.map((_, index) => index * discSize);
-  }, [discSize, discs.length]);
+  }, [discSize, discs]);
 
   return (
     <Wrapper ref={wrapperRef}>
