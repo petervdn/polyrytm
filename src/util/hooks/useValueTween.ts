@@ -13,7 +13,7 @@ export const useValueTween = (onUpdate?: (value: number) => void) => {
     };
   }, []);
 
-  return (to: number, duration = 0.4) => {
+  return (to: number, duration = 0.3) => {
     TweenLite.killTweensOf(tweenValueRef.current);
 
     // set current values
