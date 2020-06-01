@@ -3,12 +3,19 @@ import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import { store } from '../../store/RootStore';
 import { observer } from 'mobx-react';
+import { paths } from '../../data/paths';
+import { useFirebaseAuth } from '../../util/hooks/useFirebase';
 
 const StyledHeader = styled.div`
   background-color: black;
   display: flex;
   color: white;
   padding: 0 20px;
+
+  a,
+  a:visited {
+    color: white;
+  }
 `;
 
 const Logo = styled.h1`
@@ -18,14 +25,16 @@ const LoginState = styled.div``;
 
 const Header = () => {
   const { userStore } = store;
-  const { user, signOut } = userStore;
+  const auth = useFirebaseAuth();
+  const { user } = userStore;
 
-  const [signingOut, setSigningOut] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
 
-  const onSignOutClick = async () => {
-    setSigningOut(true);
-    await signOut();
-    setSigningOut(false);
+  const onSignOutClick = () => {
+    setIsSigningOut(true);
+    auth.signOut().then(() => {
+      setIsSigningOut(false);
+    });
   };
 
   return (
@@ -34,13 +43,15 @@ const Header = () => {
       <LoginState>
         {user && (
           <>
-            <p>Logged in as {user.displayName}</p>
-            <button onClick={onSignOutClick} disabled={signingOut}>
+            <p>
+              <Link to={paths.profile}>Profile</Link>
+            </p>
+            <button onClick={onSignOutClick} disabled={isSigningOut}>
               Sign out
             </button>
           </>
         )}
-        {!user && <Link to={'/login'}>Sign in</Link>}
+        {!user && <Link to={paths.login}>Sign in</Link>}
       </LoginState>
     </StyledHeader>
   );

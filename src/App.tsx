@@ -8,6 +8,8 @@ import DiscsView from './components/disc/DiscsView';
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import SignInPage from './page/SignInPage';
+import { paths } from './data/paths';
+import ProfilePage from './page/ProfilePage';
 
 const MainView = styled.div`
   background-color: lightgray;
@@ -54,8 +56,11 @@ const App = () => {
       </MainView>
       <RouteContainer>
         <Switch>
-          <Route path={'/login'}>
+          <Route path={paths.login}>
             <SignInPage />
+          </Route>
+          <Route path={paths.profile}>
+            <ProfilePage />
           </Route>
           <Route>
             <h2>{timeData.playTime.toFixed(2)}</h2>

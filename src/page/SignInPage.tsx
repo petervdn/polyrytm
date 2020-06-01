@@ -1,29 +1,35 @@
 import React, { useState } from 'react';
-
-import { store } from '../store/RootStore';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import { paths } from '../data/paths';
+import { useFirebaseAuth } from '../util/hooks/useFirebase';
 
 const ErrorMessage = styled.p`
   color: darkred;
 `;
 const SignInPage = () => {
-  const { userStore } = store;
-  const { signIn } = userStore;
+  const history = useHistory();
+  const auth = useFirebaseAuth();
+
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const onSubmit = async (event: React.FormEvent) => {
+  const onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     setErrorMessage('');
     setIsSigningIn(true);
-    try {
-      await signIn(email, password);
-    } catch (e) {
-      setErrorMessage(e.message);
-    }
-    setIsSigningIn(false);
+
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        history.push(paths.home);
+      })
+      .catch((e) => {
+        setErrorMessage(e.message);
+        setIsSigningIn(false);
+      });
   };
 
   return (
