@@ -3,8 +3,11 @@ import styled from 'styled-components';
 
 import { observer } from 'mobx-react';
 import { store } from './store/RootStore';
-import Header from './components/layout/Header';
+import Header from './components/header/Header';
 import DiscsView from './components/disc/DiscsView';
+
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import SignInPage from './page/SignInPage';
 
 const MainView = styled.div`
   background-color: lightgray;
@@ -12,19 +15,20 @@ const MainView = styled.div`
   display: flex;
 `;
 
-const DiscsWrapper = styled.div`
+const DiscsContainer = styled.div`
   background-color: cadetblue;
   flex-grow: 1;
 `;
-const SidePanelWrapper = styled.div`
+const SidePanelContainer = styled.div`
   background-color: paleturquoise;
   width: 400px;
   flex-grow: 0;
 `;
-
-const Wrapper = styled.div`
-  //background-color: #282c34;
-  //color: white;
+const RouteContainer = styled.div`
+  background-color: lightgrey;
+  width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
 `;
 
 const App = () => {
@@ -37,25 +41,38 @@ const App = () => {
   }, [addDisc]);
 
   return (
-    <Wrapper>
+    <BrowserRouter>
       <Header />
 
       <MainView>
-        <DiscsWrapper>
+        <DiscsContainer>
           <DiscsView />
-        </DiscsWrapper>
-        <SidePanelWrapper>
+        </DiscsContainer>
+        <SidePanelContainer>
           <h3>menu</h3>
-        </SidePanelWrapper>
+        </SidePanelContainer>
       </MainView>
-      <h2>{timeData.playTime.toFixed(2)}</h2>
-      <h2>{timeData.currentRevolution}</h2>
-      <h2>{timeData.currentRevolutionFactor.toFixed(2)}</h2>
-      {isPlaying ? <button onClick={stop}>stop</button> : <button onClick={start}>start</button>}
-      <div>
-        <button onClick={addDisc}>Add disc</button>
-      </div>
-    </Wrapper>
+      <RouteContainer>
+        <Switch>
+          <Route path={'/login'}>
+            <SignInPage />
+          </Route>
+          <Route>
+            <h2>{timeData.playTime.toFixed(2)}</h2>
+            <h2>{timeData.currentRevolution}</h2>
+            <h2>{timeData.currentRevolutionFactor.toFixed(2)}</h2>
+            {isPlaying ? (
+              <button onClick={stop}>stop</button>
+            ) : (
+              <button onClick={start}>start</button>
+            )}
+            <div>
+              <button onClick={addDisc}>Add disc</button>
+            </div>
+          </Route>
+        </Switch>
+      </RouteContainer>
+    </BrowserRouter>
   );
 };
 
