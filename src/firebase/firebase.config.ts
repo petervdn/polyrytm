@@ -7,3 +7,7 @@ export const firebaseConfig = {
   messagingSenderId: '653369756677',
   appId: '1:653369756677:web:aa0c7e1468a709ce13a06c',
 };
+
+
+export const publicSamplePath = 'samples/public/';
+export const getUserSamplePath = (userId: string) => `samples/user/${userId}/`

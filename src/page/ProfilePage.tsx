@@ -4,7 +4,7 @@ import ProfileMenu from '../components/profile/ProfileMenu';
 import { Route, Switch } from 'react-router-dom';
 import { paths } from '../data/paths';
 import UserDetails from '../components/profile/UserDetails';
-import Samples from '../components/profile/Samples';
+import Samples from '../components/profile/samples/Samples';
 
 const ProfilePage = () => {
   return (

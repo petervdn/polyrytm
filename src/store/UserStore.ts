@@ -1,6 +1,6 @@
 import * as firebase from 'firebase/app';
 import AbstractStore from './AbstractStore';
-import { observable } from 'mobx';
+import { computed, observable } from 'mobx';
 import RootStore from './RootStore';
 
 export default class UserStore extends AbstractStore {
@@ -12,5 +12,13 @@ export default class UserStore extends AbstractStore {
     firebase.auth().onAuthStateChanged((user) => {
       this.user = user;
     });
+  }
+
+  @computed get userId() {
+    return this.user ? this.user.uid : undefined;
+  }
+
+  @computed get isAdmin() {
+    return true;
   }
 }
