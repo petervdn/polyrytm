@@ -9,7 +9,7 @@ const ErrorMessage = styled.p`
 `;
 const SignInPage = () => {
   const history = useHistory();
-  const auth = useFirebaseAuth();
+  const { auth } = useFirebaseAuth();
 
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [email, setEmail] = useState('');

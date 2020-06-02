@@ -25,7 +25,7 @@ const LoginState = styled.div``;
 
 const Header = () => {
   const { userStore } = store;
-  const auth = useFirebaseAuth();
+  const { auth } = useFirebaseAuth();
   const { user } = userStore;
 
   const [isSigningOut, setIsSigningOut] = useState(false);

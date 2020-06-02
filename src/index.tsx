@@ -1,6 +1,7 @@
 import React from 'react';
 import 'mobx-react-lite/batchingForReactDom';
 import 'firebase/auth';
+import 'firebase/storage';
 
 import ReactDOM from 'react-dom';
 import './index.css';

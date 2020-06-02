@@ -4,7 +4,7 @@ import ProfileMenu from '../components/profile/ProfileMenu';
 import { Route, Switch } from 'react-router-dom';
 import { paths } from '../data/paths';
 import UserDetails from '../components/profile/UserDetails';
-import SamplesOverview from '../components/profile/SamplesOverview';
+import Samples from '../components/profile/Samples';
 
 const ProfilePage = () => {
   return (
@@ -16,7 +16,7 @@ const ProfilePage = () => {
           <UserDetails />
         </Route>
         <Route path={paths.samples}>
-          <SamplesOverview />
+          <Samples />
         </Route>
       </Switch>
     </>
