@@ -13,6 +13,7 @@ const Samples = () => {
     <>
       <h2>Samples</h2>
 
+      <h3>Upload</h3>
       <SampleUpload />
       <h3>Current samples</h3>
       {isAdmin && <CurrentSamples path={publicSamplePath} />}
