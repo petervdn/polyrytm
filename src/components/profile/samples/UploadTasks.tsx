@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { Upload } from '../../../util/hooks/useFirebaseFileUpload';
+import UploadTask from './UploadTask';
 
 type Props = {
   uploads: Array<Upload>;
@@ -7,11 +8,11 @@ type Props = {
 
 const UploadTasks: FunctionComponent<Props> = ({ uploads }) => {
   return (
-    <ul>
+    <div>
       {uploads.map((upload) => {
-        return <li>{upload.file.name}</li>;
+        return <UploadTask key={upload.task.snapshot.ref.fullPath} upload={upload} />;
       })}
-    </ul>
+    </div>
   );
 };
 
