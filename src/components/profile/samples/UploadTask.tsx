@@ -29,9 +29,13 @@ const UploadTask: FunctionComponent<Props> = ({ upload }) => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    upload.task.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot) => {
+    const dispose = upload.task.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot) => {
       setProgress((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
     });
+
+    return () => {
+      dispose();
+    }
   }, [upload.task]);
 
   return (
