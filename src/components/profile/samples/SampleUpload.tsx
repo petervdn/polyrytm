@@ -26,6 +26,10 @@ const SampleUpload = () => {
     setIsPublicUpload(event.target.checked);
   };
 
+  const onComplete = (completedUpload: Upload) => {
+    setUploads(uploads.filter((upload) => upload !== completedUpload));
+  };
+
   return (
     <>
       <input
@@ -42,7 +46,7 @@ const SampleUpload = () => {
         </label>
       )}
       <button onClick={onUploadClick}>Upload</button>
-      <UploadTasks uploads={uploads} />
+      <UploadTasks uploads={uploads} onComplete={onComplete} />
     </>
   );
 };

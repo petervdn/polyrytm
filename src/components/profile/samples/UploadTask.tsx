@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 type Props = {
   upload: Upload;
+  onComplete: () => void;
 };
 
 const barHeight = 20;
@@ -25,18 +26,27 @@ const BarText = styled.div`
   z-index: 10;
 `;
 
-const UploadTask: FunctionComponent<Props> = ({ upload }) => {
+const UploadTask: FunctionComponent<Props> = ({ upload, onComplete }) => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const dispose = upload.task.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot) => {
-      setProgress((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-    });
+    const dispose = upload.task.on(
+      firebase.storage.TaskEvent.STATE_CHANGED,
+      (snapshot) => {
+        setProgress((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+      },
+      null,
+      () => {
+        setProgress(100);
+        setTimeout(onComplete, 1000); // todo: not sure if this is the best approach
+      },
+    );
 
     return () => {
+      console.log('dispose');
       dispose();
-    }
-  }, [upload.task]);
+    };
+  }, [onComplete, upload.task]);
 
   return (
     <Wrapper>
