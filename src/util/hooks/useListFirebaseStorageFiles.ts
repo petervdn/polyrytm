@@ -4,6 +4,7 @@ import * as firebase from 'firebase/app';
 
 export const useListFirebaseStorageFiles = (path: string) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<any>(); // todo better type
   const [items, setItems] = useState<Array<firebase.storage.Reference>>([]);
   const { storageRef } = useFirebaseStorage();
 
@@ -12,11 +13,18 @@ export const useListFirebaseStorageFiles = (path: string) => {
   const load = useCallback(() => {
     setItems([]);
     setIsLoading(true);
-    listRef.listAll().then((result) => {
-      setItems(result.items);
-      setIsLoading(false);
-    });
+    listRef
+      .listAll()
+      .then((result) => {
+        setItems(result.items);
+      })
+      .catch((error) => {
+        setError(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [listRef]);
 
-  return { items, load, isLoading };
+  return { items, load, isLoading, error };
 };
