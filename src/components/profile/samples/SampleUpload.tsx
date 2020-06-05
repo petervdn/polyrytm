@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import { Upload, useFirebaseFileUpload } from '../../../util/hooks/useFirebaseFileUpload';
-import * as firebase from 'firebase';
 import { store } from '../../../store/RootStore';
 import { observer } from 'mobx-react';
 import { getUserSamplePath, publicSamplePath } from '../../../firebase/firebase.config';
@@ -18,8 +17,8 @@ const SampleUpload = () => {
   const onUploadClick = () => {
     if (!file || !userId || !fileInputRef.current) return;
     fileInputRef.current.value = ''; // clears the file input
-    const uploadPath = isPublicUpload ? publicSamplePath : getUserSamplePath(userId);
-    setUploads([...uploads, upload(file, uploadPath)]);
+    const path = isPublicUpload ? publicSamplePath : getUserSamplePath(userId);
+    setUploads([...uploads, { file, task: upload(file, path) }]);
   };
 
   const onCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {

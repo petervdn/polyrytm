@@ -15,7 +15,7 @@ export default class UserStore extends AbstractStore {
   }
 
   @computed get userId() {
-    return this.user ? this.user.uid : undefined;
+    return 'test'; // this.user ? this.user.uid : undefined;
   }
 
   @computed get isAdmin() {

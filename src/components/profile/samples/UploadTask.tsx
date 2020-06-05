@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import * as firebase from 'firebase';
-
+import { StyledError } from '../../styles';
 import { Upload } from '../../../util/hooks/useFirebaseFileUpload';
 import styled from 'styled-components';
 
@@ -28,6 +28,7 @@ const BarText = styled.div`
 
 const UploadTask: FunctionComponent<Props> = ({ upload, onComplete }) => {
   const [progress, setProgress] = useState(0);
+  const [error, setError] = useState<Error>();
 
   useEffect(() => {
     const dispose = upload.task.on(
@@ -35,7 +36,7 @@ const UploadTask: FunctionComponent<Props> = ({ upload, onComplete }) => {
       (snapshot) => {
         setProgress((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
       },
-      null,
+      setError,
       () => {
         setProgress(100);
         setTimeout(onComplete, 1000); // todo: not sure if this is the best approach
@@ -50,19 +51,24 @@ const UploadTask: FunctionComponent<Props> = ({ upload, onComplete }) => {
 
   return (
     <Wrapper>
-      <BarText>
-        Uploading {upload.task.snapshot.ref.name} ({progress.toFixed(0)}%)
-      </BarText>
-      <div
-        style={{
-          position: 'absolute',
-          left: 0,
-          top: 0,
-          width: `${progress}%`,
-          height: '100%',
-          backgroundColor: 'slategrey',
-        }}
-      />
+      {error && <StyledError>{error.message}</StyledError>}
+      {!error && (
+        <>
+          <BarText>
+            Uploading {upload.task.snapshot.ref.name} ({progress.toFixed(0)}%)
+          </BarText>
+          <div
+            style={{
+              position: 'absolute',
+              left: 0,
+              top: 0,
+              width: `${progress}%`,
+              height: '100%',
+              backgroundColor: 'slategrey',
+            }}
+          />
+        </>
+      )}
     </Wrapper>
   );
 };
