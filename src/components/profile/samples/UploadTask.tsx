@@ -44,7 +44,6 @@ const UploadTask: FunctionComponent<Props> = ({ upload, onComplete }) => {
     );
 
     return () => {
-      console.log('dispose');
       dispose();
     };
   }, [onComplete, upload.task]);
