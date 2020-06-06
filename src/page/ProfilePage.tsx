@@ -5,11 +5,14 @@ import { Route, Switch } from 'react-router-dom';
 import { paths } from '../data/paths';
 import UserDetails from '../components/profile/UserDetails';
 import Samples from '../components/profile/samples/Samples';
+import { store } from '../store/RootStore';
 
 const ProfilePage = () => {
+  const { userStore } = store;
+  const { isAdmin } = userStore;
   return (
     <>
-      <h2>Profile</h2>
+      <h2>Profile {isAdmin ? '(admin)' : ''}</h2>
       <ProfileMenu />
       <Switch>
         <Route path={paths.userDetails}>

@@ -1,11 +1,15 @@
-import React, { useRef, useState } from 'react';
+import React, { FunctionComponent, useRef, useState } from 'react';
 import { Upload, useFirebaseFileUpload } from '../../../util/hooks/useFirebaseFileUpload';
 import { store } from '../../../store/RootStore';
 import { observer } from 'mobx-react';
 import { getUserSamplePath, publicSamplePath } from '../../../firebase/firebase.config';
 import UploadTasks from './UploadTasks';
 
-const SampleUpload = () => {
+type Props = {
+  onComplete?: (isPublic: boolean) => void;
+};
+
+const SampleUpload: FunctionComponent<Props> = ({ onComplete }) => {
   const { userStore } = store;
   const { isAdmin, userId } = userStore;
   const { upload } = useFirebaseFileUpload();
@@ -16,6 +20,7 @@ const SampleUpload = () => {
 
   const onUploadClick = () => {
     if (!file || !userId || !fileInputRef.current) return;
+
     fileInputRef.current.value = ''; // clears the file input
     const path = isPublicUpload ? publicSamplePath : getUserSamplePath(userId);
     setUploads([...uploads, { file, task: upload(file, path) }]);
@@ -25,8 +30,10 @@ const SampleUpload = () => {
     setIsPublicUpload(event.target.checked);
   };
 
-  const onComplete = (completedUpload: Upload) => {
+  const onUploadComplete = (completedUpload: Upload) => {
     setUploads(uploads.filter((upload) => upload !== completedUpload));
+
+    onComplete && onComplete(isPublicUpload);
   };
 
   return (
@@ -45,7 +52,7 @@ const SampleUpload = () => {
         </label>
       )}
       <button onClick={onUploadClick}>Upload</button>
-      <UploadTasks uploads={uploads} onComplete={onComplete} />
+      <UploadTasks uploads={uploads} onUploadComplete={onUploadComplete} />
     </>
   );
 };

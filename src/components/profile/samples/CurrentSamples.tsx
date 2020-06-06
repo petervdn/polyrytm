@@ -1,18 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { forwardRef, ForwardRefRenderFunction, useEffect, useImperativeHandle } from 'react';
 import { StyledError } from '../../styles';
-import { FunctionComponent } from 'react';
 import { useListFirebaseStorageFiles } from '../../../util/hooks/useListFirebaseStorageFiles';
 
 type Props = {
   path: string;
 };
 
-export const CurrentSamples: FunctionComponent<Props> = ({ path }) => {
+export type CurrentSamplesRef = { load: () => void };
+
+const CurrentSamples: ForwardRefRenderFunction<CurrentSamplesRef, Props> = ({ path }, ref) => {
+  // todo probably get rid of the forwardRef-construction for reloading from the parent
   const { items, load, isLoading, error } = useListFirebaseStorageFiles(path);
 
   useEffect(() => {
     load();
   }, [load]);
+
+  useImperativeHandle(ref, () => ({
+    load,
+  }));
 
   return (
     <>
@@ -43,3 +49,5 @@ export const CurrentSamples: FunctionComponent<Props> = ({ path }) => {
     </>
   );
 };
+
+export default forwardRef(CurrentSamples);

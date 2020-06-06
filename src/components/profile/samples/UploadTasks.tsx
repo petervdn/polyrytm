@@ -4,10 +4,10 @@ import UploadTask from './UploadTask';
 
 type Props = {
   uploads: Array<Upload>;
-  onComplete: (upload: Upload) => void;
+  onUploadComplete: (upload: Upload) => void;
 };
 
-const UploadTasks: FunctionComponent<Props> = ({ uploads, onComplete }) => {
+const UploadTasks: FunctionComponent<Props> = ({ uploads, onUploadComplete }) => {
   return (
     <div>
       {uploads.map((upload) => {
@@ -15,7 +15,7 @@ const UploadTasks: FunctionComponent<Props> = ({ uploads, onComplete }) => {
           <UploadTask
             key={upload.task.snapshot.ref.fullPath}
             upload={upload}
-            onComplete={() => onComplete(upload)}
+            onComplete={() => onUploadComplete(upload)}
           />
         );
       })}
