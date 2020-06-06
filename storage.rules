@@ -8,20 +8,24 @@ service firebase.storage {
             allow read;
         }
 
-        // only admin can upload public
+        // only admin can upload to public
         match /public/{sample} {
-            allow write: if request.auth != null && requestIsAudioFile(request); // todo: if admin
+            allow write: if isAdmin(request) && isAudioFile(request);
         }
 
         // users can upload in their own folder
         match /user/{userId}/{sample} {
-            allow write: if request.auth.uid == userId && requestIsAudioFile(request);
+            allow write: if request.auth.uid == userId && isAudioFile(request);
         }
     }
 
   }
 }
 
-function requestIsAudioFile(request) {
+function isAudioFile(request) {
     return request.resource.contentType.matches('audio/.*');
+}
+
+function isAdmin(request) {
+    return request.auth != null && request.auth.token.admin == true;
 }
