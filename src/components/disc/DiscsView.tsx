@@ -33,7 +33,7 @@ const DiscsView = () => {
 
   useEffect(() => {
     tween((selected ? selected.discIndex : 0) * -discSize);
-  }, [selected]);
+  }, [discSize, selected, tween]);
 
   // offset needed to center a disc
   const centeredOffset = useMemo(() => {

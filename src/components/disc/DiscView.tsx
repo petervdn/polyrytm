@@ -1,9 +1,9 @@
-import React, { MouseEvent, useEffect, useMemo, useState } from 'react';
-import { DiscData, DiscSizeData } from '../../data/interfaces';
-import { getDiscSizeData } from '../../util/miscUtils';
-import { drawDisc } from '../../util/drawUtils';
+import React from 'react';
+import { DiscData } from '../../data/interfaces';
+
 import { store } from '../../store/RootStore';
 import { observer } from 'mobx-react';
+import { useDrawDisc } from '../../util/hooks/useDrawDisc';
 
 type Props = {
   size: number;
@@ -14,37 +14,44 @@ type Props = {
 const DiscView: React.FC<Props> = ({ size, disc, discIndex }) => {
   const { applicationStore, interactionStore } = store;
   const { timeData } = applicationStore;
-  const { setHovered, setSelected } = interactionStore;
-  const [context, setContext] = useState<CanvasRenderingContext2D>();
+  const { hovered, setHovered, setHoverAsSelected } = interactionStore;
 
-  const discSizeData: DiscSizeData = useMemo(() => getDiscSizeData(size), [size]);
+  const { setContext } = useDrawDisc(disc, size, timeData);
 
-  useEffect(() => {
-    if (context) {
-      drawDisc(context, disc, discSizeData, timeData.currentRevolutionRadians);
-    }
-  }, [discSizeData, context, disc, size, timeData]);
-
-  const onMouseMove = (event: MouseEvent<HTMLElement>) => {
+  const onMouseEnter = () => {
     setHovered({ discIndex });
   };
-  const onClick = (event: MouseEvent<HTMLElement>) => {
-    setSelected({ discIndex });
+
+  const onMouseLeave = () => {
+    setHovered(undefined);
   };
+
+  const onMouseMove = () => {
+    // setHovered({ discIndex });
+  };
+  const onClick = () => {
+    setHoverAsSelected();
+  };
+
+  const isHovered = hovered && hovered.discIndex === discIndex;
 
   // todo: apply size directly on style width/height, use debounced value for width/height attrs (canvas is now fully cleared and flickers when size changes)
   // todo: pixelratio
   return (
-    <canvas
-      onMouseMove={onMouseMove}
-      onClick={onClick}
-      style={{ transform: `rotate(${timeData.currentRevolutionDegrees}deg)` }}
-      width={size}
-      height={size}
-      ref={(canvas) => {
-        canvas && setContext(canvas.getContext('2d')!);
-      }}
-    />
+    <div style={{ backgroundColor: isHovered ? 'rgba(0,0,0,0.1)' : undefined }}>
+      <canvas
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        onMouseMove={onMouseMove}
+        onClick={onClick}
+        style={{ transform: `rotate(${timeData.currentRevolutionDegrees}deg)` }}
+        width={size}
+        height={size}
+        ref={(canvas) => {
+          canvas && setContext(canvas.getContext('2d'));
+        }}
+      />
+    </div>
   );
 };
 

@@ -10,6 +10,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import SignInPage from './page/SignInPage';
 import { paths } from './data/paths';
 import ProfilePage from './page/ProfilePage';
+import Inspector from './components/inspector/Inspector';
 
 const MainView = styled.div`
   background-color: lightgray;
@@ -51,7 +52,7 @@ const App = () => {
           <DiscsView />
         </DiscsContainer>
         <SidePanelContainer>
-          <h3>menu</h3>
+          <Inspector />
         </SidePanelContainer>
       </MainView>
       <RouteContainer>
