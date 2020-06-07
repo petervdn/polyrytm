@@ -7,6 +7,11 @@ type Props = {
   discIndex: number;
 };
 
+const sampleGroups = [
+  { key: 'public' as const, label: 'Public samples' },
+  { key: 'user' as const, label: 'User samples' },
+];
+
 const DiscSampleSelect: FunctionComponent<Props> = ({ discIndex }) => {
   const { userStore, discStore } = store;
   const { userId } = userStore;
@@ -15,11 +20,6 @@ const DiscSampleSelect: FunctionComponent<Props> = ({ discIndex }) => {
 
   const disc = useMemo(() => discs[discIndex], [discIndex, discs]);
 
-  const sampleGroups = samples
-    ? samples.user
-      ? [samples.public, samples.user]
-      : [samples.public]
-    : [];
   return samples ? (
     <select
       value={disc.sample?.fullPath || ''} // todo is there a better way to not select anything?
@@ -29,18 +29,20 @@ const DiscSampleSelect: FunctionComponent<Props> = ({ discIndex }) => {
       }}
     >
       <option value={''}>Select a sample</option>
-      {sampleGroups.map((samplesInGroup, index) => {
-        return (
-          <React.Fragment key={index}>
-            <option disabled={true}>{index === 0 ? 'Public samples' : 'Your samples'}</option>
-            {samplesInGroup.map((sample) => (
+      {sampleGroups
+        .filter((group) => !!samples[group.key])
+        .map((group) => {
+          const samplesInGroup = samples[group.key]!; // ! because we filtered above
+
+          return samplesInGroup.map((sample, index) => (
+            <React.Fragment key={index}>
+              {index === 0 && <option disabled={true}>{group.label}</option>}
               <option key={sample.fullPath} value={sample.fullPath}>
                 {sample.name}
               </option>
-            ))}
-          </React.Fragment>
-        );
-      })}
+            </React.Fragment>
+          ));
+        })}
     </select>
   ) : null;
 };
