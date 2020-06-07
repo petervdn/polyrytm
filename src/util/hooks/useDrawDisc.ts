@@ -4,8 +4,12 @@ import { getDiscSizeData } from '../miscUtils';
 import { drawDisc } from '../drawUtils';
 
 export const useDrawDisc = (disc: DiscData, size: number, timeData: TimeData) => {
+  // const waveformCanvasRef = useRef(createCanvas(size, size));
+
   const [context, setContext] = useState<CanvasRenderingContext2D | null>();
   const discSizeData: DiscSizeData = useMemo(() => getDiscSizeData(size), [size]);
+
+  useEffect(() => {});
 
   useEffect(() => {
     if (context) {

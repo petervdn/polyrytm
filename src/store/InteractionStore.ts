@@ -1,5 +1,6 @@
-import { observable, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
 import AbstractStore from './AbstractStore';
+import { DiscData } from '../data/interfaces';
 
 type Selectable =
   | {
@@ -25,5 +26,9 @@ export default class InteractionStore extends AbstractStore {
 
   @action.bound setHovered(value: Selectable | undefined) {
     this.hovered = value;
+  }
+
+  @computed get selectedDisc(): DiscData | undefined {
+    return this.selected ? this.rootStore.discStore.discs[this.selected.discIndex] : undefined;
   }
 }

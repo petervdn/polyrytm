@@ -7,7 +7,6 @@ export const useValueTween = (onUpdate?: (value: number) => void) => {
 
   useEffect(() => {
     return () => {
-      // tweenValuesRef.current will never change, so we can ignore eslint's warning
       // eslint-disable-next-line react-hooks/exhaustive-deps
       TweenLite.killTweensOf(tweenValueRef.current);
     };
