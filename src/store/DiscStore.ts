@@ -11,4 +11,10 @@ export default class DiscStore extends AbstractStore {
   @action.bound addDisc() {
     this.discs = [...this.discs, createRandomDisc()];
   }
+
+  @action.bound setSampleOnDisc(discIndex: number, fullPath: string) {
+    this.discs[discIndex].sample = {
+      fullPath,
+    };
+  }
 }

@@ -1,12 +1,16 @@
 export interface DiscData {
   rings: RingData[];
+  sample?: {
+    fullPath: string;
+    audioBuffer?: AudioBuffer;
+  };
 }
 
-export interface RingData {
-  items: RingItemData[];
-}
 export interface RingItemData {
   volume: number;
+}
+export interface RingData {
+  items: RingItemData[];
 }
 
 export interface DiscSizeData {

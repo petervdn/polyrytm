@@ -10,14 +10,14 @@ const StyledContainer = styled.div`
 
 const Inspector = () => {
   const { interactionStore } = store;
-  const { selected, hovered, selectedDisc } = interactionStore;
+  const { selected, hovered } = interactionStore;
 
   return (
     <StyledContainer>
       <h2>inspector</h2>
       <div>selection: {selected && JSON.stringify(selected)}</div>
       <div>hovered: {hovered && JSON.stringify(hovered)}</div>
-      {selectedDisc && <DiscSampleSelect disc={selectedDisc} />}
+      {selected && <DiscSampleSelect discIndex={selected.discIndex} />}
     </StyledContainer>
   );
 };
