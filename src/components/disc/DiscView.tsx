@@ -4,6 +4,7 @@ import { DiscData } from '../../data/interfaces';
 import { store } from '../../store/RootStore';
 import { observer } from 'mobx-react';
 import { useDrawDisc } from '../../util/hooks/useDrawDisc';
+import { useDiscInteraction } from '../../util/hooks/useDiscInteraction';
 
 type Props = {
   size: number;
@@ -14,24 +15,10 @@ type Props = {
 const DiscView: React.FC<Props> = ({ size, disc, discIndex }) => {
   const { applicationStore, interactionStore } = store;
   const { timeData } = applicationStore;
-  const { hovered, setHovered, setHoverAsSelected } = interactionStore;
+  const { hovered } = interactionStore;
 
   const { setContext } = useDrawDisc(disc, size, timeData);
-
-  const onMouseEnter = () => {
-    setHovered({ discIndex });
-  };
-
-  const onMouseLeave = () => {
-    setHovered(undefined);
-  };
-
-  const onMouseMove = () => {
-    // setHovered({ discIndex });
-  };
-  const onClick = () => {
-    setHoverAsSelected();
-  };
+  const { onClick, onMouseEnter, onMouseLeave, onMouseMove } = useDiscInteraction(discIndex);
 
   const isHovered = hovered && hovered.discIndex === discIndex;
 
