@@ -25,7 +25,6 @@ const DiscSampleSelect: FunctionComponent<Props> = ({ discIndex }) => {
       value={disc.sample?.fullPath || ''} // todo is there a better way to not select anything?
       onChange={(event) => {
         setSampleOnDisc(discIndex, event.target.value);
-        event.preventDefault();
       }}
     >
       <option value={''}>Select a sample</option>

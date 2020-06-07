@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
 import { StyledError } from '../../styles';
 import { Upload } from '../../../util/hooks/useFirebaseFileUpload';
 import styled from 'styled-components';
