@@ -1,17 +1,17 @@
 import { useFirebaseStorage } from './useFirebase';
-import { AvailableSamples, getAvailableSamples } from '../firebaseUtils';
+import { AvailableSampleFiles, getAvailableSampleFiles } from '../firebaseUtils';
 import { useCallback, useEffect, useState } from 'react';
 
-export const useGetAvailableSamples = (userId: string | undefined) => {
+export const useGetAvailableSampleFiles = (userId: string | undefined) => {
   const { storageRef } = useFirebaseStorage();
-  const [samples, setSamples] = useState<AvailableSamples>();
+  const [sampleFiles, setSampleFiles] = useState<AvailableSampleFiles>();
   const [isLoading, setIsLoading] = useState(false);
 
   const load = useCallback(() => {
     setIsLoading(true);
 
-    getAvailableSamples(storageRef, userId).then((result) => {
-      setSamples(result);
+    getAvailableSampleFiles(storageRef, userId).then((result) => {
+      setSampleFiles(result);
       setIsLoading(false);
     });
   }, [storageRef, userId]);
@@ -22,5 +22,5 @@ export const useGetAvailableSamples = (userId: string | undefined) => {
     load();
   }, [load, storageRef, userId]);
 
-  return { samples, isLoading, load };
+  return { sampleFiles, isLoading, load };
 };

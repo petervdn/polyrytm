@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import React, { FunctionComponent, useMemo } from 'react';
-import { useGetAvailableSamples } from '../../util/hooks/useGetAvailableSamples';
+import { useGetAvailableSampleFiles } from '../../util/hooks/useGetAvailableSampleFiles';
 import { store } from '../../store/RootStore';
 
 type Props = {
@@ -16,16 +16,16 @@ const DiscSampleSelect: FunctionComponent<Props> = ({ discIndex }) => {
   const { userStore, discStore } = store;
   const { userId } = userStore;
   const { discs, setSampleOnDisc } = discStore;
-  const { samples } = useGetAvailableSamples(userId);
+  const { sampleFiles } = useGetAvailableSampleFiles(userId);
 
   const disc = useMemo(() => discs[discIndex], [discIndex, discs]);
 
-  return samples ? (
+  return sampleFiles ? (
     <select
       value={disc.sample?.fullPath || ''} // todo is there a better way to not select anything?
       onChange={(event) => {
         // find the sample (we need the name, probably better ways to do this)
-        const sample = [...samples.public, ...(samples?.user || [])].find(
+        const sample = [...sampleFiles.public, ...(sampleFiles?.user || [])].find(
           (s) => s.fullPath === event.target.value,
         );
         sample && setSampleOnDisc(discIndex, sample.name, sample.fullPath);
@@ -33,9 +33,9 @@ const DiscSampleSelect: FunctionComponent<Props> = ({ discIndex }) => {
     >
       <option value={''}>Select a sample</option>
       {sampleGroups
-        .filter((group) => !!samples[group.key])
+        .filter((group) => !!sampleFiles[group.key])
         .map((group) => {
-          const samplesInGroup = samples[group.key]!; // ! because we filtered above
+          const samplesInGroup = sampleFiles[group.key]!; // ! because we filtered above
 
           return samplesInGroup.map((sample, index) => (
             <React.Fragment key={index}>

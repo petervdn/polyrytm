@@ -3,21 +3,21 @@ import SampleUpload from './SampleUpload';
 import { store } from '../../../store/RootStore';
 import { observer } from 'mobx-react';
 import SamplesList from './SamplesList';
-import { useGetAvailableSamples } from '../../../util/hooks/useGetAvailableSamples';
+import { useGetAvailableSampleFiles } from '../../../util/hooks/useGetAvailableSampleFiles';
 
 const ProfileSamples = () => {
   const { userStore } = store;
   const { isAdmin, userId } = userStore;
 
-  const { samples } = useGetAvailableSamples(userId);
+  const { sampleFiles } = useGetAvailableSampleFiles(userId);
 
   return (
     <>
       <h2>Samples</h2>
-      {samples && (
+      {sampleFiles && (
         <>
-          {samples.user && <SamplesList label={'User'} samples={samples.user} />}
-          {isAdmin && <SamplesList label={'Public'} samples={samples.public} />}
+          {sampleFiles.user && <SamplesList label={'User'} samples={sampleFiles.user} />}
+          {isAdmin && <SamplesList label={'Public'} samples={sampleFiles.public} />}
         </>
       )}
       <h3>Upload</h3>

@@ -7,7 +7,7 @@ import { Await } from './typescript.util';
  * @param storageRef
  * @param userId
  */
-export const getAvailableSamples = (
+export const getAvailableSampleFiles = (
   storageRef: firebase.storage.Reference,
   userId: string | undefined,
 ) => {
@@ -21,7 +21,7 @@ export const getAvailableSamples = (
   );
 };
 
-export type AvailableSamples = Await<ReturnType<typeof getAvailableSamples>>;
+export type AvailableSampleFiles = Await<ReturnType<typeof getAvailableSampleFiles>>;
 /**
  * Lists the files for a given path.
  * @param storageRef
