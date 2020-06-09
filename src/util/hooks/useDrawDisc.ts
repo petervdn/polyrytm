@@ -1,15 +1,23 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { DiscData, DiscSizeData, TimeData } from '../../data/interfaces';
 import { getDiscSizeData } from '../miscUtils';
-import { drawDisc } from '../drawUtils';
+import { createCanvas, drawDisc } from '../drawUtils';
 
 export const useDrawDisc = (disc: DiscData, size: number, timeData: TimeData) => {
-  // const waveformCanvasRef = useRef(createCanvas(size, size));
+  const waveformCanvasRef = useRef(createCanvas(size, size));
+
+  const { sample, rings } = disc;
 
   const [context, setContext] = useState<CanvasRenderingContext2D | null>();
   const discSizeData: DiscSizeData = useMemo(() => getDiscSizeData(size), [size]);
 
-  useEffect(() => {});
+  useEffect(() => {
+    console.log('sample change');
+  }, [disc.sample]);
+
+  useEffect(() => {
+    console.log('rings change');
+  }, [rings]);
 
   useEffect(() => {
     if (context) {

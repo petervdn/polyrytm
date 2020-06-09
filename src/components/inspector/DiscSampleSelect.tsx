@@ -24,7 +24,11 @@ const DiscSampleSelect: FunctionComponent<Props> = ({ discIndex }) => {
     <select
       value={disc.sample?.fullPath || ''} // todo is there a better way to not select anything?
       onChange={(event) => {
-        setSampleOnDisc(discIndex, event.target.value);
+        // find the sample (we need the name, probably better ways to do this)
+        const sample = [...samples.public, ...(samples?.user || [])].find(
+          (s) => s.fullPath === event.target.value,
+        );
+        sample && setSampleOnDisc(discIndex, sample.name, sample.fullPath);
       }}
     >
       <option value={''}>Select a sample</option>
