@@ -1,20 +1,21 @@
 export type Sample = {
   fullPath: string;
   name: string;
-  audioBuffer?: AudioBuffer;
-  // loadProgress: number;
+  audioBuffer: AudioBuffer | null;
+  loadProgress: number;
 };
-
-export interface DiscData {
-  rings: RingData[];
-  sample?: Sample;
-}
 
 export interface RingItemData {
   volume: number;
 }
+
 export interface RingData {
   items: RingItemData[];
+}
+
+export interface DiscData {
+  rings: RingData[];
+  sample?: Sample;
 }
 
 export interface DiscSizeData {
