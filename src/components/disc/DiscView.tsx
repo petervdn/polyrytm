@@ -16,7 +16,6 @@ const DiscView: React.FC<Props> = ({ size, disc, discIndex }) => {
   const { applicationStore, interactionStore } = store;
   const { timeData } = applicationStore;
   const { hovered } = interactionStore;
-
   const { setContext } = useDrawDisc(disc, size, timeData);
   const { onClick, onMouseEnter, onMouseLeave, onMouseMove } = useDiscInteraction(discIndex);
 

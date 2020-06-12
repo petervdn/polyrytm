@@ -16,9 +16,13 @@ const DiscSampleSelect: FunctionComponent<Props> = ({ discIndex }) => {
   const { userStore, discStore } = store;
   const { userId } = userStore;
   const { discs, setSampleOnDisc } = discStore;
-  const { sampleFiles } = useGetAvailableSampleFiles(userId);
+  const { sampleFiles, isLoading } = useGetAvailableSampleFiles(userId);
 
   const disc = useMemo(() => discs[discIndex], [discIndex, discs]);
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
   return sampleFiles ? (
     <select

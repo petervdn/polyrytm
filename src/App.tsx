@@ -55,6 +55,7 @@ const App = () => {
           <Inspector />
         </SidePanelContainer>
       </MainView>
+
       <RouteContainer>
         <Switch>
           <Route path={paths.login}>

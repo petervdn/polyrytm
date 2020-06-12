@@ -6,33 +6,32 @@ import { audioContext } from '../audio/audioContext';
 import { Sample } from '../data/interfaces';
 
 export default class SampleStore extends AbstractStore {
-  @observable samples: Record<string, Sample> = {};
+  @observable samples: Record<string, Sample> = {}; // samples are stored by their fullPath
 
-  @action.bound getSample(fullPath: string): Promise<Sample> {
-    if (this.samples[fullPath]) {
-      return Promise.resolve(this.samples[fullPath]);
-    }
-
-    return new Promise((resolve) => {
+  @action.bound getSample(fullPath: string): Sample {
+    if (!this.samples[fullPath]) {
       const fileRef = firebase.storage().ref().child(fullPath);
-
-      const sample: Sample = {
+      const sample: Sample = observable.object({
         fullPath,
         name: fileRef.name,
         audioBuffer: null,
-        loadProgress: 0,
+        loadProgress: -1,
+      });
+
+      const onProgress = (progress: number) => {
+        sample.loadProgress = progress;
       };
 
       this.samples[fullPath] = sample;
-
       fileRef
         .getDownloadURL()
-        .then((downloadUrl) => loadAudioBuffer(downloadUrl, audioContext))
-        .then((audioBuffer) => {
+        .then((downloadUrl) => loadAudioBuffer(audioContext, downloadUrl, onProgress))
+        .then(({ audioBuffer }) => {
           sample.audioBuffer = audioBuffer;
-          resolve(sample);
         })
         .catch(console.log);
-    });
+    }
+
+    return this.samples[fullPath];
   }
 }

@@ -11,9 +11,15 @@ export const useDrawDisc = (disc: DiscData, size: number, timeData: TimeData) =>
   const [context, setContext] = useState<CanvasRenderingContext2D | null>();
   const discSizeData: DiscSizeData = useMemo(() => getDiscSizeData(size), [size]);
 
+  const loadProgress = sample?.loadProgress;
+
   useEffect(() => {
-    console.log('sample change');
+    console.log('sample change', disc.sample?.loadProgress);
   }, [disc.sample]);
+
+  useEffect(() => {
+    console.log('load', loadProgress);
+  }, [loadProgress]);
 
   useEffect(() => {
     console.log('rings change');
